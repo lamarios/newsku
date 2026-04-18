@@ -33,7 +33,7 @@ public class Feed {
     @JsonIgnore
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private FeedCategory category;
 

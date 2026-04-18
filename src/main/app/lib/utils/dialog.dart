@@ -38,7 +38,7 @@ Future<String?> showTextInputDialog(BuildContext context, String title, {String?
     builder: (context) {
       return AlertDialog(
         title: Text(title),
-        content: TextField(controller: controller, autofocus: true),
+        content: TextField(key: Key('input-textfield'), controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context), // Returns null

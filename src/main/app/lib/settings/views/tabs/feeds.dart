@@ -80,11 +80,13 @@ class FeedsSettingsTab extends StatelessWidget {
                         mainAxisAlignment: .start,
                         spacing: pu2,
                         children: [
-                          TextButton.icon(
-                            onPressed: () => addCategory(context),
-                            label: Text(locals.addCategory),
-                            icon: Icon(Icons.add),
-                          ),
+                          if (state.feeds.isNotEmpty)
+                            TextButton.icon(
+                              key: Key('add-category'),
+                              onPressed: () => addCategory(context),
+                              label: Text(locals.addCategory),
+                              icon: Icon(Icons.add),
+                            ),
                           TextButton.icon(
                             onPressed: () => cubit.exportFeed(),
                             label: Text(locals.export),
