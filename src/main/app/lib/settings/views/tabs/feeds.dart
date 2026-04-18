@@ -1,10 +1,7 @@
-import 'package:app/feed/models/feed.dart';
-import 'package:app/feed/views/components/feed_image.dart';
 import 'package:app/l10n/app_localizations.dart';
-import 'package:app/router.dart';
 import 'package:app/settings/states/feeds.dart';
+import 'package:app/settings/views/components/feed_category.dart';
 import 'package:app/utils/dialog.dart';
-import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/utils/views/components/error_listener.dart';
 import 'package:auto_route/auto_route.dart';
@@ -20,6 +17,15 @@ final _formKey = GlobalKey<FormState>();
 @RoutePage()
 class FeedsSettingsTab extends StatelessWidget {
   const FeedsSettingsTab({super.key});
+
+  Future<void> addCategory(BuildContext context) async {
+    final locals = AppLocalizations.of(context)!;
+    String? name = await showTextInputDialog(context, locals.addCategory);
+
+    if (context.mounted && name != null) {
+      context.read<FeedsSettingsCubit>().addFeedCategory(name);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +80,13 @@ class FeedsSettingsTab extends StatelessWidget {
                         mainAxisAlignment: .start,
                         spacing: pu2,
                         children: [
+                          if (state.feeds.isNotEmpty)
+                            TextButton.icon(
+                              key: Key('add-category'),
+                              onPressed: () => addCategory(context),
+                              label: Text(locals.addCategory),
+                              icon: Icon(Icons.add),
+                            ),
                           TextButton.icon(
                             onPressed: () => cubit.exportFeed(),
                             label: Text(locals.export),
@@ -115,36 +128,12 @@ class FeedsSettingsTab extends StatelessWidget {
                             )
                           : Expanded(
                               child: ListView.builder(
-                                itemCount: state.feeds.length,
+                                itemCount: state.categories.length,
                                 itemBuilder: (context, index) {
-                                  final f = state.feeds[index];
-
-                                  return ListTile(
-                                    leading: ClipRRect(
-                                      borderRadius: .circular(50),
-                                      child: FeedImage(item: f, width: 50, height: 50),
-                                    ),
-                                    title: Text(f.name ?? ''),
-                                    subtitle: SelectableText(f.url ?? ''),
-                                    trailing: Row(
-                                      mainAxisAlignment: .end,
-                                      crossAxisAlignment: .center,
-                                      mainAxisSize: .min,
-                                      children: [
-                                        _ErrorButton(feed: f),
-                                        IconButton(
-                                          onPressed: () {
-                                            okCancelDialog(
-                                              context,
-                                              title: locals.deleteFeed,
-                                              content: Text(locals.deleteFeedMessage),
-                                              onOk: () => cubit.deleteFeed(f),
-                                            );
-                                          },
-                                          icon: Icon(Icons.delete),
-                                        ),
-                                      ],
-                                    ),
+                                  final c = state.categories[index];
+                                  return FeedCategoryView(
+                                    category: c,
+                                    feeds: state.feeds.where((f) => f.category?.id == c.id).toList(),
                                   );
                                 },
                               ),
@@ -154,42 +143,6 @@ class FeedsSettingsTab extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-class _ErrorButton extends StatelessWidget {
-  final Feed feed;
-
-  const _ErrorButton({required this.feed});
-
-  void openErrors(BuildContext context) {
-    AutoRouter.of(context).push(FeedErrorsRoute(feed: feed));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final device = BreakPoint.get(context);
-    final colors = Theme.of(context).colorScheme;
-
-    final locals = AppLocalizations.of(context)!;
-    final hasErrors = feed.lastRefreshErrors > 0;
-    var icon = Icon(
-      hasErrors ? Icons.error_outline : Icons.check,
-      color: hasErrors ? colors.error : Colors.lightGreen.withValues(alpha: 0.5),
-    );
-    return Tooltip(
-      message: locals.duringLastRefreshAttempt,
-      child: device == .mobile
-          ? IconButton(onPressed: () => openErrors(context), icon: icon)
-          : TextButton.icon(
-              onPressed: () => openErrors(context),
-              icon: icon,
-              label: Text(
-                locals.nErrors(feed.lastRefreshErrors),
-                style: TextStyle(color: hasErrors ? colors.error : colors.onSurface.withValues(alpha: 0.5)),
-              ),
-            ),
     );
   }
 }

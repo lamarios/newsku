@@ -1,19 +1,27 @@
 import 'dart:math';
 
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/layouts/models/layout_block.dart';
+import 'package:app/layouts/views/components/layout_category_selector.dart';
+import 'package:app/layouts/views/components/previews/preview_container.dart';
 import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter/material.dart';
-
-import 'package:app/layouts/views/components/previews/preview_container.dart';
 
 class BigGridPictureBig extends StatelessWidget {
   final bool last;
   final LayoutBlock block;
   final Function(LayoutBlock block) onUpdated;
+  final List<FeedCategory> categories;
 
-  const BigGridPictureBig({super.key, required this.last, required this.block, required this.onUpdated});
+  const BigGridPictureBig({
+    super.key,
+    required this.last,
+    required this.block,
+    required this.onUpdated,
+    required this.categories,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,7 @@ class BigGridPictureBig extends StatelessWidget {
             (index) => _GridItem(),
           ),
         ),
-        if (!last)
+        if (!last) ...[
           Row(
             mainAxisAlignment: .center,
             children: [
@@ -55,6 +63,8 @@ class BigGridPictureBig extends StatelessWidget {
               ),
             ],
           ),
+          LayoutCategorySelector(block: block, onUpdated: onUpdated, categories: categories),
+        ],
       ],
     );
   }

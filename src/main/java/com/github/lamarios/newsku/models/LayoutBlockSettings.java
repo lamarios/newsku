@@ -4,6 +4,7 @@ public class LayoutBlockSettings {
 
     private String title;
     private Integer items;
+    private String categoryId;
 
     public String getTitle() {
         return title;
@@ -19,5 +20,13 @@ public class LayoutBlockSettings {
 
     public void setItems(Integer items) {
         this.items = items;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }

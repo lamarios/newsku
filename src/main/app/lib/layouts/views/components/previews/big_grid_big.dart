@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/layouts/models/layout_block.dart';
+import 'package:app/layouts/views/components/layout_category_selector.dart';
 import 'package:app/layouts/views/components/previews/preview_container.dart';
 import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/utils.dart';
@@ -11,8 +13,15 @@ class BigGridBig extends StatelessWidget {
   final bool last;
   final LayoutBlock block;
   final Function(LayoutBlock block) onUpdated;
+  final List<FeedCategory> categories;
 
-  const BigGridBig({super.key, required this.block, required this.onUpdated, required this.last});
+  const BigGridBig({
+    super.key,
+    required this.block,
+    required this.onUpdated,
+    required this.last,
+    required this.categories,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +42,7 @@ class BigGridBig extends StatelessWidget {
             (index) => _GridItem(),
           ),
         ),
-        if (!last)
+        if (!last) ...[
           Row(
             mainAxisAlignment: .center,
             children: [
@@ -54,6 +63,8 @@ class BigGridBig extends StatelessWidget {
               ),
             ],
           ),
+          LayoutCategorySelector(block: block, onUpdated: onUpdated, categories: categories),
+        ],
       ],
     );
   }

@@ -13,6 +13,7 @@ _Feed _$FeedFromJson(Map<String, dynamic> json) => _Feed(
   url: json['url'] as String?,
   itemPreference: json['itemPreference'] as String?,
   image: json['image'] as String?,
+  category: json['category'] == null ? null : FeedCategory.fromJson(json['category'] as Map<String, dynamic>),
   lastRefreshErrors: (json['lastRefreshErrors'] as num?)?.toInt() ?? 0,
 );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$FeedToJson(_Feed instance) => <String, dynamic>{
   'url': instance.url,
   'itemPreference': instance.itemPreference,
   'image': instance.image,
+  'category': instance.category,
   'lastRefreshErrors': instance.lastRefreshErrors,
 };

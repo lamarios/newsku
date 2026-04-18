@@ -69,11 +69,19 @@ class FeedScreen extends StatelessWidget {
         int blockSize = block.type.fixedItemSize ?? block.settings?.items ?? 0;
         _log.fine('${block.type}: Block Size: $blockSize');
         // we take the items the block is expecting
-        blockItems.addAll(items.take(blockSize).toList());
+        var list = items
+            .where((i) => block.settings?.categoryId == null || i.feed?.category?.id == block.settings?.categoryId)
+            .take(blockSize)
+            .toList();
+
+        blockItems.addAll(list);
       }
       _log.fine('Block item: ${blockItems.length}');
 
-      slivers.add(block.type.getSliver(context: context, items: blockItems, block: block));
+      if (blockItems.isNotEmpty) {
+        _log.fine('Adding block ${block.type} with ${blockItems.length} items');
+        slivers.add(block.type.getSliver(context: context, items: blockItems, block: block));
+      }
 
       // we remove them from the main list
       for (var element in blockItems) {

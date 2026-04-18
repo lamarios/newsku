@@ -840,6 +840,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid URL'**
   String get invalidUrl;
+
+  /// No description provided for @uncategorized.
+  ///
+  /// In en, this message translates to:
+  /// **'Uncategorized'**
+  String get uncategorized;
+
+  /// No description provided for @addCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Add category'**
+  String get addCategory;
+
+  /// No description provided for @noFeedInCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'No feed in category, drag and drop them here'**
+  String get noFeedInCategory;
+
+  /// No description provided for @rename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get rename;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @deleteCategoryExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting a category will also delete all the feeds it contains. This cannot be undone'**
+  String get deleteCategoryExplanation;
+
+  /// No description provided for @any.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get any;
+
+  /// No description provided for @feedCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get feedCategory;
+
+  /// No description provided for @layoutBlockCategoryExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'This block will only display blocks of the selected category'**
+  String get layoutBlockCategoryExplanation;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

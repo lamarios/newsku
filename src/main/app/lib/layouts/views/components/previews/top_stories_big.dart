@@ -1,4 +1,6 @@
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/layouts/models/layout_block.dart';
+import 'package:app/layouts/views/components/layout_category_selector.dart';
 import 'package:app/layouts/views/components/previews/preview_container.dart';
 import 'package:app/utils/utils.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -8,8 +10,9 @@ import 'package:gap/gap.dart';
 class TopStoriesBig extends StatefulWidget {
   final LayoutBlock block;
   final Function(LayoutBlock block) onUpdated;
+  final List<FeedCategory> categories;
 
-  const TopStoriesBig({super.key, required this.block, required this.onUpdated});
+  const TopStoriesBig({super.key, required this.block, required this.onUpdated, required this.categories});
 
   @override
   State<TopStoriesBig> createState() => _TopStoriesBigState();
@@ -66,6 +69,7 @@ class _TopStoriesBigState extends State<TopStoriesBig> {
             ),
           ],
         ),
+        LayoutCategorySelector(block: widget.block, onUpdated: widget.onUpdated, categories: widget.categories),
       ],
     );
   }

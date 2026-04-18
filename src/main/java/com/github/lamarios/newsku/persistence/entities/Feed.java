@@ -33,6 +33,11 @@ public class Feed {
     @JsonIgnore
     private User user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private FeedCategory category;
+
+
     public User getUser() {
         return user;
     }
@@ -87,5 +92,13 @@ public class Feed {
 
     public void setLastRefreshErrors(int lastRefreshErrors) {
         this.lastRefreshErrors = lastRefreshErrors;
+    }
+
+    public FeedCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(FeedCategory category) {
+        this.category = category;
     }
 }

@@ -1,3 +1,4 @@
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/feed/views/components/big_grid_item.dart';
 import 'package:app/feed/views/components/big_grid_picture_item.dart';
@@ -62,15 +63,16 @@ enum LayoutBlockTypes {
     required LayoutBlock block,
     required Function(LayoutBlock block) onUpdated,
     required bool last,
+    required List<FeedCategory> categories,
   }) {
     return switch (this) {
-      bigGrid => BigGridBig(block: block, onUpdated: onUpdated, last: last),
-      topStories => TopStoriesBig(block: block, onUpdated: onUpdated),
-      smallGrid => SmallGridBig(block: block, onUpdated: onUpdated, last: last),
-      bigHeadline => HeadlineBig(block: block, onUpdated: onUpdated),
-      bigHeadlinePicture => HeadlinePictureBig(block: block, onUpdated: onUpdated),
-      searchResult => SearchResultBig(block: block, onUpdated: onUpdated, last: last),
-      bigGridPicture => BigGridPictureBig(block: block, onUpdated: onUpdated, last: last),
+      bigGrid => BigGridBig(block: block, onUpdated: onUpdated, last: last, categories: categories),
+      topStories => TopStoriesBig(block: block, onUpdated: onUpdated, categories: categories),
+      smallGrid => SmallGridBig(block: block, onUpdated: onUpdated, last: last, categories: categories),
+      bigHeadline => HeadlineBig(block: block, onUpdated: onUpdated, categories: categories),
+      bigHeadlinePicture => HeadlinePictureBig(block: block, onUpdated: onUpdated, categories: categories),
+      searchResult => SearchResultBig(block: block, onUpdated: onUpdated, last: last, categories: categories),
+      bigGridPicture => BigGridPictureBig(block: block, onUpdated: onUpdated, last: last, categories: categories),
     };
   }
 

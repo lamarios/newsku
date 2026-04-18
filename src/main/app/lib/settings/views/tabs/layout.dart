@@ -3,6 +3,7 @@ import 'package:app/layouts/models/layout_block_types.dart';
 import 'package:app/settings/states/layout.dart';
 import 'package:app/settings/views/components/draggable_layout_block.dart';
 import 'package:app/settings/views/components/dragged_layout_block.dart';
+import 'package:app/settings/views/components/layout_separator.dart';
 import 'package:app/settings/views/components/new_block_dialog.dart';
 import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/states/simple_cubit.dart';
@@ -14,8 +15,6 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-
-import 'package:app/settings/views/components/layout_separator.dart';
 
 @RoutePage()
 class LayoutSettingsTab extends StatelessWidget {
@@ -237,6 +236,7 @@ class LayoutSettingsTab extends StatelessWidget {
                                                       block: block,
                                                       onUpdated: (newBlock) => cubit.updateBlock(block, newBlock),
                                                       last: isLast,
+                                                      categories: state.categories,
                                                     ),
                                                   ),
                                                 ),
@@ -248,7 +248,10 @@ class LayoutSettingsTab extends StatelessWidget {
                                                   ),
                                               ],
                                             ),
+                                            Gap(pu4),
+                                            Divider(),
                                             LayoutSeparator(index: index, dragging: state.dragging),
+                                            if (state.dragging) Divider(),
                                           ],
                                         ),
                                       ),

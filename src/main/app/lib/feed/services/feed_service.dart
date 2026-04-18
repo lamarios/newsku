@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:app/base_service.dart';
 import 'package:app/feed/models/feed.dart';
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_error.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/utils/models/pagination.dart';
@@ -31,6 +32,18 @@ class FeedService extends BaseService {
     Map<String, dynamic> json = jsonDecode(response.body);
 
     return Paginated<FeedError>.fromJson(json, (feedItem) => FeedError.fromJson(feedItem as Map<String, dynamic>));
+  }
+
+  Future<Feed> updateFeed(Feed feed) async {
+    var uri = await formatUrl('/api/feeds');
+
+    var response = await http.post(uri, headers: await headers, body: jsonEncode(feed));
+
+    processResponse(response);
+
+    Map<String, dynamic> updated = jsonDecode(response.body);
+
+    return Feed.fromJson(updated);
   }
 
   Future<int> countLast24Hours() async {
@@ -131,6 +144,49 @@ class FeedService extends BaseService {
 
     var response = await http.post(uri, headers: await headers, body: jsonEncode(itemIds));
 
+    processResponse(response);
+  }
+
+  Future<List<FeedCategory>> getFeedCategories() async {
+    var uri = await formatUrl('/api/feed-categories');
+
+    var response = await http.get(uri, headers: await headers);
+
+    processResponse(response);
+
+    Iterable i = jsonDecode(response.body);
+
+    return i.map((e) => FeedCategory.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<FeedCategory> addFeedCategory(String name) async {
+    var uri = await formatUrl('/api/feed-categories');
+
+    var response = await http.put(uri, headers: await headers, body: name);
+
+    processResponse(response);
+
+    Map<String, dynamic> feed = jsonDecode(response.body);
+
+    return FeedCategory.fromJson(feed);
+  }
+
+  Future<FeedCategory> updateFeedCategory(FeedCategory category) async {
+    var uri = await formatUrl('/api/feed-categories');
+
+    var response = await http.post(uri, headers: await headers, body: jsonEncode(category));
+
+    processResponse(response);
+
+    Map<String, dynamic> feed = jsonDecode(response.body);
+
+    return FeedCategory.fromJson(feed);
+  }
+
+  Future<void> deleteFeedCategory(String id) async {
+    var uri = await formatUrl('/api/feed-categories/$id');
+
+    var response = await http.delete(uri, headers: await headers);
     processResponse(response);
   }
 }

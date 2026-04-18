@@ -5,6 +5,7 @@ import be.ceau.opml.OpmlParser;
 import com.github.lamarios.newsku.TestConfig;
 import com.github.lamarios.newsku.TestContainerTest;
 import com.github.lamarios.newsku.errors.NewskuException;
+import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
 import com.github.lamarios.newsku.persistence.repositories.FeedRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
+import org.testcontainers.shaded.org.checkerframework.checker.units.qual.A;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,12 +32,18 @@ public class FeedControllerTest extends TestContainerTest {
     @Autowired
     private FeedRepository feedRepository;
 
+    @Autowired
+    private FeedCategoryController feedCategoryController;
+    @Autowired
+    private FeedCategoryRepository feedCategoryRepository;
+
     @LocalServerPort
     private int port;
 
     @AfterEach
     public void tearDown() {
         feedRepository.deleteAll();
+        feedCategoryRepository.deleteAll();
     }
 
     @Test
@@ -50,6 +58,14 @@ public class FeedControllerTest extends TestContainerTest {
 
         var feeds = feedController.getFeeds();
         assertEquals(1, feeds.size());
+
+        var cat = feedCategoryController.addCategory("My cat");
+        feed.setCategory(cat);
+        feedController.updateFeed(feed);
+
+
+        feeds = feedController.getFeeds();
+        assertEquals(cat.getId(), feeds.getFirst().getCategory().getId());
 
         feedController.deleteFeed(feeds.getFirst().getId());
 

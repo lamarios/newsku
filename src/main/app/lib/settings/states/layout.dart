@@ -1,3 +1,5 @@
+import 'package:app/feed/models/feed_category.dart';
+import 'package:app/feed/services/feed_service.dart';
 import 'package:app/layouts/models/layout_block.dart';
 import 'package:app/layouts/models/layout_block_types.dart';
 import 'package:app/layouts/services/layout.dart';
@@ -33,8 +35,10 @@ class LayoutCubit extends Cubit<LayoutState> {
   Future<void> getLayout() async {
     try {
       emit(state.copyWith(loading: true));
-      var layout = await LayoutService(serverUrl!).getLayout();
-      emit(state.copyWith(blocks: layout, loading: false));
+      var layout = LayoutService(serverUrl!).getLayout();
+      var categories = await FeedService(serverUrl!).getFeedCategories();
+      categories.insert(0, FeedCategory(name: "Any"));
+      emit(state.copyWith(blocks: await layout, categories: categories, loading: false));
     } catch (e, s) {
       emit(state.copyWith(loading: false, error: e, stackTrace: s));
       rethrow;
@@ -104,6 +108,7 @@ sealed class LayoutState with _$LayoutState implements WithError {
   const factory LayoutState({
     @Default(false) bool dragging,
     @Default([]) List<LayoutBlock> blocks,
+    @Default([]) List<FeedCategory> categories,
     @Default(true) bool loading,
     dynamic error,
     StackTrace? stackTrace,

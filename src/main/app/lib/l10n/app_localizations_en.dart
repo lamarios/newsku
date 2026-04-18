@@ -453,4 +453,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invalidUrl => 'Invalid URL';
+
+  @override
+  String get uncategorized => 'Uncategorized';
+
+  @override
+  String get addCategory => 'Add category';
+
+  @override
+  String get noFeedInCategory => 'No feed in category, drag and drop them here';
+
+  @override
+  String get rename => 'Rename';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleteCategoryExplanation =>
+      'Deleting a category will also delete all the feeds it contains. This cannot be undone';
+
+  @override
+  String get any => 'Any';
+
+  @override
+  String get feedCategory => 'Category';
+
+  @override
+  String get layoutBlockCategoryExplanation => 'This block will only display blocks of the selected category';
 }

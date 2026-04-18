@@ -27,3 +27,32 @@ Future<void> okCancelDialog(
     ),
   );
 }
+
+Future<String?> showTextInputDialog(BuildContext context, String title, {String? initialValue}) async {
+  final TextEditingController controller = TextEditingController(text: initialValue);
+
+  final locals = AppLocalizations.of(context)!;
+
+  return showDialog<String>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(title),
+        content: TextField(key: Key('input-textfield'), controller: controller, autofocus: true),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context), // Returns null
+            child: Text(locals.cancel),
+          ),
+          TextButton(onPressed: () => Navigator.pop(context, controller.text), child: Text(locals.ok)),
+        ],
+      );
+    },
+  ).then((value) {
+    // Return null if the user cancelled OR if the string is empty
+    if (value == null || value.trim().isEmpty) {
+      return null;
+    }
+    return value;
+  });
+}

@@ -24,7 +24,7 @@ public class FeedItem {
     private long timeCreated;
     private boolean read;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "feed_id")
     private Feed feed;
 

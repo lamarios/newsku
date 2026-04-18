@@ -123,5 +123,14 @@
     "changeEmail": "Change email",
     "newEmail": "New email",
     "emailUpdated": "Email updated",
-    "invalidUrl": "Invalid URL"
+    "invalidUrl": "Invalid URL",
+    "uncategorized": "Uncategorized",
+    "addCategory": "Add category",
+    "noFeedInCategory": "No feed in category, drag and drop them here",
+    "rename": "Rename",
+    "delete": "Delete",
+    "deleteCategoryExplanation": "Deleting a category will also delete all the feeds it contains. This cannot be undone",
+    "any": "Any",
+    "feedCategory": "Category",
+    "layoutBlockCategoryExplanation": "This block will only display blocks of the selected category"
 }

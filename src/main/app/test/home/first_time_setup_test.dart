@@ -79,6 +79,7 @@ void main() {
     await snap(name: 'first_time_set_up_page_1', matchToGolden: true);
 
     final feedsInterceptor = nock(validServerUrl).get('/api/feeds')..reply(200, '[]');
+    var feedCategoryInterceptor = nock(validServerUrl).get('/api/feed-categories')..reply(200, '[]');
 
     await tester.tap(nextButton);
     await tester.pumpAndSettle();
@@ -87,6 +88,7 @@ void main() {
     final feedsTitle = find.descendant(of: dialog, matching: find.text('Feeds'));
     expect(feedsTitle, findsOneWidget);
     expect(feedsInterceptor.isDone, true);
+    expect(feedCategoryInterceptor.isDone, true);
 
     // now, we should be able to go back
     expect(nextButton, findsOneWidget);
@@ -116,6 +118,7 @@ void main() {
     final layoutInterceptor = nock(validServerUrl).get('/api/layout')..reply(200, loadFixture('default_layout.json'));
     final firstLayoutSaveInterceptor = nock(validServerUrl).put('/api/layout', (body) => true)
       ..reply(200, loadFixture('default_layout.json'));
+    feedCategoryInterceptor = nock(validServerUrl).get('/api/feed-categories')..reply(200, '[]');
 
     await tester.tap(nextButton);
     await tester.pumpAndSettle();
@@ -124,6 +127,7 @@ void main() {
 
     expect(layoutInterceptor.isDone, true);
     expect(firstLayoutSaveInterceptor.isDone, true);
+    expect(feedCategoryInterceptor.isDone, true);
 
     final layoutTitle = find.descendant(of: dialog, matching: find.text('Layout'));
     expect(layoutTitle, findsOneWidget);

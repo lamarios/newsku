@@ -12,15 +12,16 @@ class ItemTitle extends StatelessWidget {
   const ItemTitle({super.key, required this.item, this.maxLines, this.style, this.overflow, required this.hovered});
 
   @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colors = Theme.of(context).colorScheme;
-    var textStyle = style ?? textTheme.bodyMedium;
+  Widget build(BuildContext outerContext) {
     return SingleMotionBuilder(
       motion: LinearMotion(Duration(milliseconds: 250)),
       value: hovered ? 1 : 0,
       from: 0,
       builder: (context, value, child) {
+        final textTheme = Theme.of(context).textTheme;
+        final colors = Theme.of(context).colorScheme;
+        var textStyle = style ?? textTheme.bodyMedium;
+
         return Text(
           key: Key('item-title'),
           item.title ?? '',

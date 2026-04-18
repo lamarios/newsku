@@ -55,7 +55,7 @@ public class FeedController {
     }
 
     @PostMapping
-    public Feed updateFeed(Feed feed) throws AccessDeniedException {
+    public Feed updateFeed(@RequestBody Feed feed) throws AccessDeniedException {
         if (demoMode) {
             throw new AccessDeniedException("App in demoMode");
         }
