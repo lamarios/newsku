@@ -137,6 +137,14 @@ class FeedsSettingsCubit extends Cubit<FeedsSettingsState> {
       rethrow;
     }
   }
+
+  void dragStarted() {
+    emit(state.copyWith(draggingFeed: true));
+  }
+
+  void dragEnded(DraggableDetails? details) {
+    emit(state.copyWith(draggingFeed: false));
+  }
 }
 
 @freezed
@@ -146,6 +154,7 @@ sealed class FeedsSettingsState with _$FeedsSettingsState implements WithError {
     @Default([]) List<Feed> feeds,
     @Default([]) List<FeedCategory> categories,
     @Default(true) bool loading,
+    @Default(false) bool draggingFeed,
     dynamic error,
     StackTrace? stackTrace,
   }) = _FeedsSettingsState;

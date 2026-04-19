@@ -1,3 +1,4 @@
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/feed/views/components/clickable_feed_item.dart';
 import 'package:app/feed/views/components/feed_item_image.dart';
@@ -10,11 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class SearchResult extends StatelessWidget {
+  final FeedCategory? category;
   final FeedItem item;
   final bool fullDate;
   final bool noDimming;
 
-  const SearchResult({super.key, required this.item, this.fullDate = false, this.noDimming = false});
+  const SearchResult({super.key, required this.item, this.fullDate = false, this.noDimming = false, this.category});
 
   @override
   Widget build(BuildContext context) {

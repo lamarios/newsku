@@ -1,5 +1,6 @@
 import 'package:app/home/state/local_preferences.dart';
 import 'package:app/identity/states/identity.dart';
+import 'package:app/l10n/app_localizations.dart';
 import 'package:app/router.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/utils/views/components/main_color_provider.dart';
@@ -9,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
-
-import 'package:app/l10n/app_localizations.dart';
 
 late final appRouter;
 
@@ -24,8 +23,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   addAppLicense();
   var identityCubit = IdentityCubit(IdentityState());
-  await identityCubit.init();
   getIt.registerSingleton<IdentityCubit>(identityCubit);
+  await identityCubit.init();
 
   getIt.registerSingleton<LocalPreferencesCubit>(LocalPreferencesCubit(LocalPreferencesState()));
 

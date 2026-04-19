@@ -1,3 +1,4 @@
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/feed/views/components/clickable_feed_item.dart';
 import 'package:app/feed/views/components/feed_item_image.dart';
@@ -10,9 +11,10 @@ import 'package:app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class SmallGridItem extends StatelessWidget {
+  final FeedCategory? category;
   final FeedItem item;
 
-  const SmallGridItem({super.key, required this.item});
+  const SmallGridItem({super.key, required this.item, this.category});
 
   @override
   Widget build(BuildContext context) {

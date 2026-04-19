@@ -1,19 +1,20 @@
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/feed/views/components/clickable_feed_item.dart';
+import 'package:app/feed/views/components/feed_item_image.dart';
 import 'package:app/feed/views/components/info_bar.dart';
 import 'package:app/feed/views/components/item_content.dart';
 import 'package:app/feed/views/components/item_title.dart';
+import 'package:app/feed/views/screens/feed_screen.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import 'package:app/feed/views/screens/feed_screen.dart';
-import 'package:app/feed/views/components/feed_item_image.dart';
-
 class BigGridItem extends StatelessWidget {
+  final FeedCategory? category;
   final FeedItem item;
 
-  const BigGridItem({super.key, required this.item});
+  const BigGridItem({super.key, required this.item, this.category});
 
   @override
   Widget build(BuildContext context) {
