@@ -20,6 +20,8 @@ mixin _$FeedsSettingsState {
 
   bool get loading;
 
+  bool get draggingFeed;
+
   dynamic get error;
 
   StackTrace? get stackTrace;
@@ -35,17 +37,25 @@ $FeedsSettingsStateCopyWith<FeedsSettingsState> get copyWith => _$FeedsSettingsS
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType && other is FeedsSettingsState && const DeepCollectionEquality().equals(other.feeds, feeds) &&
       const DeepCollectionEquality().equals(other.categories, categories) && (identical(other.loading, loading) || other.loading == loading) &&
-      const DeepCollectionEquality().equals(other.error, error) && (identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+      (identical(other.draggingFeed, draggingFeed) || other.draggingFeed == draggingFeed) && const DeepCollectionEquality().equals(other.error, error) &&
+      (identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
 int get hashCode =>
-    Object.hash(runtimeType, const DeepCollectionEquality().hash(feeds), const DeepCollectionEquality().hash(categories), loading, const DeepCollectionEquality().hash(error), stackTrace);
+    Object.hash(
+        runtimeType,
+        const DeepCollectionEquality().hash(feeds),
+        const DeepCollectionEquality().hash(categories),
+        loading,
+        draggingFeed,
+        const DeepCollectionEquality().hash(error),
+        stackTrace);
 
 @override
 String toString() {
-  return 'FeedsSettingsState(feeds: $feeds, categories: $categories, loading: $loading, error: $error, stackTrace: $stackTrace)';
+  return 'FeedsSettingsState(feeds: $feeds, categories: $categories, loading: $loading, draggingFeed: $draggingFeed, error: $error, stackTrace: $stackTrace)';
 }
 
 
@@ -56,7 +66,7 @@ abstract mixin class $FeedsSettingsStateCopyWith<$Res>  {
   factory $FeedsSettingsStateCopyWith(FeedsSettingsState value, $Res Function(FeedsSettingsState) _then) = _$FeedsSettingsStateCopyWithImpl;
 @useResult
 $Res call({
-  List<Feed> feeds, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace
+  List<Feed> feeds, List<FeedCategory> categories, bool loading, bool draggingFeed, dynamic error, StackTrace? stackTrace
 });
 
 
@@ -75,13 +85,15 @@ class _$FeedsSettingsStateCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? feeds = null, Object? categories = null, Object? loading = null, Object? error = freezed, Object? stackTrace = freezed,}) {
+  $Res call({Object? feeds = null, Object? categories = null, Object? loading = null, Object? draggingFeed = null, Object? error = freezed, Object? stackTrace = freezed,}) {
   return _then(_self.copyWith(
 feeds: null == feeds ? _self.feeds : feeds // ignore: cast_nullable_to_non_nullable
 as List<Feed>,
     categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
     as List<FeedCategory>,
     loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
+    as bool,
+    draggingFeed: null == draggingFeed ? _self.draggingFeed : draggingFeed // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as dynamic,stackTrace: freezed == stackTrace ? _self.stackTrace : stackTrace // ignore: cast_nullable_to_non_nullable
 as StackTrace?,
@@ -166,10 +178,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Feed> feeds, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace)? $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Feed> feeds, List<FeedCategory> categories, bool loading, bool draggingFeed, dynamic error, StackTrace? stackTrace)? $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FeedsSettingsState() when $default != null:
-return $default(_that.feeds,_that.categories,_that.loading,_that.error,_that.stackTrace);case _:
+return $default(_that.feeds,_that.categories,_that.loading,_that.draggingFeed,_that.error,_that.stackTrace);case _:
   return orElse();
 
 }
@@ -187,10 +199,10 @@ return $default(_that.feeds,_that.categories,_that.loading,_that.error,_that.sta
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Feed> feeds, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace) $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Feed> feeds, List<FeedCategory> categories, bool loading, bool draggingFeed, dynamic error, StackTrace? stackTrace) $default,) {final _that = this;
 switch (_that) {
 case _FeedsSettingsState():
-return $default(_that.feeds,_that.categories,_that.loading,_that.error,_that.stackTrace);}
+return $default(_that.feeds,_that.categories,_that.loading,_that.draggingFeed,_that.error,_that.stackTrace);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -204,10 +216,10 @@ return $default(_that.feeds,_that.categories,_that.loading,_that.error,_that.sta
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Feed> feeds, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace)? $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Feed> feeds, List<FeedCategory> categories, bool loading, bool draggingFeed, dynamic error, StackTrace? stackTrace)? $default,) {final _that = this;
 switch (_that) {
 case _FeedsSettingsState() when $default != null:
-return $default(_that.feeds,_that.categories,_that.loading,_that.error,_that.stackTrace);case _:
+return $default(_that.feeds,_that.categories,_that.loading,_that.draggingFeed,_that.error,_that.stackTrace);case _:
   return null;
 
 }
@@ -219,7 +231,7 @@ return $default(_that.feeds,_that.categories,_that.loading,_that.error,_that.sta
 
 
 class _FeedsSettingsState implements FeedsSettingsState, WithError {
-  const _FeedsSettingsState({final List<Feed> feeds = const [], final List<FeedCategory> categories = const [], this.loading = true, this.error, this.stackTrace})
+  const _FeedsSettingsState({final List<Feed> feeds = const [], final List<FeedCategory> categories = const [], this.loading = true, this.draggingFeed = false, this.error, this.stackTrace})
       : _feeds = feeds,
         _categories = categories;
 
@@ -242,6 +254,9 @@ class _FeedsSettingsState implements FeedsSettingsState, WithError {
   }
 
 @override@JsonKey() final  bool loading;
+  @override
+  @JsonKey()
+  final bool draggingFeed;
 @override final  dynamic error;
 @override final  StackTrace? stackTrace;
 
@@ -257,17 +272,25 @@ _$FeedsSettingsStateCopyWith<_FeedsSettingsState> get copyWith => __$FeedsSettin
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType && other is _FeedsSettingsState && const DeepCollectionEquality().equals(other._feeds, _feeds) &&
       const DeepCollectionEquality().equals(other._categories, _categories) && (identical(other.loading, loading) || other.loading == loading) &&
-      const DeepCollectionEquality().equals(other.error, error) && (identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+      (identical(other.draggingFeed, draggingFeed) || other.draggingFeed == draggingFeed) && const DeepCollectionEquality().equals(other.error, error) &&
+      (identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
 int get hashCode =>
-    Object.hash(runtimeType, const DeepCollectionEquality().hash(_feeds), const DeepCollectionEquality().hash(_categories), loading, const DeepCollectionEquality().hash(error), stackTrace);
+    Object.hash(
+        runtimeType,
+        const DeepCollectionEquality().hash(_feeds),
+        const DeepCollectionEquality().hash(_categories),
+        loading,
+        draggingFeed,
+        const DeepCollectionEquality().hash(error),
+        stackTrace);
 
 @override
 String toString() {
-  return 'FeedsSettingsState(feeds: $feeds, categories: $categories, loading: $loading, error: $error, stackTrace: $stackTrace)';
+  return 'FeedsSettingsState(feeds: $feeds, categories: $categories, loading: $loading, draggingFeed: $draggingFeed, error: $error, stackTrace: $stackTrace)';
 }
 
 
@@ -278,7 +301,7 @@ abstract mixin class _$FeedsSettingsStateCopyWith<$Res> implements $FeedsSetting
   factory _$FeedsSettingsStateCopyWith(_FeedsSettingsState value, $Res Function(_FeedsSettingsState) _then) = __$FeedsSettingsStateCopyWithImpl;
 @override @useResult
 $Res call({
-  List<Feed> feeds, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace
+  List<Feed> feeds, List<FeedCategory> categories, bool loading, bool draggingFeed, dynamic error, StackTrace? stackTrace
 });
 
 
@@ -297,13 +320,15 @@ class __$FeedsSettingsStateCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $Res call({Object? feeds = null, Object? categories = null, Object? loading = null, Object? error = freezed, Object? stackTrace = freezed,}) {
+  $Res call({Object? feeds = null, Object? categories = null, Object? loading = null, Object? draggingFeed = null, Object? error = freezed, Object? stackTrace = freezed,}) {
   return _then(_FeedsSettingsState(
 feeds: null == feeds ? _self._feeds : feeds // ignore: cast_nullable_to_non_nullable
 as List<Feed>,
     categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
     as List<FeedCategory>,
     loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
+    as bool,
+    draggingFeed: null == draggingFeed ? _self.draggingFeed : draggingFeed // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as dynamic,stackTrace: freezed == stackTrace ? _self.stackTrace : stackTrace // ignore: cast_nullable_to_non_nullable
 as StackTrace?,

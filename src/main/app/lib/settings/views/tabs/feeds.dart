@@ -131,10 +131,12 @@ class FeedsSettingsTab extends StatelessWidget {
                                 itemCount: state.categories.length,
                                 itemBuilder: (context, index) {
                                   final c = state.categories[index];
-                                  return FeedCategoryView(
-                                    category: c,
-                                    feeds: state.feeds.where((f) => f.category?.id == c.id).toList(),
-                                  );
+                                  return state.draggingFeed
+                                      ? FeedCategoryDragTarget(category: c)
+                                      : FeedCategoryView(
+                                          category: c,
+                                          feeds: state.feeds.where((f) => f.category?.id == c.id).toList(),
+                                        );
                                 },
                               ),
                             ),

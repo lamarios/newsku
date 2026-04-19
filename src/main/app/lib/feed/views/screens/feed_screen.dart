@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/feed/states/main_feed.dart';
 import 'package:app/feed/views/components/date_bar.dart';
@@ -43,6 +44,7 @@ class FeedScreen extends StatelessWidget {
     required DateTimeRange<DateTime> timeRange,
     required List<FeedItem> immutableItems,
     required List<LayoutBlock> blocks,
+    required List<FeedCategory> categories,
     required int readItems,
     required double padding,
   }) {
@@ -80,7 +82,7 @@ class FeedScreen extends StatelessWidget {
 
       if (blockItems.isNotEmpty) {
         _log.fine('Adding block ${block.type} with ${blockItems.length} items');
-        slivers.add(block.type.getSliver(context: context, items: blockItems, block: block));
+        slivers.add(block.type.getSliver(context: context, items: blockItems, block: block, categories: categories));
       }
 
       // we remove them from the main list
@@ -146,6 +148,7 @@ class FeedScreen extends StatelessWidget {
 
                     return Center(
                       child: Stack(
+                        clipBehavior: .none,
                         children: [
                           Center(
                             child: Column(
@@ -280,6 +283,7 @@ class FeedScreen extends StatelessWidget {
                                                   timeRange: value,
                                                   immutableItems: feed,
                                                   blocks: state.layout,
+                                                  categories: state.categories,
                                                   readItems: totalItemCount - unreadCount,
                                                   padding: padding,
                                                 );

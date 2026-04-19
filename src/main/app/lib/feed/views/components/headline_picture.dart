@@ -1,4 +1,6 @@
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
+import 'package:app/feed/views/components/category_pill.dart';
 import 'package:app/feed/views/components/clickable_feed_item.dart';
 import 'package:app/feed/views/components/feed_item_image.dart';
 import 'package:app/feed/views/components/info_bar.dart';
@@ -10,9 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class HeadlinePicture extends StatelessWidget {
+  final FeedCategory? category;
   final FeedItem item;
 
-  const HeadlinePicture({super.key, required this.item});
+  const HeadlinePicture({super.key, required this.item, this.category});
 
   @override
   Widget build(BuildContext outerContext) {
@@ -26,6 +29,7 @@ class HeadlinePicture extends StatelessWidget {
             builder: (hovered) => ClipRRect(
               borderRadius: .circular(10),
               child: Stack(
+                clipBehavior: .none,
                 children: [
                   Row(
                     children: [
@@ -66,6 +70,13 @@ class HeadlinePicture extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  if (category != null)
+                    Positioned(
+                      top: pu2,
+                      left: pu2,
+                      child: CategoryPill(category: category!),
+                    ),
                 ],
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/feed/views/components/clickable_feed_item.dart';
 import 'package:app/feed/views/components/feed_item_image.dart';
@@ -13,10 +14,11 @@ import 'package:gap/gap.dart';
 const double _roundImageSize = 100;
 
 class TopStories extends StatelessWidget {
+  final FeedCategory? category;
   final List<FeedItem> items;
   final LayoutBlock block;
 
-  const TopStories({super.key, required this.items, required this.block});
+  const TopStories({super.key, required this.items, required this.block, this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,10 @@ class TopStories extends StatelessWidget {
                 decoration: BoxDecoration(color: colors.tertiary, borderRadius: .circular(50)),
                 padding: .symmetric(horizontal: pu4),
                 child: Text(
-                  (block.settings ?? block.type.defaultSettings).title ?? '★ Top Stories',
+                  category?.name ?? (block.settings ?? block.type.defaultSettings).title ?? '★ Top Stories',
                   maxLines: 1,
                   overflow: .ellipsis,
-                  style: textTheme.bodyLarge?.copyWith(fontSize: 25, color: colors.onTertiary),
+                  style: textTheme.bodyLarge?.copyWith(fontSize: 20, color: colors.onTertiary),
                 ),
               ),
             ),

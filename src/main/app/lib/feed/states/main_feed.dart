@@ -1,3 +1,4 @@
+import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/feed/models/time_block.dart';
 import 'package:app/feed/services/feed_service.dart';
@@ -76,6 +77,8 @@ class MainFeedCubit extends Cubit<MainFeedState> {
       var identityCubit = getIt.get<IdentityCubit>();
       var service = FeedService(identityCubit.state.serverUrl ?? '');
 
+      final categoriesAsync = service.getFeedCategories();
+
       final now = state.currentTime;
       final from = now.add(-state.timeBlock.duration);
 
@@ -104,7 +107,7 @@ class MainFeedCubit extends Cubit<MainFeedState> {
       var map = Map<DateTimeRange, List<FeedItem>>.from(state.items);
       map[key] = data;
 
-      emit(state.copyWith(loading: false, items: map, currentTime: from));
+      emit(state.copyWith(loading: false, items: map, currentTime: from, categories: await categoriesAsync));
     } catch (e, s) {
       emit(state.copyWith(error: e, stackTrace: s, loading: false));
       rethrow;
@@ -187,6 +190,7 @@ sealed class MainFeedState with _$MainFeedState implements WithError {
     @Default(TimeBlock.one_day) TimeBlock timeBlock,
     @Default(true) bool loading,
     @Default({}) Map<DateTimeRange, List<FeedItem>> items,
+    @Default([]) List<FeedCategory> categories,
     @Default(false) bool searchMode,
     @Default('') String searchTerms,
     @Default([]) List<FeedItem> searchResults,

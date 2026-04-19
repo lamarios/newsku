@@ -2,6 +2,7 @@ import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/feed/views/components/big_grid_item.dart';
 import 'package:app/feed/views/components/big_grid_picture_item.dart';
+import 'package:app/feed/views/components/category_dividers.dart';
 import 'package:app/feed/views/components/headline.dart';
 import 'package:app/feed/views/components/headline_picture.dart';
 import 'package:app/feed/views/components/search_result.dart';
@@ -76,52 +77,110 @@ enum LayoutBlockTypes {
     };
   }
 
-  Widget getSliver({required BuildContext context, required List<FeedItem> items, required LayoutBlock block}) {
+  Widget getSliver({
+    required BuildContext context,
+    required List<FeedItem> items,
+    required LayoutBlock block,
+    required List<FeedCategory> categories,
+  }) {
+    final cat = categories.where((c) => c.id == block.settings?.categoryId).firstOrNull;
+
     final breakPoint = BreakPoint.get(context);
     return switch (this) {
       bigHeadline =>
         breakPoint == .mobile
-            ? _bigGridSliver(breakPoint: breakPoint, items: items, block: block)
-            : SliverToBoxAdapter(child: Headline(item: items.first)),
+            ? _bigGridSliver(breakPoint: breakPoint, items: items, block: block, category: cat)
+            : SliverToBoxAdapter(
+                child: Headline(item: items.first, category: cat),
+              ),
       bigHeadlinePicture =>
         breakPoint == .mobile
-            ? _bigGridPictureSliver(breakPoint: breakPoint, items: items, block: block)
-            : SliverToBoxAdapter(child: HeadlinePicture(item: items.first)),
+            ? _bigGridPictureSliver(breakPoint: breakPoint, items: items, block: block, category: cat)
+            : SliverToBoxAdapter(
+                child: HeadlinePicture(item: items.first, category: cat),
+              ),
       topStories =>
         breakPoint == .mobile
-            ? _bigGridSliver(items: items, block: block, breakPoint: breakPoint)
+            ? _bigGridSliver(items: items, block: block, breakPoint: breakPoint, category: cat)
             : SliverToBoxAdapter(
-                child: TopStories(items: items, block: block),
+                child: TopStories(items: items, block: block, category: cat),
               ),
-      bigGrid => _bigGridSliver(breakPoint: breakPoint, items: items, block: block),
-      searchResult => SliverList.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) => SearchResult(item: items[index], fullDate: false),
-      ),
-      bigGridPicture => _bigGridPictureSliver(breakPoint: breakPoint, items: items, block: block),
-      smallGrid => SliverGrid.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: switch (breakPoint) {
-            .mobile => 1,
-            _ => 2,
-          },
-          mainAxisExtent: 150,
-          mainAxisSpacing: 16,
-          crossAxisSpacing: 16,
-        ),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return SmallGridItem(key: ValueKey(items[index]), item: items[index]);
-        },
-      ),
+      bigGrid => _bigGridSliver(breakPoint: breakPoint, items: items, block: block, category: cat),
+      searchResult => _searchListSliver(breakPoint: breakPoint, items: items, block: block, category: cat),
+      bigGridPicture => _bigGridPictureSliver(breakPoint: breakPoint, items: items, block: block, category: cat),
+      smallGrid => _smallGridSliver(breakPoint: breakPoint, items: items, block: block, category: cat),
     };
   }
 
-  Widget _bigGridSliver({required BreakPoint breakPoint, required List<FeedItem> items, required LayoutBlock block}) {
-    return SliverGrid.builder(
+  Widget _searchListSliver({
+    required BreakPoint breakPoint,
+    required List<FeedItem> items,
+    required LayoutBlock block,
+    FeedCategory? category,
+  }) {
+    Widget sliverList = SliverList.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) => SearchResult(item: items[index], fullDate: false, category: category),
+    );
+
+    if (category != null) {
+      sliverList = SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(child: CategoryStartDivider(category: category)),
+          sliverList,
+          SliverToBoxAdapter(child: CategoryEndDivider(category: category)),
+        ],
+      );
+    }
+
+    return sliverList;
+  }
+
+  Widget _smallGridSliver({
+    required BreakPoint breakPoint,
+    required List<FeedItem> items,
+    required LayoutBlock block,
+    FeedCategory? category,
+  }) {
+    Widget sliverList = SliverGrid.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: switch (breakPoint) {
+          .mobile => 1,
+          _ => 2,
+        },
+        mainAxisExtent: 150,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
+      ),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return SmallGridItem(key: ValueKey(items[index]), item: items[index], category: category);
+      },
+    );
+
+    if (category != null) {
+      sliverList = SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(child: CategoryStartDivider(category: category)),
+          sliverList,
+          SliverToBoxAdapter(child: CategoryEndDivider(category: category)),
+        ],
+      );
+    }
+
+    return sliverList;
+  }
+
+  Widget _bigGridSliver({
+    required BreakPoint breakPoint,
+    required List<FeedItem> items,
+    required LayoutBlock block,
+    FeedCategory? category,
+  }) {
+    Widget sliverGrid = SliverGrid.builder(
       key: Key(items.firstOrNull?.id ?? ''),
       itemCount: items.length,
-      itemBuilder: (context, index) => BigGridItem(key: ValueKey(items[index]), item: items[index]),
+      itemBuilder: (context, index) => BigGridItem(key: ValueKey(items[index]), item: items[index], category: category),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: switch (breakPoint) {
           .mobile => 1,
@@ -133,16 +192,30 @@ enum LayoutBlockTypes {
         mainAxisExtent: 450,
       ),
     );
+
+    if (category != null) {
+      sliverGrid = SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(child: CategoryStartDivider(category: category)),
+          sliverGrid,
+          SliverToBoxAdapter(child: CategoryEndDivider(category: category)),
+        ],
+      );
+    }
+
+    return sliverGrid;
   }
 
   Widget _bigGridPictureSliver({
     required BreakPoint breakPoint,
     required List<FeedItem> items,
     required LayoutBlock block,
+    FeedCategory? category,
   }) {
-    return SliverGrid.builder(
+    Widget sliverGrid = SliverGrid.builder(
       itemCount: items.length,
-      itemBuilder: (context, index) => BigGridPictureItem(key: ValueKey(items[index]), item: items[index]),
+      itemBuilder: (context, index) =>
+          BigGridPictureItem(key: ValueKey(items[index]), item: items[index], category: category),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: switch (breakPoint) {
           .mobile => 1,
@@ -154,5 +227,17 @@ enum LayoutBlockTypes {
         mainAxisExtent: 450,
       ),
     );
+
+    if (category != null) {
+      sliverGrid = SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(child: CategoryStartDivider(category: category)),
+          sliverGrid,
+          SliverToBoxAdapter(child: CategoryEndDivider(category: category)),
+        ],
+      );
+    }
+
+    return sliverGrid;
   }
 }

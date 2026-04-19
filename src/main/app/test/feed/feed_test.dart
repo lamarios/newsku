@@ -21,6 +21,10 @@ void main() {
   setUp(() async {
     await setupTests(loggedIn: true);
     nock.cleanAll();
+
+    nock(validServerUrl).get('/api/feed-categories')
+      ..reply(200, '[]')
+      ..persist(true);
   });
 
   testWidgets('Test whether demo mode removes the settings button properly', (WidgetTester tester) async {

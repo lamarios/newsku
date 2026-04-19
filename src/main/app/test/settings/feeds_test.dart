@@ -192,13 +192,24 @@ void main() {
     expect(dragHandle, findsOneWidget);
 
     final Offset sourceLocation = tester.getCenter(dragHandle);
-    final Offset targetLocation = tester.getCenter(cat1);
-    final Offset delta = targetLocation - sourceLocation;
 
     // when we end the drag, we don't care about the result post as long as it's not an error.
     var interceptor = nock(validServerUrl).post('/api/feeds', (body) => true)..reply(200, '{}');
 
-    await tester.drag(dragHandle, delta);
+    final gesture = await tester.startGesture(sourceLocation);
+    await gesture.moveTo(Offset(0, 10));
+
+    await tester.pumpAndSettle();
+
+    await snap(name: 'feed_drag_started');
+
+    final Offset targetLocation = tester.getCenter(cat1);
+
+    await gesture.moveTo(targetLocation);
+    await tester.pumpAndSettle();
+
+    await gesture.up();
+
     await tester.pumpAndSettle();
 
     await snap(name: 'after_drag_feed_into_category');
