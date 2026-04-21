@@ -48,6 +48,9 @@ public class LayoutService {
             throw new InvalidParameterException("layout must end by a flexible block");
         }
 
+        // we remove feed categories from the latest of the layout
+        layoutBlocks.getLast().getSettings().setCategoryId(null);
+
         // if we're good, we remove all the items from the user then we insert all the new ones.
         layoutRepository.deleteByUser(user);
 
