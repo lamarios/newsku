@@ -45,7 +45,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_sticky_header: 0.8.0
-  flutter_svg: 2.2.3
+  flutter_svg: 2.3.0
   freezed_annotation: 3.1.0
   gap: 3.0.1
   get_it: 9.2.1
@@ -60,7 +60,7 @@ dependencies:
   oidc: 0.14.0+2
   oidc_default_store: 0.6.0+2
   package_info_plus: 9.0.0
-  shared_preferences: 2.5.4
+  shared_preferences: 2.5.5
   url_launcher: 6.3.2
   visibility_detector: 0.4.0+2
 
