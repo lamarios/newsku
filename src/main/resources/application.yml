@@ -4,6 +4,12 @@ server:
  #     max: 8
   port: 8080
 spring:
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        default_batch_fetch_size: 50
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:15432}/${DB_DATABASE:postgres}
     username: ${DB_USER:postgres}

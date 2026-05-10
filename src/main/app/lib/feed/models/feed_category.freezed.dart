@@ -57,7 +57,6 @@ abstract mixin class $FeedCategoryCopyWith<$Res> {
 
 
 }
-
 /// @nodoc
 class _$FeedCategoryCopyWithImpl<$Res>
     implements $FeedCategoryCopyWith<$Res> {
@@ -223,7 +222,6 @@ extension FeedCategoryPatterns on FeedCategory {
 @JsonSerializable()
 class _FeedCategory implements FeedCategory {
   const _FeedCategory({this.id, required this.name});
-
   factory _FeedCategory.fromJson(Map<String, dynamic> json) => _$FeedCategoryFromJson(json);
 
   @override final String? id;
@@ -270,7 +268,6 @@ abstract mixin class _$FeedCategoryCopyWith<$Res> implements $FeedCategoryCopyWi
 
 
 }
-
 /// @nodoc
 class __$FeedCategoryCopyWithImpl<$Res>
     implements _$FeedCategoryCopyWith<$Res> {
