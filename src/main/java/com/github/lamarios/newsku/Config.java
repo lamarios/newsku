@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.flywaydb.core.Flyway;
-import org.hazlewood.connor.bottema.emailaddress.EmailAddressCriteria;
 import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.api.mailer.config.TransportStrategy;
 import org.simplejavamail.mailer.MailerBuilder;
@@ -108,9 +107,8 @@ public class Config {
 
         mailer = mailer.withTransportStrategy(transportStrategy);
 
-        mailer = mailer.clearEmailAddressCriteria()
-                .async()
-                .withEmailAddressCriteria(EmailAddressCriteria.RFC_COMPLIANT);
+        mailer = mailer
+                .async();
         return mailer.buildMailer();
     }
 
