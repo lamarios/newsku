@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -91,7 +92,7 @@ public class FeedItemService {
                             var existingFeed = feedItemRepository.getFirstByGuidAndFeed(item.getGuid().get(), feed);
 
                             Optional<String> image = item.getEnclosure()
-                                    .filter(e -> e.getType().contains("image"))
+                                    .filter(e -> e.getType() != null && e.getUrl() != null && e.getType().contains("image"))
                                     .map(Enclosure::getUrl);
 
                             String imageUrl = image.orElse(getImageUrl(item));
@@ -188,8 +189,33 @@ public class FeedItemService {
             Document doc = Jsoup.parse(item.getContent().get());
             imageUrl = doc.getElementsByTag("img").attr("src");
         }
-        return Optional.ofNullable(imageUrl).filter(s -> !s.isBlank()).orElse(null);
+        // we don't want empty images or relative paths
+        return Optional.ofNullable(imageUrl).filter(s -> !s.isBlank() && !s.startsWith("/")).orElse(getImageFromArticle(item));
 
+    }
+
+    /**
+     * We'll try to get a twitter:image if there's any
+     * @param item which feed item to parse
+     * @return a full url of a picture if it can be found
+     */
+    private String getImageFromArticle(Item item){
+        try {
+            String imageUrl = null;
+            if (item.getLink().isPresent()) {
+                Document doc = Jsoup.connect(item.getLink().get()).get();
+                Element element = doc.selectFirst("meta[property=twitter:image]");
+                if(element != null) {
+                    imageUrl = element.attr("content");
+                }
+            }
+
+            // we don't want empty images or relative paths
+            return Optional.ofNullable(imageUrl).filter(s -> !s.isBlank() && !s.startsWith("/")).orElse(null);
+        } catch (Exception e) {
+            logger.error("Couldn't parse url from direct website");
+            return null;
+        }
     }
 
     @Transactional
