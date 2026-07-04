@@ -3,6 +3,7 @@ package com.github.lamarios.newsku.controllers;
 import be.ceau.opml.OpmlWriteException;
 import com.github.lamarios.newsku.errors.NewskuException;
 import com.github.lamarios.newsku.persistence.entities.Feed;
+import com.github.lamarios.newsku.persistence.entities.FeedItem;
 import com.github.lamarios.newsku.services.FeedItemService;
 import com.github.lamarios.newsku.services.FeedService;
 import com.github.lamarios.newsku.utils.ImageHelper;
@@ -14,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -148,6 +151,11 @@ public class FeedController {
 
         // Fetch from remote URL
         return serveFile(filePath);
+    }
+
+    @GetMapping("{id}/items")
+    public Page<FeedItem> getFeedItems(@PathVariable String id, @DefaultValue("0") @RequestParam int page, @DefaultValue("100") @RequestParam int pageSize) throws IOException {
+        return feedItemService.getFeedItems(id, page, pageSize);
     }
 
 }

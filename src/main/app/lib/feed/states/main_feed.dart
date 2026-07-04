@@ -1,6 +1,8 @@
+import 'package:app/feed/models/feed.dart';
 import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/feed/models/time_block.dart';
+import 'package:app/feed/models/view_mode.dart';
 import 'package:app/feed/services/feed_service.dart';
 import 'package:app/identity/states/identity.dart';
 import 'package:app/layouts/models/layout_block.dart';
@@ -17,7 +19,7 @@ import 'package:logging/logging.dart';
 
 part 'main_feed.freezed.dart';
 
-final searchPageSize = 100;
+final pageSize = 100;
 
 final _log = Logger('MainFeedCubit');
 
@@ -38,7 +40,7 @@ class MainFeedCubit extends Cubit<MainFeedState> {
       } else if (state.hasScrolled && scrollController.position.pixels == 0) {
         emit(state.copyWith(hasScrolled: false));
       }
-      if (!state.searchMode &&
+      if (state.viewMode == FeedViewMode.feeds &&
           scrollController.position.pixels > scrollController.position.maxScrollExtent * 0.95 &&
           !state.loading) {
         EasyThrottle.throttle('load-feed', Duration(seconds: 1), () {
@@ -115,7 +117,9 @@ class MainFeedCubit extends Cubit<MainFeedState> {
   }
 
   void setSearch(bool enable) {
-    emit(state.copyWith(searchMode: enable, searchPage: 0, searchResults: [], searchTerms: ''));
+    emit(
+      state.copyWith(viewMode: enable ? .search : .feeds, page: 0, feedItems: [], searchTerms: '', drawerOpened: false),
+    );
     searchController.text = '';
     scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeOutQuart);
   }
@@ -125,7 +129,10 @@ class MainFeedCubit extends Cubit<MainFeedState> {
       emit(state.copyWith(loading: true));
       final layout = LayoutService(serverUrl!).getLayout();
 
-      final errorCount = FeedService(serverUrl!).countLast24Hours();
+      var feedService = FeedService(serverUrl!);
+      final errorCount = feedService.countLast24Hours();
+
+      final feeds = feedService.getFeeds();
 
       emit(
         state.copyWith(
@@ -133,6 +140,7 @@ class MainFeedCubit extends Cubit<MainFeedState> {
           items: {},
           layout: await layout,
           errorCount: await errorCount,
+          feeds: await feeds,
         ),
       );
     } catch (e, s) {
@@ -152,13 +160,11 @@ class MainFeedCubit extends Cubit<MainFeedState> {
   }
 
   Future<void> search(String value) async {
-    emit(state.copyWith(searchPage: 0, searchResults: []));
+    emit(state.copyWith(page: 0, feedItems: []));
     EasyDebounce.debounce('search', Duration(milliseconds: 500), () async {
       try {
-        final results = await FeedService(
-          serverUrl!,
-        ).search(query: value, page: state.searchPage, pageSize: searchPageSize);
-        emit(state.copyWith(searchPage: 0, searchResults: results, searchTerms: value));
+        final results = await FeedService(serverUrl!).search(query: value, page: state.page, pageSize: pageSize);
+        emit(state.copyWith(page: 0, feedItems: results, searchTerms: value));
       } catch (e, s) {
         emit(state.copyWith(error: e, stackTrace: s));
       }
@@ -168,16 +174,39 @@ class MainFeedCubit extends Cubit<MainFeedState> {
   Future<void> loadMoreSearchResults() async {
     try {
       emit(state.copyWith(loading: true));
-      final page = state.searchPage + 1;
-      final results = await FeedService(
-        serverUrl!,
-      ).search(query: state.searchTerms, page: page, pageSize: searchPageSize);
-      final feeds = List<FeedItem>.from(state.searchResults);
+      final page = state.page + 1;
+      final results = await FeedService(serverUrl!).search(query: state.searchTerms, page: page, pageSize: pageSize);
+      final feeds = List<FeedItem>.from(state.feedItems);
       feeds.addAll(results);
-      emit(state.copyWith(searchResults: feeds, searchPage: page, loading: false));
+      emit(state.copyWith(feedItems: feeds, page: page, loading: false));
     } catch (e, s) {
       emit(state.copyWith(loading: false, error: e, stackTrace: s));
     }
+  }
+
+  void toggleDrawer() {
+    emit(state.copyWith(drawerOpened: !state.drawerOpened));
+  }
+
+  void selectFeed(Feed? f) {
+    emit(state.copyWith(selectedFeed: f, viewMode: f == null ? .feeds : .singleFeed, page: 0, feedItems: []));
+    if (f != null) {
+      getSingleFeedItems(0);
+    }
+  }
+
+  Future<void> getSingleFeedItems(int page) async {
+    if (state.selectedFeed == null) return;
+
+    emit(state.copyWith(loading: true));
+
+    // dirty lazy trick, we
+    final results = await FeedService(
+      serverUrl!,
+    ).getSingleFeedItems(state.selectedFeed!, page: page, pageSize: pageSize);
+    final feeds = List<FeedItem>.from(state.feedItems);
+    feeds.addAll(results.content);
+    emit(state.copyWith(feedItems: feeds, page: page, loading: false));
   }
 }
 
@@ -191,13 +220,24 @@ sealed class MainFeedState with _$MainFeedState implements WithError {
     @Default(true) bool loading,
     @Default({}) Map<DateTimeRange, List<FeedItem>> items,
     @Default([]) List<FeedCategory> categories,
-    @Default(false) bool searchMode,
+    @Default([]) List<Feed> feeds,
+    Feed? selectedFeed,
     @Default('') String searchTerms,
-    @Default([]) List<FeedItem> searchResults,
-    @Default(0) int searchPage,
+    @Default([]) List<FeedItem> feedItems,
+    @Default(0) int page,
     @Default([]) List<LayoutBlock> layout,
     @Default(0) int errorCount,
+    @Default(false) bool drawerOpened,
+    @Default(FeedViewMode.feeds) FeedViewMode viewMode,
     dynamic error,
     StackTrace? stackTrace,
   }) = _MainFeedState;
+
+  const MainFeedState._();
+
+  bool get searchMode => viewMode == FeedViewMode.search;
+
+  bool get singleFeedMode => viewMode == FeedViewMode.singleFeed;
+
+  bool get feedsMode => viewMode == FeedViewMode.feeds;
 }
