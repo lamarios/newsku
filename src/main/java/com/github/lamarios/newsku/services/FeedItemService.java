@@ -18,12 +18,14 @@ import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -284,5 +286,15 @@ public class FeedItemService {
         feedItemRepository.saveAll(items);
 
         return true;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<FeedItem> getFeedItems(String id, int page, int pageSize) {
+        Feed feed = feedService.getFeed(id);
+        if(feed == null){
+            return Page.empty();
+        }
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by("timeCreated").descending());
+        return feedItemRepository.findFeedItemByFeed(feed, pageable);
     }
 }

@@ -25,6 +25,9 @@ void main() {
     nock(validServerUrl).get('/api/layout')
       ..reply(200, loadFixture('default_layout.json'))
       ..persist(true);
+    nock(validServerUrl).get('/api/feeds')
+      ..reply(200, '[]')
+      ..persist(true);
     nock(validServerUrl).get('/api/feed-errors/last-refresh-count')
       ..reply(200, '0')
       ..persist(true);

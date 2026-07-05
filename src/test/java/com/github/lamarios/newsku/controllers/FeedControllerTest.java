@@ -5,7 +5,9 @@ import be.ceau.opml.OpmlParser;
 import com.github.lamarios.newsku.TestConfig;
 import com.github.lamarios.newsku.TestContainerTest;
 import com.github.lamarios.newsku.errors.NewskuException;
+import com.github.lamarios.newsku.persistence.entities.FeedItem;
 import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
+import com.github.lamarios.newsku.persistence.repositories.FeedItemRepository;
 import com.github.lamarios.newsku.persistence.repositories.FeedRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,6 +42,8 @@ public class FeedControllerTest extends TestContainerTest {
 
     @LocalServerPort
     private int port;
+    @Autowired
+    private FeedItemRepository feedItemRepository;
 
     @AfterEach
     public void tearDown() {
@@ -124,5 +129,40 @@ public class FeedControllerTest extends TestContainerTest {
             var parser = new OpmlParser().parse(is);
             assertEquals(2, parser.getBody().getOutlines().size());
         }
+    }
+
+
+    @Test
+    public void testGettingSingleFeedItems() throws NewskuException, IOException {
+        testImportFeeds();
+
+        var userFeeds = feedController.getFeeds();
+        assertEquals(2, userFeeds.size());
+
+        FeedItem i1 = new FeedItem();
+        i1.setId(UUID.randomUUID().toString());
+        i1.setFeed(userFeeds.getFirst());
+        i1.setGuid("a1");
+        i1.setTitle("t1");
+        i1.setContent("c1");
+        i1.setDescription("d1");
+        i1.setTimeCreated(System.currentTimeMillis());
+        feedItemRepository.save(i1);
+
+        FeedItem i2 = new FeedItem();
+        i2.setId(UUID.randomUUID().toString());
+        i2.setFeed(userFeeds.getFirst());
+        i2.setGuid("a2");
+        i2.setTitle("t2");
+        i2.setContent("c2");
+        i2.setDescription("d2");
+        i2.setTimeCreated(System.currentTimeMillis());
+        feedItemRepository.save(i2);
+
+        var page = feedController.getFeedItems(userFeeds.getFirst().getId(), 0, 1);
+        assertEquals(2, page.getTotalPages());
+        assertEquals(1, page.getContent().size());
+        assertEquals(2, page.getTotalElements());
+
     }
 }
