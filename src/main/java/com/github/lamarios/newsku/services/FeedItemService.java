@@ -25,7 +25,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -94,7 +93,8 @@ public class FeedItemService {
                             var existingFeed = feedItemRepository.getFirstByGuidAndFeed(item.getGuid().get(), feed);
 
                             Optional<String> image = item.getEnclosure()
-                                    .filter(e -> e.getType() != null && e.getUrl() != null && e.getType().contains("image"))
+                                    .filter(e -> e.getType() != null && e.getUrl() != null && e.getType()
+                                            .contains("image"))
                                     .map(Enclosure::getUrl);
 
                             String imageUrl = image.orElse(getImageUrl(item));
@@ -192,30 +192,39 @@ public class FeedItemService {
             imageUrl = doc.getElementsByTag("img").attr("src");
         }
         // we don't want empty images or relative paths
-        return Optional.ofNullable(imageUrl).filter(s -> !s.isBlank() && !s.startsWith("/")).orElse(getImageFromArticle(item));
+        return Optional.ofNullable(imageUrl)
+                .filter(s -> !s.isBlank() && !s.startsWith("/"))
+                .orElse(getImageFromArticle(item));
 
     }
 
     /**
      * We'll try to get a twitter:image if there's any
+     *
      * @param item which feed item to parse
      * @return a full url of a picture if it can be found
      */
-    private String getImageFromArticle(Item item){
+    private String getImageFromArticle(Item item) {
         try {
             String imageUrl = null;
             if (item.getLink().isPresent()) {
-                Document doc = Jsoup.connect(item.getLink().get()).get();
+                Document doc = Jsoup.connect(item.getLink().get()).timeout(5000).get();
                 Element element = doc.selectFirst("meta[property=twitter:image]");
-                if(element != null) {
+                if (element != null) {
                     imageUrl = element.attr("content");
                 }
-            }
 
-            // we don't want empty images or relative paths
+                // we don't want empty images or relative paths
+                if (imageUrl == null || imageUrl.isBlank()) {
+                    Element ogElement = doc.selectFirst("meta[property=og:image]");
+                    if (ogElement != null) {
+                        imageUrl = ogElement.attr("content");
+                    }
+                }
+            }
             return Optional.ofNullable(imageUrl).filter(s -> !s.isBlank() && !s.startsWith("/")).orElse(null);
         } catch (Exception e) {
-            logger.error("Couldn't parse url from direct website");
+            logger.error("Couldn't parse url from direct website", e);
             return null;
         }
     }
@@ -260,7 +269,7 @@ public class FeedItemService {
     @Transactional(readOnly = true)
     public List<FeedItem> search(String query, int page, int pageSize) {
         var feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
-        return entityManager.createNativeQuery("select * from feed_items where search_terms @@ websearch_to_tsquery(:textQuery) and feed_id in :feeds limit :pageSize offset :page", FeedItem.class)
+        return entityManager.createNativeQuery("SELECT * FROM feed_items WHERE search_terms @@ websearch_to_tsquery(:textQuery) AND feed_id IN :feeds LIMIT :pageSize OFFSET :page", FeedItem.class)
                 .setParameter("textQuery", query)
                 .setParameter("feeds", feeds.stream().map(Feed::getId).toList())
                 .setParameter("pageSize", pageSize)
@@ -291,7 +300,7 @@ public class FeedItemService {
     @Transactional(readOnly = true)
     public Page<FeedItem> getFeedItems(String id, int page, int pageSize) {
         Feed feed = feedService.getFeed(id);
-        if(feed == null){
+        if (feed == null) {
             return Page.empty();
         }
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("timeCreated").descending());
