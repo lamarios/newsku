@@ -16,6 +16,8 @@ class DrawerFeedCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     final isMobile = BreakPoint.get(context) == .mobile;
     final cubit = context.read<MainFeedCubit>();
     return Padding(
@@ -24,7 +26,7 @@ class DrawerFeedCategory extends StatelessWidget {
         crossAxisAlignment: .stretch,
         spacing: pu,
         children: [
-          Text(category.name),
+          Text(category.name, style: textTheme.titleMedium),
           ...feeds.map(
             (f) => Padding(
               padding: .only(left: pu3),
@@ -35,12 +37,18 @@ class DrawerFeedCategory extends StatelessWidget {
                     cubit.toggleDrawer();
                   }
                 },
-                child: Row(
-                  children: [
-                    FeedImage(item: f, width: 15, height: 15),
-                    Gap(pu),
-                    Expanded(child: Text(f.name ?? '', maxLines: 1, overflow: .ellipsis)),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(pu),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: .circular(15),
+                        child: FeedImage(item: f, width: 15, height: 15),
+                      ),
+                      Gap(pu),
+                      Expanded(child: Text(f.name ?? '', maxLines: 1, overflow: .ellipsis)),
+                    ],
+                  ),
                 ),
               ),
             ),

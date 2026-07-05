@@ -73,7 +73,8 @@ class FeedService extends BaseService {
 
     processResponse(response);
 
-    Map<String, dynamic> json = jsonDecode(response.body);
+    var body = response.body;
+    Map<String, dynamic> json = jsonDecode(body);
 
     return Paginated<FeedItem>.fromJson(json, (feedItem) => FeedItem.fromJson(feedItem as Map<String, dynamic>));
   }

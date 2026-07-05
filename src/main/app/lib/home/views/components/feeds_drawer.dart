@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/feed/models/feed.dart';
 import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/states/main_feed.dart';
@@ -11,7 +13,9 @@ import 'package:gap/gap.dart';
 class FeedsDrawer extends StatelessWidget {
   static double drawerWidth = 400;
 
-  const FeedsDrawer({super.key});
+  final double width;
+
+  const FeedsDrawer({super.key, required this.width});
 
   Iterable<Feed> catFeeds(FeedCategory cat, List<Feed> feeds) => feeds.where((f) => f.category?.id == cat.id);
 
@@ -21,34 +25,40 @@ class FeedsDrawer extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     final locals = AppLocalizations.of(context)!;
 
-    return BlocBuilder<MainFeedCubit, MainFeedState>(
-      builder: (context, state) {
-        final categories = List.from(state.categories);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return BlocBuilder<MainFeedCubit, MainFeedState>(
+          builder: (context, state) {
+            final drawerMaxWidth = min(width, constraints.maxWidth);
 
-        categories.add(FeedCategory(name: locals.uncategorized, id: null));
+            final categories = List.from(state.categories);
 
-        return Container(
-          width: drawerWidth - pu2,
-          decoration: BoxDecoration(
-            borderRadius: .only(topRight: .circular(20), bottomRight: .circular(20)),
+            categories.add(FeedCategory(name: locals.uncategorized, id: null));
 
-            color: colors.surfaceContainer,
-          ),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(pu4),
-              child: Column(
-                crossAxisAlignment: .stretch,
-                children: [
-                  Text(locals.feeds, style: textTheme.titleLarge),
-                  Gap(pu4),
-                  ...categories
-                      .where((cat) => catFeeds(cat, state.feeds).isNotEmpty)
-                      .map((cat) => DrawerFeedCategory(category: cat, feeds: catFeeds(cat, state.feeds).toList())),
-                ],
+            return Container(
+              width: drawerMaxWidth - pu2,
+              decoration: BoxDecoration(
+                borderRadius: .only(topRight: .circular(20), bottomRight: .circular(20)),
+
+                color: colors.surfaceContainer,
               ),
-            ),
-          ),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(pu4),
+                  child: Column(
+                    crossAxisAlignment: .stretch,
+                    children: [
+                      Text(locals.feeds, style: textTheme.titleLarge),
+                      Gap(pu4),
+                      ...categories
+                          .where((cat) => catFeeds(cat, state.feeds).isNotEmpty)
+                          .map((cat) => DrawerFeedCategory(category: cat, feeds: catFeeds(cat, state.feeds).toList())),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         );
       },
     );

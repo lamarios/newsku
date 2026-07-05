@@ -41,7 +41,10 @@ class FeedUtils {
           actions: [IconButton(onPressed: () => cubit.selectFeed(null), icon: Icon(Icons.close))],
           title: Row(
             children: [
-              FeedImage(item: feed, width: 30, height: 30),
+              ClipRRect(
+                borderRadius: .circular(30),
+                child: FeedImage(item: feed, width: 30, height: 30),
+              ),
               Gap(pu4),
               Expanded(child: Text(feed.name ?? '', style: textTheme.titleLarge)),
             ],

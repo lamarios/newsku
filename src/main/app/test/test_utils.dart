@@ -16,6 +16,10 @@ import 'utils/path_provider.dart';
 
 final String validServerUrl = 'http://localhost:123';
 
+bool anyQuery(dynamic query) {
+  return true;
+}
+
 Future<void> setupTests({bool withConfig = true, bool loggedIn = false}) async {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {

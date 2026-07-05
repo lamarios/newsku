@@ -56,12 +56,13 @@ class FeedScreen extends StatelessWidget {
                 return LayoutBuilder(
                   builder: (context, constraints) {
                     final double padding = max(0, (constraints.maxWidth - BreakPoint.desktop.maxWidth) / 2) + pu4;
+                    final drawerMaxWidth = min(FeedsDrawer.drawerWidth, constraints.maxWidth);
 
                     return Center(
                       child: SingleMotionBuilder(
                         motion: MaterialSpringMotion.expressiveSpatialDefault(),
                         from: 0,
-                        value: state.drawerOpened ? FeedsDrawer.drawerWidth : 0,
+                        value: state.drawerOpened ? drawerMaxWidth : 0,
                         builder: (context, value, child) {
                           final EdgeInsets computedPadding = .only(
                             left: isMobile ? padding : max(padding, value),
@@ -103,15 +104,6 @@ class FeedScreen extends StatelessWidget {
                                                         )
                                                       : Row(
                                                           children: [
-                                                            InkWell(
-                                                              onTap: () => cubit.toggleDrawer(),
-                                                              child: AnimatedIcon(
-                                                                icon: AnimatedIcons.menu_arrow,
-                                                                progress: AlwaysStoppedAnimation<double>(
-                                                                  value / FeedsDrawer.drawerWidth,
-                                                                ),
-                                                              ),
-                                                            ),
                                                             Gap(pu2),
                                                             AppName(style: textTheme.titleLarge),
                                                           ],
@@ -119,18 +111,40 @@ class FeedScreen extends StatelessWidget {
                                                 ),
                                                 leading: state.searchMode
                                                     ? null
-                                                    : ClipPath(
-                                                        clipper: FancySide(),
-                                                        child: Container(
-                                                          decoration: BoxDecoration(color: appColor),
-                                                          child: Padding(
-                                                            padding: .only(left: pu6),
-                                                            child: Align(
-                                                              alignment: .centerLeft,
-                                                              child: AppLogo(color: colors.onSurface, size: 20),
+                                                    : Row(
+                                                        crossAxisAlignment: .stretch,
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () => cubit.toggleDrawer(),
+                                                            child: Container(
+                                                              color: appColor,
+                                                              padding: .all(pu),
+                                                              alignment: .center,
+                                                              child: AnimatedIcon(
+                                                                key: Key('drawer-button'),
+                                                                icon: AnimatedIcons.menu_arrow,
+                                                                progress: AlwaysStoppedAnimation<double>(
+                                                                  value / drawerMaxWidth,
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
+                                                          Expanded(
+                                                            child: ClipPath(
+                                                              clipper: FancySide(),
+                                                              child: Container(
+                                                                decoration: BoxDecoration(color: appColor),
+                                                                child: Padding(
+                                                                  padding: .only(left: pu6),
+                                                                  child: Align(
+                                                                    alignment: .centerLeft,
+                                                                    child: AppLogo(color: colors.onSurface, size: 17),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                 actions: [
                                                   IconButton(
@@ -323,11 +337,11 @@ class FeedScreen extends StatelessWidget {
                               ),
                               Positioned(
                                 top: 70,
-                                left: (value - FeedsDrawer.drawerWidth) - pu2,
+                                left: (value - drawerMaxWidth) - pu2,
                                 bottom: pu4,
                                 child: Opacity(
-                                  opacity: (value / FeedsDrawer.drawerWidth).clamp(0, 1),
-                                  child: FeedsDrawer(),
+                                  opacity: (value / drawerMaxWidth).clamp(0, 1),
+                                  child: FeedsDrawer(width: drawerMaxWidth),
                                 ),
                               ),
                             ],

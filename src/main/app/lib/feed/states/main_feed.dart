@@ -189,6 +189,7 @@ class MainFeedCubit extends Cubit<MainFeedState> {
   }
 
   void selectFeed(Feed? f) {
+    scrollController.jumpTo(0);
     emit(state.copyWith(selectedFeed: f, viewMode: f == null ? .feeds : .singleFeed, page: 0, feedItems: []));
     if (f != null) {
       getSingleFeedItems(0);
