@@ -9,6 +9,8 @@ import com.github.lamarios.newsku.services.FeedService;
 import com.github.lamarios.newsku.utils.ImageHelper;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -154,7 +156,7 @@ public class FeedController {
     }
 
     @GetMapping("{id}/items")
-    public Page<FeedItem> getFeedItems(@PathVariable String id, @DefaultValue("0") @RequestParam int page, @DefaultValue("100") @RequestParam int pageSize) throws IOException {
+    public Page<FeedItem> getFeedItems(@PathVariable String id, @Min(0) @DefaultValue("0") @RequestParam Integer page, @Min(0) @Max(500) @DefaultValue("100") @RequestParam Integer pageSize) throws IOException {
         return feedItemService.getFeedItems(id, page, pageSize);
     }
 

@@ -15,11 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LayoutBlockSettings {
 
-  String? get title;
-
-  int? get items;
-
-  String? get categoryId;
+ String? get title; int? get items; String? get categoryId;
 /// Create a copy of LayoutBlockSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -32,14 +28,12 @@ $LayoutBlockSettingsCopyWith<LayoutBlockSettings> get copyWith => _$LayoutBlockS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) ||
-      (other.runtimeType == runtimeType && other is LayoutBlockSettings && (identical(other.title, title) || other.title == title) && (identical(other.items, items) || other.items == items) &&
-          (identical(other.categoryId, categoryId) || other.categoryId == categoryId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LayoutBlockSettings&&(identical(other.title, title) || other.title == title)&&(identical(other.items, items) || other.items == items)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType, title, items, categoryId);
+int get hashCode => Object.hash(runtimeType,title,items,categoryId);
 
 @override
 String toString() {
@@ -54,7 +48,7 @@ abstract mixin class $LayoutBlockSettingsCopyWith<$Res>  {
   factory $LayoutBlockSettingsCopyWith(LayoutBlockSettings value, $Res Function(LayoutBlockSettings) _then) = _$LayoutBlockSettingsCopyWithImpl;
 @useResult
 $Res call({
-  String? title, int? items, String? categoryId
+ String? title, int? items, String? categoryId
 });
 
 
@@ -71,14 +65,12 @@ class _$LayoutBlockSettingsCopyWithImpl<$Res>
 
 /// Create a copy of LayoutBlockSettings
 /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? title = freezed, Object? items = freezed, Object? categoryId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = freezed,Object? items = freezed,Object? categoryId = freezed,}) {
   return _then(_self.copyWith(
 title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String?,items: freezed == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
-  as int?, categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-  as String?,
+as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -160,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? title, int? items, String? categoryId)? $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? title,  int? items,  String? categoryId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LayoutBlockSettings() when $default != null:
 return $default(_that.title,_that.items,_that.categoryId);case _:
@@ -181,7 +173,7 @@ return $default(_that.title,_that.items,_that.categoryId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? title, int? items, String? categoryId) $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? title,  int? items,  String? categoryId)  $default,) {final _that = this;
 switch (_that) {
 case _LayoutBlockSettings():
 return $default(_that.title,_that.items,_that.categoryId);}
@@ -198,7 +190,7 @@ return $default(_that.title,_that.items,_that.categoryId);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? title, int? items, String? categoryId)? $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? title,  int? items,  String? categoryId)?  $default,) {final _that = this;
 switch (_that) {
 case _LayoutBlockSettings() when $default != null:
 return $default(_that.title,_that.items,_that.categoryId);case _:
@@ -218,7 +210,7 @@ class _LayoutBlockSettings implements LayoutBlockSettings {
 
 @override final  String? title;
 @override final  int? items;
-  @override final String? categoryId;
+@override final  String? categoryId;
 
 /// Create a copy of LayoutBlockSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -233,14 +225,12 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) ||
-      (other.runtimeType == runtimeType && other is _LayoutBlockSettings && (identical(other.title, title) || other.title == title) && (identical(other.items, items) || other.items == items) &&
-          (identical(other.categoryId, categoryId) || other.categoryId == categoryId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LayoutBlockSettings&&(identical(other.title, title) || other.title == title)&&(identical(other.items, items) || other.items == items)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType, title, items, categoryId);
+int get hashCode => Object.hash(runtimeType,title,items,categoryId);
 
 @override
 String toString() {
@@ -255,7 +245,7 @@ abstract mixin class _$LayoutBlockSettingsCopyWith<$Res> implements $LayoutBlock
   factory _$LayoutBlockSettingsCopyWith(_LayoutBlockSettings value, $Res Function(_LayoutBlockSettings) _then) = __$LayoutBlockSettingsCopyWithImpl;
 @override @useResult
 $Res call({
-  String? title, int? items, String? categoryId
+ String? title, int? items, String? categoryId
 });
 
 
@@ -272,14 +262,12 @@ class __$LayoutBlockSettingsCopyWithImpl<$Res>
 
 /// Create a copy of LayoutBlockSettings
 /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({Object? title = freezed, Object? items = freezed, Object? categoryId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = freezed,Object? items = freezed,Object? categoryId = freezed,}) {
   return _then(_LayoutBlockSettings(
 title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String?,items: freezed == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
-  as int?, categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-  as String?,
+as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

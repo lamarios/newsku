@@ -13,9 +13,8 @@ import java.util.List;
 
 public interface FeedItemRepository extends JpaRepository<FeedItem, String> {
     FeedItem getFirstByGuid(String guid);
-
-
-    @Query("select i from FeedItem i where i.feed in :feeds and i.importance >= :minImportance and i.timeCreated > :from and i.timeCreated <= :to")
+    
+    @Query(value = "select i from FeedItem i where i.feed in :feeds and i.importance >= :minImportance and i.timeCreated > :from and i.timeCreated <= :to")
     Page<FeedItem> findallByTimeAndFeeds(@Param("minImportance") int minImportance, @Param("from") long from, @Param("to") long to, @Param("feeds") List<Feed> feeds, Pageable pageable);
 
     List<FeedItem> findFirstByIdAndFeedIn(String id, Collection<Feed> feeds);
