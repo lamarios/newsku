@@ -31,6 +31,8 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static java.lang.Math.max;
+
 @Service
 public class FeedItemService {
     private final static Logger logger = LogManager.getLogger();

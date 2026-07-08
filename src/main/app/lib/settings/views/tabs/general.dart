@@ -119,18 +119,6 @@ class GeneralSettingsTab extends StatelessWidget {
                       value: context.select((LocalPreferencesCubit p) => p.state.blackBackground),
                       onChanged: (value) => getIt.get<LocalPreferencesCubit>().setBlackBackground(value),
                     ),
-                    Text(locals.appColor),
-                    Gap(pu2),
-                    if (!kIsWeb && Platform.isAndroid) ...[
-                      SwitchListTile(
-                        contentPadding: .zero,
-                        title: Text(locals.dynamicColor),
-                        subtitle: Text(locals.blackBackgroundExplanation, style: subTextTheme),
-                        value: context.select((LocalPreferencesCubit p) => p.state.dynamicColor),
-                        onChanged: (value) => getIt.get<LocalPreferencesCubit>().setDynamicColor(value),
-                      ),
-                      Gap(pu2),
-                    ],
                     Row(
                       spacing: pu2,
                       children: [
@@ -145,6 +133,18 @@ class GeneralSettingsTab extends StatelessWidget {
                         ),
                       ],
                     ),
+                    Text(locals.appColor),
+                    Gap(pu2),
+                    if (!kIsWeb && Platform.isAndroid) ...[
+                      SwitchListTile(
+                        contentPadding: .zero,
+                        title: Text(locals.dynamicColor),
+                        subtitle: Text(locals.blackBackgroundExplanation, style: subTextTheme),
+                        value: context.select((LocalPreferencesCubit p) => p.state.dynamicColor),
+                        onChanged: (value) => getIt.get<LocalPreferencesCubit>().setDynamicColor(value),
+                      ),
+                      Gap(pu2),
+                    ],
                     if (!context.select((LocalPreferencesCubit p) => p.state.dynamicColor))
                       Wrap(
                         spacing: pu4,

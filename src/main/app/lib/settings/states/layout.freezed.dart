@@ -14,17 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LayoutState {
 
-  bool get dragging;
-
-  List<LayoutBlock> get blocks;
-
-  List<FeedCategory> get categories;
-
-  bool get loading;
-
-  dynamic get error;
-
-  StackTrace? get stackTrace;
+ bool get dragging; List<LayoutBlock> get blocks; List<FeedCategory> get categories; bool get loading; dynamic get error; StackTrace? get stackTrace;
 /// Create a copy of LayoutState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -35,23 +25,12 @@ $LayoutStateCopyWith<LayoutState> get copyWith => _$LayoutStateCopyWithImpl<Layo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) ||
-      (other.runtimeType == runtimeType && other is LayoutState && (identical(other.dragging, dragging) || other.dragging == dragging) && const DeepCollectionEquality().equals(other.blocks, blocks) &&
-          const DeepCollectionEquality().equals(other.categories, categories) && (identical(other.loading, loading) || other.loading == loading) &&
-          const DeepCollectionEquality().equals(other.error, error) && (identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LayoutState&&(identical(other.dragging, dragging) || other.dragging == dragging)&&const DeepCollectionEquality().equals(other.blocks, blocks)&&const DeepCollectionEquality().equals(other.categories, categories)&&(identical(other.loading, loading) || other.loading == loading)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
-int get hashCode =>
-    Object.hash(
-        runtimeType,
-        dragging,
-        const DeepCollectionEquality().hash(blocks),
-        const DeepCollectionEquality().hash(categories),
-        loading,
-        const DeepCollectionEquality().hash(error),
-        stackTrace);
+int get hashCode => Object.hash(runtimeType,dragging,const DeepCollectionEquality().hash(blocks),const DeepCollectionEquality().hash(categories),loading,const DeepCollectionEquality().hash(error),stackTrace);
 
 @override
 String toString() {
@@ -66,7 +45,7 @@ abstract mixin class $LayoutStateCopyWith<$Res>  {
   factory $LayoutStateCopyWith(LayoutState value, $Res Function(LayoutState) _then) = _$LayoutStateCopyWithImpl;
 @useResult
 $Res call({
-  bool dragging, List<LayoutBlock> blocks, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace
+ bool dragging, List<LayoutBlock> blocks, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace
 });
 
 
@@ -83,16 +62,12 @@ class _$LayoutStateCopyWithImpl<$Res>
 
 /// Create a copy of LayoutState
 /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? dragging = null, Object? blocks = null, Object? categories = null, Object? loading = null, Object? error = freezed, Object? stackTrace = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? dragging = null,Object? blocks = null,Object? categories = null,Object? loading = null,Object? error = freezed,Object? stackTrace = freezed,}) {
   return _then(_self.copyWith(
 dragging: null == dragging ? _self.dragging : dragging // ignore: cast_nullable_to_non_nullable
 as bool,blocks: null == blocks ? _self.blocks : blocks // ignore: cast_nullable_to_non_nullable
-  as List<LayoutBlock>,
-    categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
-    as List<FeedCategory>,
-    loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
+as List<LayoutBlock>,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
+as List<FeedCategory>,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as dynamic,stackTrace: freezed == stackTrace ? _self.stackTrace : stackTrace // ignore: cast_nullable_to_non_nullable
 as StackTrace?,
@@ -177,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool dragging, List<LayoutBlock> blocks, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace)? $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool dragging,  List<LayoutBlock> blocks,  List<FeedCategory> categories,  bool loading,  dynamic error,  StackTrace? stackTrace)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LayoutState() when $default != null:
 return $default(_that.dragging,_that.blocks,_that.categories,_that.loading,_that.error,_that.stackTrace);case _:
@@ -198,7 +173,7 @@ return $default(_that.dragging,_that.blocks,_that.categories,_that.loading,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool dragging, List<LayoutBlock> blocks, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace) $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool dragging,  List<LayoutBlock> blocks,  List<FeedCategory> categories,  bool loading,  dynamic error,  StackTrace? stackTrace)  $default,) {final _that = this;
 switch (_that) {
 case _LayoutState():
 return $default(_that.dragging,_that.blocks,_that.categories,_that.loading,_that.error,_that.stackTrace);}
@@ -215,7 +190,7 @@ return $default(_that.dragging,_that.blocks,_that.categories,_that.loading,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool dragging, List<LayoutBlock> blocks, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace)? $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool dragging,  List<LayoutBlock> blocks,  List<FeedCategory> categories,  bool loading,  dynamic error,  StackTrace? stackTrace)?  $default,) {final _that = this;
 switch (_that) {
 case _LayoutState() when $default != null:
 return $default(_that.dragging,_that.blocks,_that.categories,_that.loading,_that.error,_that.stackTrace);case _:
@@ -230,10 +205,7 @@ return $default(_that.dragging,_that.blocks,_that.categories,_that.loading,_that
 
 
 class _LayoutState extends LayoutState implements WithError {
-  const _LayoutState({this.dragging = false, final List<LayoutBlock> blocks = const [], final List<FeedCategory> categories = const [], this.loading = true, this.error, this.stackTrace})
-      : _blocks = blocks,
-        _categories = categories,
-        super._();
+  const _LayoutState({this.dragging = false, final  List<LayoutBlock> blocks = const [], final  List<FeedCategory> categories = const [], this.loading = true, this.error, this.stackTrace}): _blocks = blocks,_categories = categories,super._();
 
 
 @override@JsonKey() final  bool dragging;
@@ -244,15 +216,12 @@ class _LayoutState extends LayoutState implements WithError {
   return EqualUnmodifiableListView(_blocks);
 }
 
-  final List<FeedCategory> _categories;
-
-  @override
-  @JsonKey()
-  List<FeedCategory> get categories {
-    if (_categories is EqualUnmodifiableListView) return _categories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
-  }
+ final  List<FeedCategory> _categories;
+@override@JsonKey() List<FeedCategory> get categories {
+  if (_categories is EqualUnmodifiableListView) return _categories;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_categories);
+}
 
 @override@JsonKey() final  bool loading;
 @override final  dynamic error;
@@ -268,23 +237,12 @@ _$LayoutStateCopyWith<_LayoutState> get copyWith => __$LayoutStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType && other is _LayoutState && (identical(other.dragging, dragging) || other.dragging == dragging) &&
-      const DeepCollectionEquality().equals(other._blocks, _blocks) && const DeepCollectionEquality().equals(other._categories, _categories) &&
-      (identical(other.loading, loading) || other.loading == loading) && const DeepCollectionEquality().equals(other.error, error) &&
-      (identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LayoutState&&(identical(other.dragging, dragging) || other.dragging == dragging)&&const DeepCollectionEquality().equals(other._blocks, _blocks)&&const DeepCollectionEquality().equals(other._categories, _categories)&&(identical(other.loading, loading) || other.loading == loading)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
-int get hashCode =>
-    Object.hash(
-        runtimeType,
-        dragging,
-        const DeepCollectionEquality().hash(_blocks),
-        const DeepCollectionEquality().hash(_categories),
-        loading,
-        const DeepCollectionEquality().hash(error),
-        stackTrace);
+int get hashCode => Object.hash(runtimeType,dragging,const DeepCollectionEquality().hash(_blocks),const DeepCollectionEquality().hash(_categories),loading,const DeepCollectionEquality().hash(error),stackTrace);
 
 @override
 String toString() {
@@ -299,7 +257,7 @@ abstract mixin class _$LayoutStateCopyWith<$Res> implements $LayoutStateCopyWith
   factory _$LayoutStateCopyWith(_LayoutState value, $Res Function(_LayoutState) _then) = __$LayoutStateCopyWithImpl;
 @override @useResult
 $Res call({
-  bool dragging, List<LayoutBlock> blocks, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace
+ bool dragging, List<LayoutBlock> blocks, List<FeedCategory> categories, bool loading, dynamic error, StackTrace? stackTrace
 });
 
 
@@ -316,16 +274,12 @@ class __$LayoutStateCopyWithImpl<$Res>
 
 /// Create a copy of LayoutState
 /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({Object? dragging = null, Object? blocks = null, Object? categories = null, Object? loading = null, Object? error = freezed, Object? stackTrace = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? dragging = null,Object? blocks = null,Object? categories = null,Object? loading = null,Object? error = freezed,Object? stackTrace = freezed,}) {
   return _then(_LayoutState(
 dragging: null == dragging ? _self.dragging : dragging // ignore: cast_nullable_to_non_nullable
 as bool,blocks: null == blocks ? _self._blocks : blocks // ignore: cast_nullable_to_non_nullable
-  as List<LayoutBlock>,
-    categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
-    as List<FeedCategory>,
-    loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
+as List<LayoutBlock>,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
+as List<FeedCategory>,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as dynamic,stackTrace: freezed == stackTrace ? _self.stackTrace : stackTrace // ignore: cast_nullable_to_non_nullable
 as StackTrace?,

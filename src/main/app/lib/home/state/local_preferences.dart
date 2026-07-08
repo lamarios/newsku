@@ -33,6 +33,11 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
 
     var theme = ThemeMode.values.where((v) => v.name == prefs.getString(_brightness)).firstOrNull ?? ThemeMode.system;
 
+    // we save the system color scheme if any
+    var systemColors = !kIsWeb && Platform.isAndroid
+        ? (await DynamicColorPlugin.getCorePalette())?.toColorScheme()
+        : null;
+
     emit(
       state.copyWith(
         themeColor: color,
@@ -40,6 +45,7 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
         blackBackground: blackbackground ?? false,
         density: density ?? 4,
         theme: theme,
+        systemColors: systemColors,
       ),
     );
   }
@@ -83,12 +89,12 @@ sealed class LocalPreferencesState with _$LocalPreferencesState {
     @Default(false) bool blackBackground,
     @Default(4) double density,
     @Default(ThemeMode.system) ThemeMode theme,
+    ColorScheme? systemColors,
   }) = _LocalPreferencesState;
 
   const LocalPreferencesState._();
 
-  Future<Color> get color async {
-    var color = !kIsWeb && Platform.isAndroid ? await DynamicColorPlugin.getCorePalette() : null;
-    return dynamicColor ? color?.toColorScheme().primary ?? themeColor : themeColor;
+  Color get appColor {
+    return dynamicColor ? systemColors?.primary ?? themeColor : themeColor;
   }
 }
