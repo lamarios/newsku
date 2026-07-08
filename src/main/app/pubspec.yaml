@@ -38,7 +38,7 @@ dependencies:
   easy_debounce: 2.0.3
   feedback: 3.2.0
   file_picker: 10.3.10
-  file_saver: 0.3.1
+  file_saver: 0.4.0
   flutter:
     sdk: flutter
   flutter_bloc: 9.1.1
@@ -52,7 +52,7 @@ dependencies:
   html_unescape: 2.0.0
   http: 1.6.0
   intl: any
-  json_annotation: 4.11.0
+  json_annotation: 4.12.0
   jwt_decoder: 2.0.1
   logging: 1.3.0
   material_loading_indicator: 1.0.0
@@ -68,16 +68,16 @@ dependencies:
 
 dev_dependencies:
   auto_route_generator: any
-  build_runner: 2.11.1
-  dart_jsonwebtoken: 3.3.1
+  build_runner: 2.15.0
+  dart_jsonwebtoken: 3.4.1
   flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
   freezed: 3.2.5
-  json_serializable: 6.13.0
-  mocktail: 1.0.4
+  json_serializable: 6.14.0
+  mocktail: 1.0.5
   nock: 1.2.3
-  snaptest: 0.2.3
+  snaptest: 0.3.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
