@@ -206,7 +206,7 @@ return $default(_that.dragging,_that.blocks,_that.categories,_that.loading,_that
 
 class _LayoutState extends LayoutState implements WithError {
   const _LayoutState({this.dragging = false, final  List<LayoutBlock> blocks = const [], final  List<FeedCategory> categories = const [], this.loading = true, this.error, this.stackTrace}): _blocks = blocks,_categories = categories,super._();
-
+  
 
 @override@JsonKey() final  bool dragging;
  final  List<LayoutBlock> _blocks;

@@ -11,7 +11,7 @@ sealed class NewskuError with _$NewskuError implements Error {
     required ErrorType type,
     required String? uuid,
     @Default("") String message,
-    @override @JsonKey(includeToJson: false, includeFromJson: false) StackTrace? stackTrace,
+    @JsonKey(includeToJson: false, includeFromJson: false) StackTrace? stackTrace,
   }) = _NewskuError;
 
   const NewskuError._();

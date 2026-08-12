@@ -206,7 +206,7 @@ return $default(_that.feeds,_that.categories,_that.loading,_that.draggingFeed,_t
 
 class _FeedsSettingsState implements FeedsSettingsState, WithError {
   const _FeedsSettingsState({final  List<Feed> feeds = const [], final  List<FeedCategory> categories = const [], this.loading = true, this.draggingFeed = false, this.error, this.stackTrace}): _feeds = feeds,_categories = categories;
-
+  
 
  final  List<Feed> _feeds;
 @override@JsonKey() List<Feed> get feeds {
