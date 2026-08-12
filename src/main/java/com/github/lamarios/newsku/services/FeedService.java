@@ -12,6 +12,7 @@ import com.apptasticsoftware.rssreader.*;
 import com.github.lamarios.newsku.Constants;
 import com.github.lamarios.newsku.errors.NewskuException;
 import com.github.lamarios.newsku.persistence.entities.Feed;
+import com.github.lamarios.newsku.persistence.entities.FeedCategory;
 import com.github.lamarios.newsku.persistence.entities.User;
 import com.github.lamarios.newsku.persistence.repositories.FeedRepository;
 import com.github.lamarios.newsku.utils.TemporaryInvalidXmlCharacterFilter;
@@ -47,16 +48,23 @@ public class FeedService {
                 enclosure.setUrl(s);
                 item.addEnclosure(enclosure);
             });
+    private final FeedCategoriesService feedCategoriesService;
 
     @Autowired
-    public FeedService(UserService userService, FeedRepository feedRepository) {
+    public FeedService(UserService userService, FeedRepository feedRepository, FeedCategoriesService feedCategoriesService) {
         this.userService = userService;
         this.feedRepository = feedRepository;
+        this.feedCategoriesService = feedCategoriesService;
     }
 
 
     @Transactional
     public Feed addFeed(String url) throws NewskuException {
+        return addFeed(url, null);
+    }
+
+    @Transactional
+    public Feed addFeed(String url, FeedCategory category) throws NewskuException {
         User currentUser = userService.getCurrentUser();
 
         List<Item> list;
@@ -82,6 +90,7 @@ public class FeedService {
         feed.setImage(item.getImage().map(Image::getUrl).orElse(null));
         feed.setName(item.getTitle());
         feed.setUser(currentUser);
+        feed.setCategory(category);
 
         return feedRepository.save(feed);
     }
@@ -133,7 +142,7 @@ public class FeedService {
             try (var is = new FileInputStream(p.toFile())) {
                 var parser = new OpmlParser().parse(is);
                 for (Outline outline : parser.getBody().getOutlines()) {
-                    newFeeds.addAll(importFeed(outline, user));
+                    newFeeds.addAll(importFeed(outline, user, null));
                 }
 
 
@@ -145,16 +154,18 @@ public class FeedService {
                 Files.deleteIfExists(p);
                 Files.deleteIfExists(tempDirectory);
             }
-        }catch (IOException e) {
-            throw  new NewskuException("Failed to read file");
+        } catch (IOException e) {
+            throw new NewskuException("Failed to read file");
         }
     }
 
     @Transactional
-    public List<Feed> importFeed(Outline outline, User user) throws SQLException, IOException {
+    public List<Feed> importFeed(Outline outline, User user, FeedCategory category) throws SQLException, IOException, NewskuException {
         List<Feed> newFeeds = new ArrayList<>();
 
+        var existingCategories = feedCategoriesService.getCategories();
         Map<String, String> attributes = outline.getAttributes();
+        FeedCategory childrenCategory = null;
         if (attributes.containsKey("type") && attributes.get("type")
                 .equalsIgnoreCase("rss") && attributes.containsKey("xmlUrl")) {
 
@@ -162,20 +173,31 @@ public class FeedService {
             String url = attributes.get("xmlUrl");
             if (feedRepository.findFirstByUrlAndUser(url, user).isEmpty()) {
                 try {
-                    newFeeds.add(addFeed(url));
+                    newFeeds.add(addFeed(url, category));
                 } catch (Exception e) {
                     log.warn("Couldnt parse feed {}", url, e);
                 }
             } else {
                 log.info("User already has feed {}", url);
             }
+        } else if (attributes.containsKey("text") || attributes.containsKey("title")) {
+            // if it's not a feed url, it's a category
+            String categoryName = attributes.containsKey("text") ? attributes.get("text") : attributes.get("title");
+            List<FeedCategory> matchingCategories = existingCategories.stream().filter(s -> s.getName().equalsIgnoreCase(categoryName)).toList();
+            if (!matchingCategories.isEmpty()) {
+                childrenCategory = matchingCategories.getFirst();
+            } else {
+                childrenCategory = feedCategoriesService.addCategory(categoryName);
+            }
+
         }
 
         if (!outline.getSubElements().isEmpty()) {
+            FeedCategory finalChildrenCategory = childrenCategory;
             outline.getSubElements().forEach(outline1 -> {
                 try {
-                    newFeeds.addAll(importFeed(outline1, user));
-                } catch (SQLException | IOException e) {
+                    newFeeds.addAll(importFeed(outline1, user, finalChildrenCategory));
+                } catch (SQLException | IOException | NewskuException e) {
                     throw new RuntimeException(e);
                 }
             });

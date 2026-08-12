@@ -20,7 +20,7 @@ pkgs.mkShell {
   # to run CI or DB migrations
   shellHook =  ''
   # Setting up mkdocs
-  python -m venv mkdocs/venv
+  python -m venv --clear mkdocs/venv
   source mkdocs/venv/bin/activate
   pip install -r mkdocs/requirements.txt
 

@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
- java -XX:MaxRAM=256m -jar /app/newsku.jar
+ java -XX:MaxRAM=${MAX_RAM:-256m} -jar /app/newsku.jar

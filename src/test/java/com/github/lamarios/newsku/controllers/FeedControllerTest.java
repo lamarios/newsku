@@ -5,6 +5,8 @@ import be.ceau.opml.OpmlParser;
 import com.github.lamarios.newsku.TestConfig;
 import com.github.lamarios.newsku.TestContainerTest;
 import com.github.lamarios.newsku.errors.NewskuException;
+import com.github.lamarios.newsku.persistence.entities.Feed;
+import com.github.lamarios.newsku.persistence.entities.FeedCategory;
 import com.github.lamarios.newsku.persistence.entities.FeedItem;
 import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
 import com.github.lamarios.newsku.persistence.repositories.FeedItemRepository;
@@ -24,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -91,6 +95,27 @@ public class FeedControllerTest extends TestContainerTest {
             MultipartFile file = new MockMultipartFile("file", "feeds.opml", "text/plain", is);
             var feeds = feedController.importFeed(file);
             assertEquals(2, feeds.size());
+        }
+    }
+
+    @Test
+    public void testImportFeedsWithCategories() throws NewskuException, IOException {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        try (InputStream is = classloader.getResourceAsStream("feeds_with_categories.opml")) {
+            MultipartFile file = new MockMultipartFile("file", "feeds.opml", "text/plain", is);
+            var feeds = feedController.importFeed(file);
+            assertEquals(2, feeds.size());
+
+            List<FeedCategory> categories = feeds.stream().map(Feed::getCategory).filter(Objects::nonNull).toList();
+            assertEquals(2, categories.size());
+            assertTrue(categories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Subscriptions")));
+            assertTrue(categories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Comics")));
+
+            // we need to make sure that the categories were properly created in the database
+            var dbCategories = feedCategoryController.getCategories();
+            assertEquals(2, dbCategories.size());
+            assertTrue(dbCategories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Subscriptions")));
+            assertTrue(dbCategories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Comics")));
         }
     }
 
