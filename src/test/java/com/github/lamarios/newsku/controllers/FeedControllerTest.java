@@ -1,26 +1,16 @@
 package com.github.lamarios.newsku.controllers;
 
+import static org.junit.jupiter.api.Assertions.*;
 import be.ceau.opml.OpmlParseException;
 import be.ceau.opml.OpmlParser;
 import com.github.lamarios.newsku.TestConfig;
 import com.github.lamarios.newsku.TestContainerTest;
 import com.github.lamarios.newsku.errors.NewskuException;
 import com.github.lamarios.newsku.models.FeedToImport;
-import com.github.lamarios.newsku.persistence.entities.Feed;
 import com.github.lamarios.newsku.persistence.entities.FeedCategory;
 import com.github.lamarios.newsku.persistence.entities.FeedItem;
-import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
 import com.github.lamarios.newsku.persistence.repositories.FeedItemRepository;
-import com.github.lamarios.newsku.persistence.repositories.FeedRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.context.annotation.Import;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
-import org.testcontainers.shaded.org.checkerframework.checker.units.qual.A;
-
+import com.github.lamarios.newsku.utils.BackgroundTaskUtils;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,31 +20,23 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Import;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 @Import(TestConfig.class)
 public class FeedControllerTest extends TestContainerTest {
     @Autowired
     private FeedController feedController;
     @Autowired
-    private FeedRepository feedRepository;
-
-    @Autowired
     private FeedCategoryController feedCategoryController;
-    @Autowired
-    private FeedCategoryRepository feedCategoryRepository;
-
     @LocalServerPort
     private int port;
     @Autowired
     private FeedItemRepository feedItemRepository;
-
-    @AfterEach
-    public void tearDown() {
-        feedRepository.deleteAll();
-        feedCategoryRepository.deleteAll();
-    }
 
     @Test
     public void testFeedCrud() throws SQLException, NewskuException {
@@ -65,14 +47,12 @@ public class FeedControllerTest extends TestContainerTest {
         assertNotNull(feed);
         assertEquals(url, feed.getUrl());
 
-
         var feeds = feedController.getFeeds();
         assertEquals(1, feeds.size());
 
         var cat = feedCategoryController.addCategory("My cat");
         feed.setCategory(cat);
         feedController.updateFeed(feed);
-
 
         feeds = feedController.getFeeds();
         assertEquals(cat.getId(), feeds.getFirst().getCategory().getId());
@@ -107,16 +87,30 @@ public class FeedControllerTest extends TestContainerTest {
             var feeds = feedController.importFeed(file);
             assertEquals(2, feeds.size());
 
-            List<FeedCategory> categories = feeds.stream().map(FeedToImport::feedCategory).filter(Objects::nonNull).toList();
+            List<FeedCategory> categories =
+                    feeds.stream().map(FeedToImport::feedCategory).filter(Objects::nonNull).toList();
             assertEquals(2, categories.size());
-            assertTrue(categories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Subscriptions")));
-            assertTrue(categories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Comics")));
-
+            assertTrue(categories
+                .stream()
+                .map(FeedCategory::getName)
+                .anyMatch(c -> c.equalsIgnoreCase("Subscriptions"))
+            );
+            assertTrue(categories
+                .stream()
+                .map(FeedCategory::getName)
+                .anyMatch(c -> c.equalsIgnoreCase("Comics")));
             // we need to make sure that the categories were properly created in the database
             var dbCategories = feedCategoryController.getCategories();
             assertEquals(2, dbCategories.size());
-            assertTrue(dbCategories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Subscriptions")));
-            assertTrue(dbCategories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Comics")));
+            assertTrue(dbCategories
+                .stream()
+                .map(FeedCategory::getName)
+                .anyMatch(c -> c.equalsIgnoreCase("Subscriptions"))
+            );
+            assertTrue(dbCategories
+                .stream()
+                .map(FeedCategory::getName)
+                .anyMatch(c -> c.equalsIgnoreCase("Comics")));
         }
     }
 
@@ -129,14 +123,13 @@ public class FeedControllerTest extends TestContainerTest {
         }
     }
 
-
     @Test
     public void testExportFeeds() throws IOException, OpmlParseException, NewskuException {
         testImportFeeds();
 
+        BackgroundTaskUtils.waitForTasksToFinish();
 
         var response = feedController.exportFeeds();
-
 
         var file = Files.createTempFile("newskutest", ".opml");
 
@@ -147,8 +140,6 @@ public class FeedControllerTest extends TestContainerTest {
             assertTrue(Files.exists(file.toAbsolutePath()));
             assertTrue(Files.isRegularFile(file));
             assertTrue(Files.size(file) > 0);
-
-
         }
 
         try (var is = new FileInputStream(file.toAbsolutePath().toFile())) {
@@ -157,13 +148,16 @@ public class FeedControllerTest extends TestContainerTest {
         }
     }
 
-
     @Test
     public void testGettingSingleFeedItems() throws NewskuException, IOException {
-        testImportFeeds();
+        String url = "http://localhost:" + port + "/test/rss/one-month-feed";
+
+        feedController.addFeed(url, true);
 
         var userFeeds = feedController.getFeeds();
-        assertEquals(2, userFeeds.size());
+        assertEquals(1, userFeeds.size());
+        // we delete everything before we
+        feedItemRepository.deleteAll();
 
         FeedItem i1 = new FeedItem();
         i1.setId(UUID.randomUUID().toString());
@@ -189,6 +183,5 @@ public class FeedControllerTest extends TestContainerTest {
         assertEquals(2, page.getTotalPages());
         assertEquals(1, page.getContent().size());
         assertEquals(2, page.getTotalElements());
-
     }
 }

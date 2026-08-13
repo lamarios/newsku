@@ -224,6 +224,29 @@
                                 </configuration>
                 -->
             </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>3.9.0</version>
+                <configuration>
+                    <java>
+                        <cleanthat/>
+                        <googleJavaFormat/>
+                        <removeUnusedImports/>
+                        <princeOfSpace>
+                            <version>2.2.0</version>                      <!-- optional -->
+                            <indentStyle>SPACES</indentStyle>              <!-- or TABS (optional) -->
+                            <indentSize>4</indentSize>                     <!-- optional -->
+                            <lineLength>120</lineLength>                   <!-- optional -->
+                            <wrapStyle>BALANCED</wrapStyle>                <!-- or WIDE/NARROW (optional) -->
+                            <closingParenOnNewLine>true</closingParenOnNewLine>  <!-- optional -->
+                            <trailingCommas>false</trailingCommas>         <!-- optional -->
+                            <javaLanguageLevel>25</javaLanguageLevel>      <!-- optional -->
+                        </princeOfSpace>
+                        <formatAnnotations/>
+                    </java>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

@@ -14,22 +14,12 @@ import com.github.lamarios.newsku.errors.NewskuException;
 import com.github.lamarios.newsku.models.FeedToImport;
 import com.github.lamarios.newsku.persistence.entities.Feed;
 import com.github.lamarios.newsku.persistence.entities.FeedCategory;
-import com.github.lamarios.newsku.persistence.entities.FeedItem;
 import com.github.lamarios.newsku.persistence.entities.User;
 import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
 import com.github.lamarios.newsku.persistence.repositories.FeedRepository;
+import com.github.lamarios.newsku.utils.BackgroundTasks;
 import com.github.lamarios.newsku.utils.TemporaryInvalidXmlCharacterFilter;
 import com.github.lamarios.newsku.utils.TransactionHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,32 +27,44 @@ import java.nio.file.Path;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
-
-import static com.github.lamarios.newsku.services.FeedItemService.BACKGROUND_TASKS;
+import java.util.stream.Stream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FeedService {
     private final UserService userService;
     private final FeedRepository feedRepository;
-
     private final Logger log = LogManager.getLogger();
-
-    public final static AbstractRssReader<Channel, Item> DEFAULT_READER = new RssReader()
-            .setUserAgent(Constants.USER_AGENT)
-            .addFeedFilter(new TemporaryInvalidXmlCharacterFilter())
-            .addItemExtension("media:thumbnail", "url", (item, s) -> {
-                Enclosure enclosure = new Enclosure();
-                enclosure.setType("image");
-                enclosure.setUrl(s);
-                item.addEnclosure(enclosure);
-            });
+    public static final AbstractRssReader<Channel, Item> DEFAULT_READER = new RssReader()
+        .setUserAgent(Constants.USER_AGENT)
+        .addFeedFilter(new TemporaryInvalidXmlCharacterFilter())
+        .addItemExtension("media:thumbnail", "url", (item, s) -> {
+            Enclosure enclosure = new Enclosure();
+            enclosure.setType("image");
+            enclosure.setUrl(s);
+            item.addEnclosure(enclosure);
+        });
     private final FeedCategoriesService feedCategoriesService;
     private final FeedItemService feedItemService;
     private final PlatformTransactionManager transactionManager;
     private final FeedCategoryRepository feedCategoryRepository;
 
     @Autowired
-    public FeedService(UserService userService, FeedRepository feedRepository, FeedCategoriesService feedCategoriesService, FeedItemService feedItemService, PlatformTransactionManager transactionManager, FeedCategoryRepository feedCategoryRepository) {
+    public FeedService(
+            UserService userService,
+            FeedRepository feedRepository,
+            FeedCategoriesService feedCategoriesService,
+            FeedItemService feedItemService,
+            PlatformTransactionManager transactionManager,
+            FeedCategoryRepository feedCategoryRepository
+    ) {
         this.userService = userService;
         this.feedRepository = feedRepository;
         this.feedCategoriesService = feedCategoriesService;
@@ -70,7 +72,6 @@ public class FeedService {
         this.transactionManager = transactionManager;
         this.feedCategoryRepository = feedCategoryRepository;
     }
-
 
     @Transactional
     public Feed addFeed(String url) throws NewskuException {
@@ -87,10 +88,7 @@ public class FeedService {
 
         List<Item> list;
         try {
-            list = DEFAULT_READER
-                    .read(url)
-                    .sorted()
-                    .toList();
+            list = DEFAULT_READER.read(url).sorted().toList();
         } catch (Exception e) {
             throw new NewskuException("Couldn't read feed URL");
         }
@@ -120,7 +118,6 @@ public class FeedService {
 
     @Transactional
     public Feed updateFeed(Feed feed) {
-
         var oldFeed = feedRepository.getFirstById(feed.getId());
         var user = userService.getCurrentUser();
         if (user.getId().equalsIgnoreCase(oldFeed.getUser().getId())) {
@@ -163,7 +160,6 @@ public class FeedService {
                     newFeeds.addAll(getFeedsFromOpml(outline, user, null));
                 }
 
-
                 return newFeeds;
             } catch (SQLException | OpmlParseException e) {
                 log.error("Failed to parse opml file", e);
@@ -178,15 +174,18 @@ public class FeedService {
     }
 
     @Transactional
-    public List<FeedToImport> getFeedsFromOpml(Outline outline, User user, FeedCategory category) throws SQLException, IOException, NewskuException {
+    public List<FeedToImport> getFeedsFromOpml(Outline outline, User user, FeedCategory category)
+            throws SQLException,
+            IOException,
+            NewskuException {
         List<FeedToImport> newFeeds = new ArrayList<>();
 
         var existingCategories = feedCategoriesService.getCategories();
         Map<String, String> attributes = outline.getAttributes();
         FeedCategory childrenCategory = null;
-        if (attributes.containsKey("type") && attributes.get("type")
-                .equalsIgnoreCase("rss") && attributes.containsKey("xmlUrl")) {
-
+        if (attributes.containsKey("type")
+                && attributes.get("type").equalsIgnoreCase("rss")
+                && attributes.containsKey("xmlUrl")) {
             // we check if the feed already exists
             String url = attributes.get("xmlUrl");
             if (feedRepository.findFirstByUrlAndUser(url, user).isEmpty()) {
@@ -201,13 +200,16 @@ public class FeedService {
         } else if (attributes.containsKey("text") || attributes.containsKey("title")) {
             // if it's not a feed url, it's a category
             String categoryName = attributes.containsKey("text") ? attributes.get("text") : attributes.get("title");
-            List<FeedCategory> matchingCategories = existingCategories.stream().filter(s -> s.getName().equalsIgnoreCase(categoryName)).toList();
+            List<FeedCategory> matchingCategories =
+                    existingCategories
+                .stream()
+                .filter(s -> s.getName().equalsIgnoreCase(categoryName))
+                .toList();
             if (!matchingCategories.isEmpty()) {
                 childrenCategory = matchingCategories.getFirst();
             } else {
                 childrenCategory = feedCategoriesService.addCategory(categoryName);
             }
-
         }
 
         if (!outline.getSubElements().isEmpty()) {
@@ -225,31 +227,48 @@ public class FeedService {
     }
 
     private Outline getFeedOutline(Feed feed) {
-        return new Outline(Map.of("type", "rss", "xmlUrl", feed.getUrl(), "title", feed.getName()), Collections.emptyList());
+        return new Outline(
+                Map.of("type", "rss", "xmlUrl", feed.getUrl(), "title", feed.getName()),
+                Collections.emptyList()
+        );
     }
-
 
     @Transactional(readOnly = true)
     public String exportFeed() throws OpmlWriteException {
-
         User currentUser = userService.getCurrentUser();
         var categories = feedCategoryRepository.getAllByUser(currentUser);
 
         List<Outline> outlines = new ArrayList<>();
-
         // split by category
         categories.forEach(cat -> {
             Map<String, String> catAttributes = Map.of("text", cat.getName(), "title", cat.getName());
-            var children = feedRepository.getFeedByUserAndCategory(currentUser, cat).map(this::getFeedOutline).toList();
+            var children = feedRepository
+                .getFeedByUserAndCategory(currentUser, cat)
+                .map(this::getFeedOutline)
+                .toList();
             var outline = new Outline(catAttributes, children);
             outlines.add(outline);
         });
 
-        outlines.addAll(feedRepository.getFeedByUserAndNullCategory(currentUser).map(this::getFeedOutline).toList());
+        var feeds = feedRepository.getFeedsByUser(currentUser);
+        Stream<Feed> feedByUserAndNullCategory = feedRepository.getFeedByUserAndNullCategory(currentUser);
+        outlines.addAll(feedByUserAndNullCategory.map(this::getFeedOutline).toList());
 
-        Head head = new Head("Newsku", LocalDateTime.now()
-                .toString(), null, null, null, null, null, null, null, null, null, null, null);
-
+        Head head = new Head(
+                "Newsku",
+                LocalDateTime.now().toString(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
 
         Body body = new Body(outlines);
 
@@ -263,17 +282,15 @@ public class FeedService {
     @Transactional
     public void importFeed(FeedToImport feedToImport) {
         var currentUser = userService.getCurrentUser();
-        BACKGROUND_TASKS.submit(() -> {
-            TransactionHelper.doInNewTransaction(
-                    transactionManager, false, () -> {
-                        try {
-                            var feed = addFeed(feedToImport.url(), feedToImport.feedCategory(), currentUser);
-                            feedItemService.refreshFeed(feed);
-                        } catch (NewskuException e) {
-                            log.error("Couldn't import feed {}", feedToImport.url(), e);
-                        }
-                    }
-            );
+        BackgroundTasks.submitBackgroundTask(() -> {
+            TransactionHelper.doInNewTransaction(transactionManager, false, () -> {
+                try {
+                    var feed = addFeed(feedToImport.url(), feedToImport.feedCategory(), currentUser);
+                    feedItemService.refreshFeed(feed);
+                } catch (NewskuException e) {
+                    log.error("Couldn't import feed {}", feedToImport.url(), e);
+                }
+            });
         });
     }
 }
