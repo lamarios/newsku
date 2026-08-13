@@ -2,6 +2,7 @@ package com.github.lamarios.newsku.controllers;
 
 import be.ceau.opml.OpmlWriteException;
 import com.github.lamarios.newsku.errors.NewskuException;
+import com.github.lamarios.newsku.models.FeedToImport;
 import com.github.lamarios.newsku.persistence.entities.Feed;
 import com.github.lamarios.newsku.persistence.entities.FeedItem;
 import com.github.lamarios.newsku.services.FeedItemService;
@@ -30,7 +31,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.SQLException;
 import java.util.List;
 
 import static com.github.lamarios.newsku.controllers.FeedItemController.serveFile;
@@ -100,13 +100,14 @@ public class FeedController {
     }
 
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public List<Feed> importFeed(@RequestParam("file") MultipartFile file) throws NewskuException {
+    public List<FeedToImport> importFeed(@RequestParam("file") MultipartFile file) throws NewskuException {
         if (demoMode) {
             throw new AccessDeniedException("App in demoMode");
         }
-        var newFeeds = feedService.importFeed(file);
+        var newFeeds = feedService.getFeedsFromOpml(file);
+        log.info("Found {} new feeds, importing them in the background", newFeeds.size());
 
-        newFeeds.forEach(feedItemService::refreshFeed);
+        newFeeds.forEach(feedService::importFeed);
         return newFeeds;
     }
 

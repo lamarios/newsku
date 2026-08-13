@@ -5,6 +5,7 @@ import be.ceau.opml.OpmlParser;
 import com.github.lamarios.newsku.TestConfig;
 import com.github.lamarios.newsku.TestContainerTest;
 import com.github.lamarios.newsku.errors.NewskuException;
+import com.github.lamarios.newsku.models.FeedToImport;
 import com.github.lamarios.newsku.persistence.entities.Feed;
 import com.github.lamarios.newsku.persistence.entities.FeedCategory;
 import com.github.lamarios.newsku.persistence.entities.FeedItem;
@@ -106,7 +107,7 @@ public class FeedControllerTest extends TestContainerTest {
             var feeds = feedController.importFeed(file);
             assertEquals(2, feeds.size());
 
-            List<FeedCategory> categories = feeds.stream().map(Feed::getCategory).filter(Objects::nonNull).toList();
+            List<FeedCategory> categories = feeds.stream().map(FeedToImport::feedCategory).filter(Objects::nonNull).toList();
             assertEquals(2, categories.size());
             assertTrue(categories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Subscriptions")));
             assertTrue(categories.stream().map(FeedCategory::getName).anyMatch(c -> c.equalsIgnoreCase("Comics")));

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:app/feed/models/feed.dart';
 import 'package:app/feed/models/feed_category.dart';
+import 'package:app/feed/models/feed_import.dart';
 import 'package:app/feed/services/feed_service.dart';
 import 'package:app/utils/models/with_error.dart';
 import 'package:app/utils/utils.dart';
@@ -9,8 +10,11 @@ import 'package:file_saver/file_saver.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logging/logging.dart';
 
 part 'feeds.freezed.dart';
+
+final _log = Logger('FeedsSettingsCubit');
 
 class FeedsSettingsCubit extends Cubit<FeedsSettingsState> {
   final TextEditingController newFeedController = TextEditingController();
@@ -56,7 +60,7 @@ class FeedsSettingsCubit extends Cubit<FeedsSettingsState> {
     }
   }
 
-  Future<List<Feed>> importFeeds(Uint8List? bytes) async {
+  Future<List<FeedToImport>> importFeeds(Uint8List? bytes) async {
     if (bytes != null) {
       try {
         emit(state.copyWith(loading: true));
@@ -78,6 +82,7 @@ class FeedsSettingsCubit extends Cubit<FeedsSettingsState> {
   Future<void> exportFeed() async {
     var service = FeedService(serverUrl!);
     var feeds = await service.exportFeeds();
+    _log.fine('exported feed: ${feeds.lengthInBytes / 1000}kB');
     FileSaver.instance.saveFile(name: 'feeds.opml', bytes: feeds);
   }
 

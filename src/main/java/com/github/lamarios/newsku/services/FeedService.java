@@ -11,16 +11,22 @@ import be.ceau.opml.entity.Outline;
 import com.apptasticsoftware.rssreader.*;
 import com.github.lamarios.newsku.Constants;
 import com.github.lamarios.newsku.errors.NewskuException;
+import com.github.lamarios.newsku.models.FeedToImport;
 import com.github.lamarios.newsku.persistence.entities.Feed;
 import com.github.lamarios.newsku.persistence.entities.FeedCategory;
+import com.github.lamarios.newsku.persistence.entities.FeedItem;
 import com.github.lamarios.newsku.persistence.entities.User;
+import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
 import com.github.lamarios.newsku.persistence.repositories.FeedRepository;
 import com.github.lamarios.newsku.utils.TemporaryInvalidXmlCharacterFilter;
+import com.github.lamarios.newsku.utils.TransactionHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +37,8 @@ import java.nio.file.Path;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
+
+import static com.github.lamarios.newsku.services.FeedItemService.BACKGROUND_TASKS;
 
 @Service
 public class FeedService {
@@ -49,12 +57,18 @@ public class FeedService {
                 item.addEnclosure(enclosure);
             });
     private final FeedCategoriesService feedCategoriesService;
+    private final FeedItemService feedItemService;
+    private final PlatformTransactionManager transactionManager;
+    private final FeedCategoryRepository feedCategoryRepository;
 
     @Autowired
-    public FeedService(UserService userService, FeedRepository feedRepository, FeedCategoriesService feedCategoriesService) {
+    public FeedService(UserService userService, FeedRepository feedRepository, FeedCategoriesService feedCategoriesService, FeedItemService feedItemService, PlatformTransactionManager transactionManager, FeedCategoryRepository feedCategoryRepository) {
         this.userService = userService;
         this.feedRepository = feedRepository;
         this.feedCategoriesService = feedCategoriesService;
+        this.feedItemService = feedItemService;
+        this.transactionManager = transactionManager;
+        this.feedCategoryRepository = feedCategoryRepository;
     }
 
 
@@ -63,9 +77,13 @@ public class FeedService {
         return addFeed(url, null);
     }
 
-    @Transactional
     public Feed addFeed(String url, FeedCategory category) throws NewskuException {
-        User currentUser = userService.getCurrentUser();
+        return addFeed(url, category, userService.getCurrentUser());
+    }
+
+    @Transactional
+    public Feed addFeed(String url, FeedCategory category, User currentUser) throws NewskuException {
+        log.info("Adding feed {} for category {}", url, category != null ? category.getName() : "n/a");
 
         List<Item> list;
         try {
@@ -130,19 +148,19 @@ public class FeedService {
     }
 
     @Transactional
-    public List<Feed> importFeed(MultipartFile file) throws NewskuException {
+    public List<FeedToImport> getFeedsFromOpml(MultipartFile file) throws NewskuException {
         try {
             log.info("Importing feed");
             var user = userService.getCurrentUser();
             Path tempDirectory = Files.createTempDirectory("newsku-opml-import");
             Path p = tempDirectory.resolve("import.opml");
             file.transferTo(p);
-            List<Feed> newFeeds = new ArrayList<>();
+            List<FeedToImport> newFeeds = new ArrayList<>();
 
             try (var is = new FileInputStream(p.toFile())) {
                 var parser = new OpmlParser().parse(is);
                 for (Outline outline : parser.getBody().getOutlines()) {
-                    newFeeds.addAll(importFeed(outline, user, null));
+                    newFeeds.addAll(getFeedsFromOpml(outline, user, null));
                 }
 
 
@@ -160,8 +178,8 @@ public class FeedService {
     }
 
     @Transactional
-    public List<Feed> importFeed(Outline outline, User user, FeedCategory category) throws SQLException, IOException, NewskuException {
-        List<Feed> newFeeds = new ArrayList<>();
+    public List<FeedToImport> getFeedsFromOpml(Outline outline, User user, FeedCategory category) throws SQLException, IOException, NewskuException {
+        List<FeedToImport> newFeeds = new ArrayList<>();
 
         var existingCategories = feedCategoriesService.getCategories();
         Map<String, String> attributes = outline.getAttributes();
@@ -173,7 +191,7 @@ public class FeedService {
             String url = attributes.get("xmlUrl");
             if (feedRepository.findFirstByUrlAndUser(url, user).isEmpty()) {
                 try {
-                    newFeeds.add(addFeed(url, category));
+                    newFeeds.add(new FeedToImport(url, category));
                 } catch (Exception e) {
                     log.warn("Couldnt parse feed {}", url, e);
                 }
@@ -196,7 +214,7 @@ public class FeedService {
             FeedCategory finalChildrenCategory = childrenCategory;
             outline.getSubElements().forEach(outline1 -> {
                 try {
-                    newFeeds.addAll(importFeed(outline1, user, finalChildrenCategory));
+                    newFeeds.addAll(getFeedsFromOpml(outline1, user, finalChildrenCategory));
                 } catch (SQLException | IOException | NewskuException e) {
                     throw new RuntimeException(e);
                 }
@@ -206,16 +224,32 @@ public class FeedService {
         return newFeeds;
     }
 
+    private Outline getFeedOutline(Feed feed) {
+        return new Outline(Map.of("type", "rss", "xmlUrl", feed.getUrl(), "title", feed.getName()), Collections.emptyList());
+    }
+
+
     @Transactional(readOnly = true)
     public String exportFeed() throws OpmlWriteException {
-        List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
+
+        User currentUser = userService.getCurrentUser();
+        var categories = feedCategoryRepository.getAllByUser(currentUser);
+
+        List<Outline> outlines = new ArrayList<>();
+
+        // split by category
+        categories.forEach(cat -> {
+            Map<String, String> catAttributes = Map.of("text", cat.getName(), "title", cat.getName());
+            var children = feedRepository.getFeedByUserAndCategory(currentUser, cat).map(this::getFeedOutline).toList();
+            var outline = new Outline(catAttributes, children);
+            outlines.add(outline);
+        });
+
+        outlines.addAll(feedRepository.getFeedByUserAndNullCategory(currentUser).map(this::getFeedOutline).toList());
 
         Head head = new Head("Newsku", LocalDateTime.now()
                 .toString(), null, null, null, null, null, null, null, null, null, null, null);
 
-        List<Outline> outlines = feeds.stream()
-                .map(feed -> new Outline(Map.of("type", "rss", "xmlUrl", feed.getUrl(), "title", feed.getName()), Collections.emptyList()))
-                .toList();
 
         Body body = new Body(outlines);
 
@@ -224,5 +258,22 @@ public class FeedService {
         OpmlWriter writer = new OpmlWriter();
 
         return writer.write(opml);
+    }
+
+    @Transactional
+    public void importFeed(FeedToImport feedToImport) {
+        var currentUser = userService.getCurrentUser();
+        BACKGROUND_TASKS.submit(() -> {
+            TransactionHelper.doInNewTransaction(
+                    transactionManager, false, () -> {
+                        try {
+                            var feed = addFeed(feedToImport.url(), feedToImport.feedCategory(), currentUser);
+                            feedItemService.refreshFeed(feed);
+                        } catch (NewskuException e) {
+                            log.error("Couldn't import feed {}", feedToImport.url(), e);
+                        }
+                    }
+            );
+        });
     }
 }

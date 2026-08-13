@@ -29,7 +29,7 @@
     "export": "Export",
     "deleteFeed": "Delete feed?",
     "deleteFeedMessage": "This will delete the feed and all its articles",
-    "importedNFeeds": "{count, plural, =0{No feed imported} =1{Imported 1 feed} other{Importer {count} feeds}}",
+    "importedNFeeds": "{count, plural, =0{No feed imported} =1{Imported 1 feed} other{Importer {count} feeds}}, processing will happen in the background",
     "cancel": "Cancel",
     "ok": "Ok",
     "layoutExplanation": "In this screen you can adjust how your RSS feed articles are being displayed by arranging the different types of blocks the way you want it. Your feed items will be inserted from most important to least important following the blocks top to bottom.\n\nNote that the Fixed article blocks on mobile will be displayed in a similar way as the big grid items.",

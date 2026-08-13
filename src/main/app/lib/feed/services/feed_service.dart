@@ -5,6 +5,7 @@ import 'package:app/base_service.dart';
 import 'package:app/feed/models/feed.dart';
 import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_error.dart';
+import 'package:app/feed/models/feed_import.dart';
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/utils/models/pagination.dart';
 import 'package:http/http.dart' as http;
@@ -138,7 +139,7 @@ class FeedService extends BaseService {
     return response.bodyBytes;
   }
 
-  Future<List<Feed>> importFeeds(Uint8List bytes) async {
+  Future<List<FeedToImport>> importFeeds(Uint8List bytes) async {
     var uri = await formatUrl('/api/feeds/import');
 
     var request = http.MultipartRequest('POST', uri)
@@ -149,7 +150,7 @@ class FeedService extends BaseService {
     processResponse(response);
     Iterable i = jsonDecode(response.body);
 
-    return i.map((e) => Feed.fromJson(e as Map<String, dynamic>)).toList();
+    return i.map((e) => FeedToImport.fromJson(e as Map<String, dynamic>)).toList();
   }
 
   Future<void> readItems(List<String> itemIds) async {

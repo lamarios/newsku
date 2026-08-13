@@ -2,6 +2,7 @@ package com.github.lamarios.newsku.services;
 
 import com.apptasticsoftware.rssreader.Enclosure;
 import com.apptasticsoftware.rssreader.Item;
+import com.github.lamarios.newsku.models.FeedToImport;
 import com.github.lamarios.newsku.persistence.entities.*;
 import com.github.lamarios.newsku.persistence.repositories.*;
 import com.github.lamarios.newsku.utils.HtmlUtils;
@@ -30,6 +31,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import static java.lang.Math.max;
 
@@ -37,8 +39,7 @@ import static java.lang.Math.max;
 public class FeedItemService {
     private final static Logger logger = LogManager.getLogger();
     private final static long PROMPT_TAG_TIME_FRAME = 30 * 24 * 60 * 60 * 1000L; // 30 days
-    private final FeedService feedService;
-    private final ExecutorService exec = Executors.newSingleThreadExecutor();
+    public final static ExecutorService BACKGROUND_TASKS = Executors.newSingleThreadExecutor();
 
 
     private final FeedItemRepository feedItemRepository;
@@ -54,11 +55,10 @@ public class FeedItemService {
     private final ClickService clickService;
 
     @Autowired
-    public FeedItemService(FeedItemRepository feedItemRepository, PlatformTransactionManager transactionManager, OpenaiService openaiService, FeedService feedService, UserService userService, EntityManager entityManager, FeedRepository feedRepository, FeedErrorRepository feedErrorRepository, FeedClicksRepository feedClicksRepository, TagClicksRepository tagClicksRepository, ClickService clickService) {
+    public FeedItemService(FeedItemRepository feedItemRepository, PlatformTransactionManager transactionManager, OpenaiService openaiService, UserService userService, EntityManager entityManager, FeedRepository feedRepository, FeedErrorRepository feedErrorRepository, FeedClicksRepository feedClicksRepository, TagClicksRepository tagClicksRepository, ClickService clickService) {
         this.feedItemRepository = feedItemRepository;
         this.transactionManager = transactionManager;
         this.openaiService = openaiService;
-        this.feedService = feedService;
         this.userService = userService;
         this.entityManager = entityManager;
         this.feedRepository = feedRepository;
@@ -69,7 +69,7 @@ public class FeedItemService {
     }
 
     public void refreshFeed(Feed feed) {
-        exec.submit(() -> refreshFeedWorker(feed));
+        BACKGROUND_TASKS.submit(() -> refreshFeedWorker(feed));
     }
 
     public void refreshFeedWorker(Feed feed) {
@@ -77,10 +77,18 @@ public class FeedItemService {
         try {
             logger.info("Refreshing feed {}", feed.getId());
 
-            List<Item> items = FeedService.DEFAULT_READER.read(feed.getUrl())
-                    .sorted()
-                    .filter(item -> item.getGuid().isPresent())
-                    .toList();
+            List<Item> items = FeedService.DEFAULT_READER.read(feed.getUrl()).sorted().filter(item -> item.getGuid().isPresent()).collect(Collectors.toList());
+
+            // we remove stuff that we already processed
+            TransactionHelper.doInNewTransaction(transactionManager, true, () -> {
+                List<String> guidsFromFeedUrl = items.stream().map(Item::getGuid).filter(Optional::isPresent).map(Optional::get).toList();
+                feedItemRepository.findAllByGuidInAndFeed(guidsFromFeedUrl, feed).map(FeedItem::getGuid).forEach(s -> {
+                    var removed = items.removeIf(item -> item.getGuid().get().equalsIgnoreCase(s));
+                    if (removed) {
+                        logger.info("Feed {} already processed", s);
+                    }
+                });
+            });
 
             for (Item item : items) {
                 try {
@@ -92,19 +100,18 @@ public class FeedItemService {
                         }
 
                         try {
-                            var existingFeed = feedItemRepository.getFirstByGuidAndFeed(item.getGuid().get(), feed);
+//                            var existingFeed = feedItemRepository.getFirstByGuidAndFeed(item.getGuid().get(), feed);
 
-                            Optional<String> image = item.getEnclosure()
-                                    .filter(e -> e.getType() != null && e.getUrl() != null && e.getType()
-                                            .contains("image"))
-                                    .map(Enclosure::getUrl);
+                            Optional<String> image = item.getEnclosure().filter(e -> e.getType() != null && e.getUrl() != null && e.getType().contains("image")).map(Enclosure::getUrl);
 
                             String imageUrl = image.orElse(getImageUrl(item));
 
+/*
                             if (existingFeed != null) {
                                 logger.info("Feed {} already processed", item.getGuid().get());
                                 return;
                             }
+*/
 
                             var clicks = clickService.tagClicks(System.currentTimeMillis() - PROMPT_TAG_TIME_FRAME, System.currentTimeMillis(), feed.getUser());
 
@@ -116,30 +123,14 @@ public class FeedItemService {
                                 newItem.setFeed(feed);
                                 newItem.setUrl(item.getLink().orElse(null));
                                 newItem.setGuid(item.getGuid().get());
-                                newItem.setDescription(item.getDescription()
-                                        .map(StringEscapeUtils::unescapeHtml4)
-                                        .map(HtmlUtils::getTextContent)
-                                        .orElse(null));
-                                newItem.setTitle(item.getTitle().map(StringEscapeUtils::unescapeHtml4)
-                                        .map(HtmlUtils::getTextContent)
-                                        .orElse(null));
-                                newItem.setContent(item.getContent()
-                                        .map(StringEscapeUtils::unescapeHtml4)
-                                        .map(HtmlUtils::getTextContent)
-                                        .orElse(null));
+                                newItem.setDescription(item.getDescription().map(StringEscapeUtils::unescapeHtml4).map(HtmlUtils::getTextContent).orElse(null));
+                                newItem.setTitle(item.getTitle().map(StringEscapeUtils::unescapeHtml4).map(HtmlUtils::getTextContent).orElse(null));
+                                newItem.setContent(item.getContent().map(StringEscapeUtils::unescapeHtml4).map(HtmlUtils::getTextContent).orElse(null));
                                 newItem.setImportance(analysis.get().importance());
                                 newItem.setReasoning(analysis.get().reasoning());
                                 newItem.setImageUrl(imageUrl);
-                                newItem.setTimeCreated(item.getPubDateAsZonedDateTime()
-                                        .map(zonedDateTime -> zonedDateTime.toInstant().toEpochMilli())
-                                        .orElse(System.currentTimeMillis()));
-                                newItem.setTags(analysis.get()
-                                        .tags()
-                                        .stream()
-                                        .map(String::toLowerCase)
-                                        .map(s -> s.replaceAll("[^a-zA-Z0-9 ]", ""))
-                                        .filter(s -> !s.isEmpty())
-                                        .toList());
+                                newItem.setTimeCreated(item.getPubDateAsZonedDateTime().map(zonedDateTime -> zonedDateTime.toInstant().toEpochMilli()).orElse(System.currentTimeMillis()));
+                                newItem.setTags(analysis.get().tags().stream().map(String::toLowerCase).map(s -> s.replaceAll("[^a-zA-Z0-9 ]", "")).filter(s -> !s.isEmpty()).toList());
 
                                 feedItemRepository.save(newItem);
                             }
@@ -194,9 +185,7 @@ public class FeedItemService {
             imageUrl = doc.getElementsByTag("img").attr("src");
         }
         // we don't want empty images or relative paths
-        return Optional.ofNullable(imageUrl)
-                .filter(s -> !s.isBlank() && !s.startsWith("/"))
-                .orElse(getImageFromArticle(item));
+        return Optional.ofNullable(imageUrl).filter(s -> !s.isBlank() && !s.startsWith("/")).orElse(getImageFromArticle(item));
 
     }
 
@@ -262,7 +251,7 @@ public class FeedItemService {
     @Transactional(readOnly = true)
     public Page<@NotNull FeedItem> getItems(Long from, Long to, int page, int pageSize) {
 
-        List<Feed> feeds = feedService.getFeeds();
+        List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
         var user = userService.getCurrentUser();
 
         return feedItemRepository.findallByTimeAndFeeds(user.getMinimumImportance(), from, to, feeds, PageRequest.of(page, pageSize, Sort.by(List.of(new Sort.Order(Sort.Direction.DESC, "importance"), new Sort.Order(Sort.Direction.DESC, "timeCreated")))));
@@ -271,18 +260,14 @@ public class FeedItemService {
     @Transactional(readOnly = true)
     public List<FeedItem> search(String query, int page, int pageSize) {
         var feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
-        return entityManager.createNativeQuery("SELECT * FROM feed_items WHERE search_terms @@ websearch_to_tsquery(:textQuery) AND feed_id IN :feeds LIMIT :pageSize OFFSET :page", FeedItem.class)
-                .setParameter("textQuery", query)
-                .setParameter("feeds", feeds.stream().map(Feed::getId).toList())
-                .setParameter("pageSize", pageSize)
-                .setParameter("page", page * pageSize)
-                .getResultList();
+        return entityManager.createNativeQuery("SELECT * FROM feed_items WHERE search_terms @@ websearch_to_tsquery(:textQuery) AND feed_id IN :feeds LIMIT :pageSize OFFSET :page", FeedItem.class).setParameter("textQuery", query).setParameter("feeds", feeds.stream().map(Feed::getId).toList()).setParameter("pageSize", pageSize).setParameter("page", page * pageSize).getResultList();
     }
 
     @Transactional(readOnly = true)
     public FeedItem getItem(String id) throws SQLException {
 
-        List<Feed> feeds = feedService.getFeeds();
+
+        List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
 
         return feedItemRepository.findFirstByIdAndFeedIn(id, feeds).stream().findFirst().orElse(null);
     }
@@ -301,11 +286,16 @@ public class FeedItemService {
 
     @Transactional(readOnly = true)
     public Page<FeedItem> getFeedItems(String id, int page, int pageSize) {
-        Feed feed = feedService.getFeed(id);
+        var feed = feedRepository.findFirstByIdAndUser(id, userService.getCurrentUser());
         if (feed == null) {
             return Page.empty();
         }
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("timeCreated").descending());
         return feedItemRepository.findFeedItemByFeed(feed, pageable);
+    }
+
+    @Transactional
+    public void importFeed(FeedToImport feedToImport) {
+
     }
 }

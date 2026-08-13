@@ -118,7 +118,7 @@ class AppLocalizationsEn extends AppLocalizations {
       one: 'Imported 1 feed',
       zero: 'No feed imported',
     );
-    return '$_temp0';
+    return '$_temp0, processing will happen in the background';
   }
 
   @override

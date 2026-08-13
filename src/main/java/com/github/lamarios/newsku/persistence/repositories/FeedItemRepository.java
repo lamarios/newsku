@@ -10,10 +10,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface FeedItemRepository extends JpaRepository<FeedItem, String> {
     FeedItem getFirstByGuid(String guid);
-    
+
     @Query(value = "select i from FeedItem i where i.feed in :feeds and i.importance >= :minImportance and i.timeCreated > :from and i.timeCreated <= :to")
     Page<FeedItem> findallByTimeAndFeeds(@Param("minImportance") int minImportance, @Param("from") long from, @Param("to") long to, @Param("feeds") List<Feed> feeds, Pageable pageable);
 
@@ -26,4 +27,8 @@ public interface FeedItemRepository extends JpaRepository<FeedItem, String> {
     FeedItem getFirstByIdAndFeedIn(String id, Collection<Feed> feeds);
 
     Page<FeedItem> findFeedItemByFeed(Feed feed, Pageable pageable);
+
+    List<FeedItem> findAllByGuid(String guid);
+
+    Stream<FeedItem> findAllByGuidInAndFeed(Collection<String> guids, Feed feed);
 }
