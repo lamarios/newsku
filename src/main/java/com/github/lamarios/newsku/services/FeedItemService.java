@@ -26,6 +26,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -259,8 +260,18 @@ public class FeedItemService {
 
     @Transactional(readOnly = true)
     public List<FeedItem> search(String query, int page, int pageSize) {
-        var feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
-        return entityManager.createNativeQuery("SELECT * FROM feed_items WHERE search_terms @@ websearch_to_tsquery(:textQuery) AND feed_id IN :feeds LIMIT :pageSize OFFSET :page", FeedItem.class).setParameter("textQuery", query).setParameter("feeds", feeds.stream().map(Feed::getId).toList()).setParameter("pageSize", pageSize).setParameter("page", page * pageSize).getResultList();
+        page = max(0, page);
+        pageSize = max(pageSize, 1);
+
+        String tsQuery = Arrays
+                .stream(query.trim().split("\\s+"))
+                .filter(s -> !s.isBlank())
+                .map(s -> s.replaceAll("[^a-zA-Z0-9]", "") + ":*")
+                .collect(Collectors.joining(" & "));
+
+        var feeds = feedRepository.getFeedsByUser(userService.getCurrentUser()).stream().map(Feed::getId).toList();
+        return feedItemRepository.search(tsQuery, feeds, page * pageSize, pageSize);
+//        return entityManager.createNativeQuery("SELECT * FROM feed_items WHERE search_terms @@ websearch_to_tsquery(:textQuery) AND feed_id IN :feeds LIMIT :pageSize OFFSET :page", FeedItem.class).setParameter("textQuery", query).setParameter("feeds", feeds.stream().map(Feed::getId).toList()).setParameter("pageSize", pageSize).setParameter("page", page * pageSize).getResultList();
     }
 
     @Transactional(readOnly = true)
