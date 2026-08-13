@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @OpenAPIDefinition(info = @Info(title = "Newsku API", version = "1.0", description = "NewsKu API"))
 @EnableScheduling
 public class Application {
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
 }

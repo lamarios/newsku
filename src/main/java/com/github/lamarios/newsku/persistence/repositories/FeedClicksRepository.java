@@ -7,9 +7,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FeedClicksRepository extends JpaRepository<FeedClick, String> {
-    List<FeedClick> getAllByFeedInAndTimeCreatedBetween(
-            Collection<Feed> feeds,
-            long timeCreatedAfter,
-            long timeCreatedBefore
-    );
+  List<FeedClick> getAllByFeedInAndTimeCreatedBetween(
+      Collection<Feed> feeds, long timeCreatedAfter, long timeCreatedBefore);
 }

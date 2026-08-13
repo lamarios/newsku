@@ -6,35 +6,35 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "feed_categories")
 public class FeedCategory {
-    @Id
-    private String id;
-    private String name;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
+  @Id private String id;
+  private String name;
 
-    public String getId() {
-        return id;
-    }
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  @JsonIgnore
+  private User user;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public User getUser() {
-        return user;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 }

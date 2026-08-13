@@ -17,23 +17,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @TestConfiguration
 @PropertySource("classpath:application.properties")
 public class TestConfig {
-    @Bean
-    public OpenaiService openaiService() {
-        return new MockOpenaiService();
-    }
+  @Bean
+  public OpenaiService openaiService() {
+    return new MockOpenaiService();
+  }
 
-    @Bean
-    public EmailService emailService(Configuration templateEngine) {
-        return new MockEmailService(templateEngine);
-    }
+  @Bean
+  public EmailService emailService(Configuration templateEngine) {
+    return new MockEmailService(templateEngine);
+  }
 
-    @Bean
-    public UserService userService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        return new TestUserService(userRepository, passwordEncoder);
-    }
+  @Bean
+  public UserService userService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    return new TestUserService(userRepository, passwordEncoder);
+  }
 
-    @Bean
-    public FakeRssFeedController fakeRssFeedController() {
-        return new FakeRssFeedController();
-    }
+  @Bean
+  public FakeRssFeedController fakeRssFeedController() {
+    return new FakeRssFeedController();
+  }
 }

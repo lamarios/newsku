@@ -16,30 +16,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/signup")
 @Tag(name = "Log in")
 public class SignUpController {
-    private final UserService userService;
-    private final boolean allowSignUp;
-    private final boolean demoMode;
+  private final UserService userService;
+  private final boolean allowSignUp;
+  private final boolean demoMode;
 
-    @Autowired
-    public SignUpController(
-            UserService userService,
-            @Value("${ALLOW_SIGNUP:0}") boolean allowSignUp,
-            @Value("${DEMO_MODE:0}") boolean demoMode
-    ) {
-        this.userService = userService;
-        this.allowSignUp = allowSignUp;
-        this.demoMode = demoMode;
-    }
+  @Autowired
+  public SignUpController(
+      UserService userService,
+      @Value("${ALLOW_SIGNUP:0}") boolean allowSignUp,
+      @Value("${DEMO_MODE:0}") boolean demoMode) {
+    this.userService = userService;
+    this.allowSignUp = allowSignUp;
+    this.demoMode = demoMode;
+  }
 
-    @PutMapping
-    public User signup(@RequestBody User user) throws java.nio.file.AccessDeniedException, NewskuUserException {
-        if (demoMode) {
-            throw new AccessDeniedException("App in demoMode");
-        }
-        if (allowSignUp) {
-            return userService.createUser(user);
-        } else {
-            throw new AccessDeniedException("Sign up not allowed");
-        }
+  @PutMapping
+  public User signup(@RequestBody User user)
+      throws java.nio.file.AccessDeniedException, NewskuUserException {
+    if (demoMode) {
+      throw new AccessDeniedException("App in demoMode");
     }
+    if (allowSignUp) {
+      return userService.createUser(user);
+    } else {
+      throw new AccessDeniedException("Sign up not allowed");
+    }
+  }
 }

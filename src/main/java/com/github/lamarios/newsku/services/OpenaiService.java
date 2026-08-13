@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OpenaiService {
-    Optional<OpenAiFeedResponse> processFeedItem(Item item, User user, List<TagClickStat> clickStats);
+  Optional<OpenAiFeedResponse> processFeedItem(Item item, User user, List<TagClickStat> clickStats);
 }

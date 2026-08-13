@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LayoutRepository extends JpaRepository<LayoutBlock, String> {
-    List<LayoutBlock> findByUserOrderByOrder(User user);
+  List<LayoutBlock> findByUserOrderByOrder(User user);
 
-    void deleteByUser(User user);
+  void deleteByUser(User user);
 }

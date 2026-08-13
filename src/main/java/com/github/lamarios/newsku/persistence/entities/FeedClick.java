@@ -5,35 +5,36 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "feed_clicks")
 public class FeedClick {
-    @Id
-    private String id;
-    @ManyToOne
-    @JoinColumn(name = "feed_id")
-    private Feed feed;
-    @Column(name = "timecreated")
-    private long timeCreated;
+  @Id private String id;
 
-    public Feed getFeed() {
-        return feed;
-    }
+  @ManyToOne
+  @JoinColumn(name = "feed_id")
+  private Feed feed;
 
-    public void setFeed(Feed feed) {
-        this.feed = feed;
-    }
+  @Column(name = "timecreated")
+  private long timeCreated;
 
-    public String getId() {
-        return id;
-    }
+  public Feed getFeed() {
+    return feed;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setFeed(Feed feed) {
+    this.feed = feed;
+  }
 
-    public long getTimeCreated() {
-        return timeCreated;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setTimeCreated(long timeCreated) {
-        this.timeCreated = timeCreated;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public long getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(long timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 }

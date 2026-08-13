@@ -15,25 +15,25 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Users")
 @SecurityRequirement(name = "bearerAuth")
 public class UserController {
-    private final boolean demoMode;
-    private final UserService userService;
+  private final boolean demoMode;
+  private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService, @Value("${DEMO_MODE:0}") boolean demoMode) {
-        this.userService = userService;
-        this.demoMode = demoMode;
-    }
+  @Autowired
+  public UserController(UserService userService, @Value("${DEMO_MODE:0}") boolean demoMode) {
+    this.userService = userService;
+    this.demoMode = demoMode;
+  }
 
-    @PostMapping
-    public User updateUser(@RequestBody User user) throws NewskuUserException {
-        if (demoMode) {
-            throw new AccessDeniedException("App in demoMode");
-        }
-        return userService.updateSelf(user);
+  @PostMapping
+  public User updateUser(@RequestBody User user) throws NewskuUserException {
+    if (demoMode) {
+      throw new AccessDeniedException("App in demoMode");
     }
+    return userService.updateSelf(user);
+  }
 
-    @GetMapping
-    public User getCurrentUser() {
-        return userService.getCurrentUser();
-    }
+  @GetMapping
+  public User getCurrentUser() {
+    return userService.getCurrentUser();
+  }
 }

@@ -28,87 +28,85 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 @Tag(name = "Feeds")
 @SecurityRequirement(name = "bearerAuth")
 public class FeedItemController {
-    private final FeedItemService feedItemService;
-    private final Logger log = LogManager.getLogger();
-    private final Path tempDir;
+  private final FeedItemService feedItemService;
+  private final Logger log = LogManager.getLogger();
+  private final Path tempDir;
 
-    @Autowired
-    public FeedItemController(FeedItemService feedItemService) throws IOException {
-        this.feedItemService = feedItemService;
-        this.tempDir = Files.createTempDirectory("newsku-feed-item-images-");
+  @Autowired
+  public FeedItemController(FeedItemService feedItemService) throws IOException {
+    this.feedItemService = feedItemService;
+    this.tempDir = Files.createTempDirectory("newsku-feed-item-images-");
+  }
+
+  @GetMapping
+  public Page<FeedItem> getItems(
+      @RequestParam("from") Long from,
+      @RequestParam("to") Long to,
+      @DefaultValue("0") @RequestParam("page") int page,
+      @DefaultValue("100") @RequestParam("pageSize") int pageSize)
+      throws SQLException {
+    if (from == null || to == null) {
+      throw new InvalidParameterException("from and to query parameters are required");
+    }
+    return feedItemService.getItems(from, to, page, pageSize);
+  }
+
+  @PostMapping("/read")
+  public boolean readArticles(@RequestBody List<String> ids) {
+    log.info("Changing read status of {} items", ids.size());
+    return feedItemService.readItems(ids);
+  }
+
+  @PutMapping("/{id}/click")
+  public void clickItem(@PathVariable String id) {
+    feedItemService.itemClicked(id);
+  }
+
+  @GetMapping("/{id}/image")
+  public ResponseEntity<StreamingResponseBody> getArticleImage(@PathVariable String id)
+      throws IOException, SQLException {
+    var item = feedItemService.getItem(id);
+
+    if (item == null || item.getImageUrl() == null || item.getImageUrl().isBlank()) {
+      return ResponseEntity.status(404).build();
     }
 
-    @GetMapping
-    public Page<FeedItem> getItems(
-            @RequestParam("from") Long from,
-            @RequestParam("to") Long to,
-            @DefaultValue("0") @RequestParam("page") int page,
-            @DefaultValue("100") @RequestParam("pageSize") int pageSize
-    ) throws SQLException {
-        if (from == null || to == null) {
-            throw new InvalidParameterException("from and to query parameters are required");
-        }
-        return feedItemService.getItems(from, to, page, pageSize);
+    var filePath = tempDir.resolve(id);
+
+    if (!filePath.toFile().exists()) {
+      log.info("File doesn't exist in cache, caching it...");
+      ImageHelper.downloadImageToPath(item.getImageUrl(), filePath);
+    } else {
+      log.info("Serving from cache");
+    }
+    // Fetch from remote URL
+    return serveFile(filePath);
+  }
+
+  public static ResponseEntity<StreamingResponseBody> serveFile(Path filePath) throws IOException {
+    String contentType = Files.probeContentType(filePath);
+    if (contentType == null) {
+      contentType = "application/octet-stream";
     }
 
-    @PostMapping("/read")
-    public boolean readArticles(@RequestBody List<String> ids) {
-        log.info("Changing read status of {} items", ids.size());
-        return feedItemService.readItems(ids);
-    }
+    long fileSize = Files.size(filePath);
 
-    @PutMapping("/{id}/click")
-    public void clickItem(@PathVariable String id) {
-        feedItemService.itemClicked(id);
-    }
-
-    @GetMapping("/{id}/image")
-    public ResponseEntity<StreamingResponseBody> getArticleImage(@PathVariable String id)
-            throws IOException,
-            SQLException {
-        var item = feedItemService.getItem(id);
-
-        if (item == null || item.getImageUrl() == null || item.getImageUrl().isBlank()) {
-            return ResponseEntity.status(404).build();
-        }
-
-        var filePath = tempDir.resolve(id);
-
-        if (!filePath.toFile().exists()) {
-            log.info("File doesn't exist in cache, caching it...");
-            ImageHelper.downloadImageToPath(item.getImageUrl(), filePath);
-        } else {
-            log.info("Serving from cache");
-        }
-        // Fetch from remote URL
-        return serveFile(filePath);
-    }
-
-    public static ResponseEntity<StreamingResponseBody> serveFile(Path filePath) throws IOException {
-        String contentType = Files.probeContentType(filePath);
-        if (contentType == null) {
-            contentType = "application/octet-stream";
-        }
-
-        long fileSize = Files.size(filePath);
-
-        StreamingResponseBody responseBody =
-                outputStream -> {
-            try (InputStream inputStream = new FileInputStream(filePath.toFile())) {
-                // 8KB buffer
-                byte[] buffer = new byte[8192];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-                outputStream.flush();
+    StreamingResponseBody responseBody =
+        outputStream -> {
+          try (InputStream inputStream = new FileInputStream(filePath.toFile())) {
+            // 8KB buffer
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+              outputStream.write(buffer, 0, bytesRead);
             }
+            outputStream.flush();
+          }
         };
 
-        return ResponseEntity
-            .ok()
-            .header(HttpHeaders.CONTENT_TYPE, contentType)
-            .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileSize))
-            .body(responseBody);
-    }
+    return ResponseEntity.ok()
+        .header(HttpHeaders.CONTENT_TYPE, contentType)
+        .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileSize))
+        .body(responseBody);
+  }
 }

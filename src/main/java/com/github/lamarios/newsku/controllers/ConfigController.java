@@ -16,44 +16,43 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/config")
 @Tag(name = "misc")
 public class ConfigController {
-    private final OidcService oidcService;
-    private final boolean allowSignUp;
-    private final String announcement;
-    private final boolean demoMode;
-    private final BuildProperties buildProperties;
-    private final Optional<Mailer> mailer;
+  private final OidcService oidcService;
+  private final boolean allowSignUp;
+  private final String announcement;
+  private final boolean demoMode;
+  private final BuildProperties buildProperties;
+  private final Optional<Mailer> mailer;
 
-    @Autowired
-    public ConfigController(
-            OidcService oidcService,
-            @Value("${ALLOW_SIGNUP:0}") boolean allowSignUp,
-            @Value("${ANNOUNCEMENT:}") String announcement,
-            @Value("${DEMO_MODE:0}") boolean demoMode,
-            BuildProperties buildProperties,
-            Optional<Mailer> mailer
-    ) {
-        this.oidcService = oidcService;
-        this.allowSignUp = allowSignUp;
-        this.announcement = announcement;
-        this.demoMode = demoMode;
-        this.buildProperties = buildProperties;
-        this.mailer = mailer;
+  @Autowired
+  public ConfigController(
+      OidcService oidcService,
+      @Value("${ALLOW_SIGNUP:0}") boolean allowSignUp,
+      @Value("${ANNOUNCEMENT:}") String announcement,
+      @Value("${DEMO_MODE:0}") boolean demoMode,
+      BuildProperties buildProperties,
+      Optional<Mailer> mailer) {
+    this.oidcService = oidcService;
+    this.allowSignUp = allowSignUp;
+    this.announcement = announcement;
+    this.demoMode = demoMode;
+    this.buildProperties = buildProperties;
+    this.mailer = mailer;
+  }
+
+  @GetMapping
+  public AppConfig getConfig() {
+    AppConfig config = new AppConfig();
+    config.setAnnouncement(announcement);
+    config.setAllowSignup(allowSignUp);
+    config.setDemoMode(demoMode);
+    config.setCanResetPassword(mailer.isPresent());
+
+    config.setBackendVersion(buildProperties.getVersion());
+
+    if (oidcService.getOidcDiscoveryUrl() != null) {
+      config.setOidcConfig(oidcService.getOidcConfig());
     }
 
-    @GetMapping
-    public AppConfig getConfig() {
-        AppConfig config = new AppConfig();
-        config.setAnnouncement(announcement);
-        config.setAllowSignup(allowSignUp);
-        config.setDemoMode(demoMode);
-        config.setCanResetPassword(mailer.isPresent());
-
-        config.setBackendVersion(buildProperties.getVersion());
-
-        if (oidcService.getOidcDiscoveryUrl() != null) {
-            config.setOidcConfig(oidcService.getOidcConfig());
-        }
-
-        return config;
-    }
+    return config;
+  }
 }

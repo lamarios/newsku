@@ -15,18 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Search")
 @SecurityRequirement(name = "bearerAuth")
 public class SearchController {
-    private final FeedItemService feedItemService;
+  private final FeedItemService feedItemService;
 
-    public SearchController(FeedItemService feedItemService) {
-        this.feedItemService = feedItemService;
-    }
+  public SearchController(FeedItemService feedItemService) {
+    this.feedItemService = feedItemService;
+  }
 
-    @GetMapping
-    public List<FeedItem> seeach(
-            @RequestParam("query") String query,
-            @RequestParam("page") int page,
-            @RequestParam("pageSize") int size
-    ) {
-        return feedItemService.search(query, page, size);
-    }
+  @GetMapping
+  public List<FeedItem> seeach(
+      @RequestParam("query") String query,
+      @RequestParam("page") int page,
+      @RequestParam("pageSize") int size) {
+    return feedItemService.search(query, page, size);
+  }
 }

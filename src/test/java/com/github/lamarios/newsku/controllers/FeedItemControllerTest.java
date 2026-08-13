@@ -1,6 +1,7 @@
 package com.github.lamarios.newsku.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.github.lamarios.newsku.TestConfig;
 import com.github.lamarios.newsku.TestContainerTest;
 import com.github.lamarios.newsku.errors.NewskuException;
@@ -14,31 +15,27 @@ import org.springframework.context.annotation.Import;
 
 @Import(TestConfig.class)
 public class FeedItemControllerTest extends TestContainerTest {
-    @Autowired
-    private FeedItemController feedItemController;
-    @Autowired
-    private FeedItemService feedItemService;
-    @Autowired
-    private FeedController feedController;
-    @LocalServerPort
-    private int port;
+  @Autowired private FeedItemController feedItemController;
+  @Autowired private FeedItemService feedItemService;
+  @Autowired private FeedController feedController;
+  @LocalServerPort private int port;
 
-    @Test
-    public void testFeedItems() throws SQLException, NewskuException {
-        String url = "http://localhost:" + port + "/test/rss/one-month-feed";
-        var feed = feedController.addFeed(url, true);
+  @Test
+  public void testFeedItems() throws SQLException, NewskuException {
+    String url = "http://localhost:" + port + "/test/rss/one-month-feed";
+    var feed = feedController.addFeed(url, true);
 
-        feedItemService.refreshFeedWorker(feed);
+    feedItemService.refreshFeedWorker(feed);
 
-        var items = feedItemController.getItems(0L, System.currentTimeMillis(), 0, 9999999);
+    var items = feedItemController.getItems(0L, System.currentTimeMillis(), 0, 9999999);
 
-        assertTrue(items.hasContent());
+    assertTrue(items.hasContent());
 
-        assertTrue(items.getContent().stream().noneMatch(FeedItem::isRead));
+    assertTrue(items.getContent().stream().noneMatch(FeedItem::isRead));
 
-        feedItemController.readArticles(items.getContent().stream().map(FeedItem::getId).toList());
+    feedItemController.readArticles(items.getContent().stream().map(FeedItem::getId).toList());
 
-        items = feedItemController.getItems(0L, System.currentTimeMillis(), 0, 9999999);
-        assertTrue(items.getContent().stream().allMatch(FeedItem::isRead));
-    }
+    items = feedItemController.getItems(0L, System.currentTimeMillis(), 0, 9999999);
+    assertTrue(items.getContent().stream().allMatch(FeedItem::isRead));
+  }
 }

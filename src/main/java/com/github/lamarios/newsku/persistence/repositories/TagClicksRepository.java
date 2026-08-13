@@ -6,5 +6,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TagClicksRepository extends JpaRepository<TagClick, String> {
-    List<TagClick> findTagClickByUserAndTimeCreatedBetween(User user, long timeCreatedAfter, long timeCreatedBefore);
+  List<TagClick> findTagClickByUserAndTimeCreatedBetween(
+      User user, long timeCreatedAfter, long timeCreatedBefore);
 }

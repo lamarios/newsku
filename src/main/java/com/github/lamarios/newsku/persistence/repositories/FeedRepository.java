@@ -10,21 +10,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface FeedRepository extends JpaRepository<Feed, String> {
-    List<Feed> getFeedsByUser(User user);
+  List<Feed> getFeedsByUser(User user);
 
-    User user(User user);
+  User user(User user);
 
-    Feed getFirstById(String id);
+  Feed getFirstById(String id);
 
-    Feed findFirstByIdAndUser(String id, User user);
+  Feed findFirstByIdAndUser(String id, User user);
 
-    List<Feed> findFirstByUrlAndUser(String url, User user);
+  List<Feed> findFirstByUrlAndUser(String url, User user);
 
-    @Query("select sum(f.lastRefreshErrors) from Feed f where f.user = :user")
-    Long sumFeedsError(@Param("user") User user);
+  @Query("select sum(f.lastRefreshErrors) from Feed f where f.user = :user")
+  Long sumFeedsError(@Param("user") User user);
 
-    Stream<Feed> getFeedByUserAndCategory(User user, FeedCategory category);
+  Stream<Feed> getFeedByUserAndCategory(User user, FeedCategory category);
 
-    @Query("select f from Feed f where f.category is null and f.user = :user")
-    Stream<Feed> getFeedByUserAndNullCategory(@Param("user") User user);
+  @Query("select f from Feed f where f.category is null and f.user = :user")
+  Stream<Feed> getFeedByUserAndNullCategory(@Param("user") User user);
 }

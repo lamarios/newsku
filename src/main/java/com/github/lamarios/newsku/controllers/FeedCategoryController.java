@@ -18,45 +18,43 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Feed Categories")
 @SecurityRequirement(name = "bearerAuth")
 public class FeedCategoryController {
-    private final FeedCategoriesService feedCategoriesService;
-    private final Logger log = LogManager.getLogger();
-    private final boolean demoMode;
+  private final FeedCategoriesService feedCategoriesService;
+  private final Logger log = LogManager.getLogger();
+  private final boolean demoMode;
 
-    @Autowired
-    public FeedCategoryController(
-            FeedCategoriesService feedCategoriesService,
-            @Value("${DEMO_MODE:0}") boolean demoMode
-    ) {
-        this.feedCategoriesService = feedCategoriesService;
-        this.demoMode = demoMode;
-    }
+  @Autowired
+  public FeedCategoryController(
+      FeedCategoriesService feedCategoriesService, @Value("${DEMO_MODE:0}") boolean demoMode) {
+    this.feedCategoriesService = feedCategoriesService;
+    this.demoMode = demoMode;
+  }
 
-    @GetMapping
-    public List<FeedCategory> getCategories() {
-        return feedCategoriesService.getCategories();
-    }
+  @GetMapping
+  public List<FeedCategory> getCategories() {
+    return feedCategoriesService.getCategories();
+  }
 
-    @PutMapping
-    public FeedCategory addCategory(@RequestBody String name) throws NewskuException {
-        if (demoMode) {
-            throw new AccessDeniedException("App in demoMode");
-        }
-        return feedCategoriesService.addCategory(name);
+  @PutMapping
+  public FeedCategory addCategory(@RequestBody String name) throws NewskuException {
+    if (demoMode) {
+      throw new AccessDeniedException("App in demoMode");
     }
+    return feedCategoriesService.addCategory(name);
+  }
 
-    @PostMapping
-    public FeedCategory updateCategory(@RequestBody FeedCategory cat) {
-        if (demoMode) {
-            throw new AccessDeniedException("App in demoMode");
-        }
-        return feedCategoriesService.updateCategory(cat);
+  @PostMapping
+  public FeedCategory updateCategory(@RequestBody FeedCategory cat) {
+    if (demoMode) {
+      throw new AccessDeniedException("App in demoMode");
     }
+    return feedCategoriesService.updateCategory(cat);
+  }
 
-    @DeleteMapping("{id}")
-    public boolean deleteCategory(@PathVariable String id) {
-        if (demoMode) {
-            throw new AccessDeniedException("App in demoMode");
-        }
-        return feedCategoriesService.deleteCategory(id);
+  @DeleteMapping("{id}")
+  public boolean deleteCategory(@PathVariable String id) {
+    if (demoMode) {
+      throw new AccessDeniedException("App in demoMode");
     }
+    return feedCategoriesService.deleteCategory(id);
+  }
 }

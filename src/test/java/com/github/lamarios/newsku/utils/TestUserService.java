@@ -6,18 +6,18 @@ import com.github.lamarios.newsku.services.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class TestUserService extends UserService {
-    private User currentUser;
+  private User currentUser;
 
-    public TestUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        super(userRepository, passwordEncoder);
-    }
+  public TestUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    super(userRepository, passwordEncoder);
+  }
 
-    @Override
-    public User getCurrentUser() {
-        return currentUser;
-    }
+  @Override
+  public User getCurrentUser() {
+    return currentUser;
+  }
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
+  public void setCurrentUser(User currentUser) {
+    this.currentUser = currentUser;
+  }
 }

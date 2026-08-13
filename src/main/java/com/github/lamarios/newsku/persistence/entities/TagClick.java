@@ -5,44 +5,46 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "tag_clicks")
 public class TagClick {
-    @Id
-    private String id;
-    @Column(name = "timecreated")
-    private long timeCreated;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    private String tag;
+  @Id private String id;
 
-    public User getUser() {
-        return user;
-    }
+  @Column(name = "timecreated")
+  private long timeCreated;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
-    public String getId() {
-        return id;
-    }
+  private String tag;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public long getTimeCreated() {
-        return timeCreated;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public void setTimeCreated(long timeCreated) {
-        this.timeCreated = timeCreated;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getTag() {
-        return tag;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
+  public long getTimeCreated() {
+    return timeCreated;
+  }
+
+  public void setTimeCreated(long timeCreated) {
+    this.timeCreated = timeCreated;
+  }
+
+  public String getTag() {
+    return tag;
+  }
+
+  public void setTag(String tag) {
+    this.tag = tag;
+  }
 }

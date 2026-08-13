@@ -8,126 +8,129 @@ import org.hibernate.type.SqlTypes;
 @Entity
 @Table(name = "feed_items")
 public class FeedItem {
-    @Id
-    private String id;
-    private String guid;
-    private String title;
-    private String description;
-    private String content;
-    private String reasoning;
-    private String imageUrl;
-    private int importance;
-    private String url;
-    @Column(name = "timecreated")
-    private long timeCreated;
-    private boolean read;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "feed_id")
-    private Feed feed;
-    @JdbcTypeCode(SqlTypes.ARRAY)
-    private List<String> tags;
+  @Id private String id;
+  private String guid;
+  private String title;
+  private String description;
+  private String content;
+  private String reasoning;
+  private String imageUrl;
+  private int importance;
+  private String url;
 
-    public Feed getFeed() {
-        return feed;
-    }
+  @Column(name = "timecreated")
+  private long timeCreated;
 
-    public void setFeed(Feed feed) {
-        this.feed = feed;
-    }
+  private boolean read;
 
-    public String getId() {
-        return id;
-    }
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "feed_id")
+  private Feed feed;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  @JdbcTypeCode(SqlTypes.ARRAY)
+  private List<String> tags;
 
-    public String getGuid() {
-        return guid;
-    }
+  public Feed getFeed() {
+    return feed;
+  }
 
-    public void setGuid(String guid) {
-        this.guid = guid;
-    }
+  public void setFeed(Feed feed) {
+    this.feed = feed;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getGuid() {
+    return guid;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public void setGuid(String guid) {
+    this.guid = guid;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public String getReasoning() {
-        return reasoning;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setReasoning(String reasoning) {
-        this.reasoning = reasoning;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-    public int getImportance() {
-        return importance;
-    }
+  public String getReasoning() {
+    return reasoning;
+  }
 
-    public void setImportance(int importance) {
-        this.importance = importance;
-    }
+  public void setReasoning(String reasoning) {
+    this.reasoning = reasoning;
+  }
 
-    public long getTimeCreated() {
-        return timeCreated;
-    }
+  public String getImageUrl() {
+    return imageUrl;
+  }
 
-    public void setTimeCreated(long timecreated) {
-        this.timeCreated = timecreated;
-    }
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public int getImportance() {
+    return importance;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setImportance(int importance) {
+    this.importance = importance;
+  }
 
-    public boolean isRead() {
-        return read;
-    }
+  public long getTimeCreated() {
+    return timeCreated;
+  }
 
-    public void setRead(boolean read) {
-        this.read = read;
-    }
+  public void setTimeCreated(long timecreated) {
+    this.timeCreated = timecreated;
+  }
 
-    public List<String> getTags() {
-        return tags;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public boolean isRead() {
+    return read;
+  }
+
+  public void setRead(boolean read) {
+    this.read = read;
+  }
+
+  public List<String> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<String> tags) {
+    this.tags = tags;
+  }
 }

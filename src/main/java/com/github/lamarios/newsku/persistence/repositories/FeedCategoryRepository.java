@@ -7,9 +7,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FeedCategoryRepository extends JpaRepository<FeedCategory, String> {
-    FeedCategory getFeedCategoriesByIdAndUser(String id, User user);
+  FeedCategory getFeedCategoriesByIdAndUser(String id, User user);
 
-    List<FeedCategory> getAllByUser(User user, Sort sort);
+  List<FeedCategory> getAllByUser(User user, Sort sort);
 
-    List<FeedCategory> getAllByUser(User user);
+  List<FeedCategory> getAllByUser(User user);
 }

@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Reset password")
 @RequestMapping("/")
 public class ResetPasswordController {
-    private final ResetPasswordService resetPasswordService;
+  private final ResetPasswordService resetPasswordService;
 
-    public ResetPasswordController(ResetPasswordService resetPasswordService) {
-        this.resetPasswordService = resetPasswordService;
-    }
+  public ResetPasswordController(ResetPasswordService resetPasswordService) {
+    this.resetPasswordService = resetPasswordService;
+  }
 
-    @PostMapping("/forgot-password")
-    public void forgotPassword(@RequestBody String email) throws TemplateException, IOException {
-        resetPasswordService.forgotPassword(email);
-    }
+  @PostMapping("/forgot-password")
+  public void forgotPassword(@RequestBody String email) throws TemplateException, IOException {
+    resetPasswordService.forgotPassword(email);
+  }
 
-    @PostMapping("/reset-password")
-    public void resetPassword(@RequestBody String password, @RequestParam("token") String token) {
-        resetPasswordService.resetPassword(token, password);
-    }
+  @PostMapping("/reset-password")
+  public void resetPassword(@RequestBody String password, @RequestParam("token") String token) {
+    resetPasswordService.resetPassword(token, password);
+  }
 }

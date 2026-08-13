@@ -8,20 +8,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ScheduleService {
-    private final FeedRepository feedRepository;
-    private final FeedItemService feedItemService;
+  private final FeedRepository feedRepository;
+  private final FeedItemService feedItemService;
 
-    @Autowired
-    public ScheduleService(FeedRepository feedRepository, FeedItemService feedItemService) {
-        this.feedRepository = feedRepository;
-        this.feedItemService = feedItemService;
-    }
+  @Autowired
+  public ScheduleService(FeedRepository feedRepository, FeedItemService feedItemService) {
+    this.feedRepository = feedRepository;
+    this.feedItemService = feedItemService;
+  }
 
-    @Scheduled(fixedRate = 1000 * 60 * 60)
-    public void refreshFeeds() {
-        var feeds = feedRepository.findAll();
-        for (Feed feed : feeds) {
-            feedItemService.refreshFeed(feed);
-        }
+  @Scheduled(fixedRate = 1000 * 60 * 60)
+  public void refreshFeeds() {
+    var feeds = feedRepository.findAll();
+    for (Feed feed : feeds) {
+      feedItemService.refreshFeed(feed);
     }
+  }
 }

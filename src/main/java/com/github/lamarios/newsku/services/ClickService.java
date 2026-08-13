@@ -18,51 +18,54 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClickService {
-    private final TagClicksRepository tagClicksRepository;
-    private final UserService userService;
-    private final FeedRepository feedRepository;
-    private final FeedClicksRepository feedClicksRepository;
+  private final TagClicksRepository tagClicksRepository;
+  private final UserService userService;
+  private final FeedRepository feedRepository;
+  private final FeedClicksRepository feedClicksRepository;
 
-    @Autowired
-    public ClickService(
-            TagClicksRepository tagClicksRepository,
-            UserService userService,
-            FeedRepository feedRepository,
-            FeedClicksRepository feedClicksRepository
-    ) {
-        this.tagClicksRepository = tagClicksRepository;
-        this.userService = userService;
-        this.feedRepository = feedRepository;
-        this.feedClicksRepository = feedClicksRepository;
-    }
+  @Autowired
+  public ClickService(
+      TagClicksRepository tagClicksRepository,
+      UserService userService,
+      FeedRepository feedRepository,
+      FeedClicksRepository feedClicksRepository) {
+    this.tagClicksRepository = tagClicksRepository;
+    this.userService = userService;
+    this.feedRepository = feedRepository;
+    this.feedClicksRepository = feedClicksRepository;
+  }
 
-    @Transactional(readOnly = true)
-    public List<TagClickStat> tagClicks(long from, long to, User user) {
-        List<TagClick> clicks = tagClicksRepository.findTagClickByUserAndTimeCreatedBetween(user, from, to);
+  @Transactional(readOnly = true)
+  public List<TagClickStat> tagClicks(long from, long to, User user) {
+    List<TagClick> clicks =
+        tagClicksRepository.findTagClickByUserAndTimeCreatedBetween(user, from, to);
 
-        var grouped = clicks.stream().collect(Collectors.groupingBy(TagClick::getTag, Collectors.counting()));
+    var grouped =
+        clicks.stream().collect(Collectors.groupingBy(TagClick::getTag, Collectors.counting()));
 
-        List<TagClickStat> clickList = new ArrayList<>();
+    List<TagClickStat> clickList = new ArrayList<>();
 
-        grouped.forEach((tag, count) -> clickList.add(new TagClickStat(tag, count)));
-        return clickList;
-    }
+    grouped.forEach((tag, count) -> clickList.add(new TagClickStat(tag, count)));
+    return clickList;
+  }
 
-    @Transactional(readOnly = true)
-    public List<TagClickStat> tagClicks(long from, long to) {
-        return tagClicks(from, to, userService.getCurrentUser());
-    }
+  @Transactional(readOnly = true)
+  public List<TagClickStat> tagClicks(long from, long to) {
+    return tagClicks(from, to, userService.getCurrentUser());
+  }
 
-    @Transactional(readOnly = true)
-    public List<FeedClickStat> feedClicks(long from, long to) {
-        List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
+  @Transactional(readOnly = true)
+  public List<FeedClickStat> feedClicks(long from, long to) {
+    List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
 
-        List<FeedClick> clicks = feedClicksRepository.getAllByFeedInAndTimeCreatedBetween(feeds, from, to);
+    List<FeedClick> clicks =
+        feedClicksRepository.getAllByFeedInAndTimeCreatedBetween(feeds, from, to);
 
-        var grouped = clicks.stream().collect(Collectors.groupingBy(FeedClick::getFeed, Collectors.counting()));
+    var grouped =
+        clicks.stream().collect(Collectors.groupingBy(FeedClick::getFeed, Collectors.counting()));
 
-        List<FeedClickStat> clickList = new ArrayList<>();
-        grouped.forEach((feed, count) -> clickList.add(new FeedClickStat(feed, count)));
-        return clickList;
-    }
+    List<FeedClickStat> clickList = new ArrayList<>();
+    grouped.forEach((feed, count) -> clickList.add(new FeedClickStat(feed, count)));
+    return clickList;
+  }
 }

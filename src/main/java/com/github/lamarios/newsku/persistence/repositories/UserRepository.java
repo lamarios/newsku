@@ -8,15 +8,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<@NotNull User, @NotNull String> {
-    List<User> getUserByUsername(String username);
+  List<User> getUserByUsername(String username);
 
-    User getUserByOidcSub(String oidcSub);
+  User getUserByOidcSub(String oidcSub);
 
-    User findFirstByEmail(String email);
+  User findFirstByEmail(String email);
 
-    User findFirstById(String subject);
+  User findFirstById(String subject);
 
-    long countUserByEmail(String email);
+  long countUserByEmail(String email);
 
-    long countUserByUsername(String username);
+  long countUserByUsername(String username);
 }

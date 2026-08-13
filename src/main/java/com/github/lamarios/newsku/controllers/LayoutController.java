@@ -15,26 +15,26 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Layout")
 @SecurityRequirement(name = "bearerAuth")
 public class LayoutController {
-    private final boolean demoMode;
-    private final LayoutService layoutService;
+  private final boolean demoMode;
+  private final LayoutService layoutService;
 
-    @Autowired
-    public LayoutController(@Value("${DEMO_MODE:0}") boolean demoMode, LayoutService layoutService) {
-        this.demoMode = demoMode;
-        this.layoutService = layoutService;
+  @Autowired
+  public LayoutController(@Value("${DEMO_MODE:0}") boolean demoMode, LayoutService layoutService) {
+    this.demoMode = demoMode;
+    this.layoutService = layoutService;
+  }
+
+  @GetMapping
+  public List<LayoutBlock> getLayout() {
+    return layoutService.getLayout();
+  }
+
+  @PutMapping
+  public List<LayoutBlock> setLayout(@RequestBody List<LayoutBlock> blocks) {
+    if (demoMode) {
+      throw new AccessDeniedException("App in demoMode");
     }
 
-    @GetMapping
-    public List<LayoutBlock> getLayout() {
-        return layoutService.getLayout();
-    }
-
-    @PutMapping
-    public List<LayoutBlock> setLayout(@RequestBody List<LayoutBlock> blocks) {
-        if (demoMode) {
-            throw new AccessDeniedException("App in demoMode");
-        }
-
-        return layoutService.setLayout(blocks);
-    }
+    return layoutService.setLayout(blocks);
+  }
 }
