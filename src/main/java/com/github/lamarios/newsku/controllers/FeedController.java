@@ -1,5 +1,6 @@
 package com.github.lamarios.newsku.controllers;
 
+import static com.github.lamarios.newsku.controllers.FeedItemController.serveFile;
 import be.ceau.opml.OpmlWriteException;
 import com.github.lamarios.newsku.errors.NewskuException;
 import com.github.lamarios.newsku.models.FeedToImport;
@@ -12,6 +13,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,14 +33,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-
-import static com.github.lamarios.newsku.controllers.FeedItemController.serveFile;
-
 @RestController
 @RequestMapping("/api/feeds")
 @Tag(name = "Feeds")
@@ -47,7 +45,11 @@ public class FeedController {
     private final boolean demoMode;
 
     @Autowired
-    public FeedController(FeedService feedService, FeedItemService feedItemService, @Value("${DEMO_MODE:0}") boolean demoMode) throws IOException {
+    public FeedController(
+            FeedService feedService,
+            FeedItemService feedItemService,
+            @Value("${DEMO_MODE:0}") boolean demoMode
+    ) throws IOException {
         this.feedService = feedService;
         this.feedItemService = feedItemService;
         this.demoMode = demoMode;
@@ -75,7 +77,7 @@ public class FeedController {
     /**
      * Adds a new RSS feed for the logged in user
      *
-     * @param url         the url of the feed
+     * @param url the url of the feed
      * @param skipRefresh skip refreshing the feed, mostly used for unit test
      * @return the newly added feed
      * @throws NewskuException if anything goes wrong while adding the feed
@@ -111,7 +113,6 @@ public class FeedController {
         return newFeeds;
     }
 
-
     @GetMapping("/export")
     public ResponseEntity<@NotNull StreamingResponseBody> exportFeeds() throws NewskuException {
         try {
@@ -123,7 +124,6 @@ public class FeedController {
 
             try (PrintWriter printer = new PrintWriter(p.toFile().getAbsolutePath())) {
                 IOUtils.write(opml, printer);
-
             }
             return serveFile(p);
         } catch (IOException | OpmlWriteException e) {
@@ -132,10 +132,8 @@ public class FeedController {
         }
     }
 
-
     @GetMapping("/{id}/image")
     public ResponseEntity<@NotNull StreamingResponseBody> getFeedImage(@PathVariable String id) throws IOException {
-
         Feed item = feedService.getFeed(id);
 
         if (item == null || item.getImage() == null || item.getImage().isBlank()) {
@@ -150,15 +148,16 @@ public class FeedController {
         } else {
             log.info("Serving from cache");
         }
-
-
         // Fetch from remote URL
         return serveFile(filePath);
     }
 
     @GetMapping("{id}/items")
-    public Page<FeedItem> getFeedItems(@PathVariable String id, @Min(0) @DefaultValue("0") @RequestParam Integer page, @Min(0) @Max(500) @DefaultValue("100") @RequestParam Integer pageSize) throws IOException {
+    public Page<FeedItem> getFeedItems(
+            @PathVariable String id,
+            @Min(0) @DefaultValue("0") @RequestParam Integer page,
+            @Min(0) @Max(500) @DefaultValue("100") @RequestParam Integer pageSize
+    ) throws IOException {
         return feedItemService.getFeedItems(id, page, pageSize);
     }
-
 }

@@ -1,32 +1,28 @@
 package com.github.lamarios.newsku.utils;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/test/rss")
 public class FakeRssFeedController {
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-
+    private final DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
     @GetMapping("/one-month-feed")
     public String oneMonthFeed() {
-
         StringBuilder items = new StringBuilder();
-
         // we generate 31 days of articles
         ZonedDateTime now = ZonedDateTime.now();
 
         for (int i = 0; i < 31; i++) {
             items.append(generateItem(now.minusDays(i)));
         }
-
 
         return """
                 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -43,7 +39,8 @@ public class FakeRssFeedController {
                         %s
                     </channel>
                 </rss>
-                """.formatted(formatter.format(ZonedDateTime.now()), items.toString());
+                """
+            .formatted(formatter.format(ZonedDateTime.now()), items.toString());
     }
 
     private String generateItem(ZonedDateTime time) {
@@ -52,16 +49,17 @@ public class FakeRssFeedController {
                        <item>
                             <title>Newsku unit test article %s</title>
                             <link>http://localhost/test/somearticle-%s</link>
-                
+
                             <pubDate>%s</pubDate>
                             <guid isPermaLink="true">
                                 %s
                             </guid>
-                
+
                             <description>
                                 Some Rss article
                             </description>
                         </item>
-                """.formatted(formatter.format(time), id, formatter.format(time), id);
+                """
+            .formatted(formatter.format(time), id, formatter.format(time), id);
     }
 }

@@ -1,7 +1,6 @@
 package com.github.lamarios.newsku.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 public class OIDCConfig {
@@ -19,11 +18,8 @@ public class OIDCConfig {
     private String emailClaim;
     private String usernameClaim;
     private String name;
-
-
     @JsonProperty("token_endpoint")
     private String tokenUrl;
-
 
     public String getAuthorizationEndpoint() {
         return authorizationEndpoint;

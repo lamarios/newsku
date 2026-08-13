@@ -1,6 +1,5 @@
 package com.github.lamarios.newsku.persistence.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -11,7 +10,6 @@ public class FeedError {
     private String id;
     @Column(name = "time_created")
     private long timeCreated;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "feed_id")
@@ -19,7 +17,6 @@ public class FeedError {
     private String error;
     private String url;
     private String message;
-
 
     public String getMessage() {
         return message;

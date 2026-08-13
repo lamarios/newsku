@@ -5,6 +5,14 @@ import com.github.lamarios.newsku.services.FeedItemService;
 import com.github.lamarios.newsku.utils.ImageHelper;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.InvalidParameterException;
+import java.sql.SQLException;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +22,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
-
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.security.InvalidParameterException;
-import java.sql.SQLException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/feeds/items")
@@ -43,7 +39,12 @@ public class FeedItemController {
     }
 
     @GetMapping
-    public Page<FeedItem> getItems(@RequestParam("from") Long from, @RequestParam("to") Long to, @DefaultValue("0") @RequestParam("page") int page, @DefaultValue("100") @RequestParam("pageSize") int pageSize) throws SQLException {
+    public Page<FeedItem> getItems(
+            @RequestParam("from") Long from,
+            @RequestParam("to") Long to,
+            @DefaultValue("0") @RequestParam("page") int page,
+            @DefaultValue("100") @RequestParam("pageSize") int pageSize
+    ) throws SQLException {
         if (from == null || to == null) {
             throw new InvalidParameterException("from and to query parameters are required");
         }
@@ -62,8 +63,9 @@ public class FeedItemController {
     }
 
     @GetMapping("/{id}/image")
-    public ResponseEntity<StreamingResponseBody> getArticleImage(@PathVariable String id) throws IOException, SQLException {
-
+    public ResponseEntity<StreamingResponseBody> getArticleImage(@PathVariable String id)
+            throws IOException,
+            SQLException {
         var item = feedItemService.getItem(id);
 
         if (item == null || item.getImageUrl() == null || item.getImageUrl().isBlank()) {
@@ -78,8 +80,6 @@ public class FeedItemController {
         } else {
             log.info("Serving from cache");
         }
-
-
         // Fetch from remote URL
         return serveFile(filePath);
     }
@@ -92,9 +92,11 @@ public class FeedItemController {
 
         long fileSize = Files.size(filePath);
 
-        StreamingResponseBody responseBody = outputStream -> {
+        StreamingResponseBody responseBody =
+                outputStream -> {
             try (InputStream inputStream = new FileInputStream(filePath.toFile())) {
-                byte[] buffer = new byte[8192]; // 8KB buffer
+                // 8KB buffer
+                byte[] buffer = new byte[8192];
                 int bytesRead;
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
@@ -103,9 +105,10 @@ public class FeedItemController {
             }
         };
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, contentType)
-                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileSize))
-                .body(responseBody);
+        return ResponseEntity
+            .ok()
+            .header(HttpHeaders.CONTENT_TYPE, contentType)
+            .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileSize))
+            .body(responseBody);
     }
 }

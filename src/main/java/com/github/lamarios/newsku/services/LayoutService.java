@@ -4,13 +4,12 @@ import com.github.lamarios.newsku.models.LayoutBlockSettings;
 import com.github.lamarios.newsku.models.LayoutBlockType;
 import com.github.lamarios.newsku.persistence.entities.LayoutBlock;
 import com.github.lamarios.newsku.persistence.repositories.LayoutRepository;
+import java.util.List;
+import java.util.UUID;
 import org.apache.tomcat.util.http.InvalidParameterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class LayoutService {
@@ -32,7 +31,6 @@ public class LayoutService {
         }
 
         return blocks;
-
     }
 
     @Transactional
@@ -47,10 +45,8 @@ public class LayoutService {
         if (layoutBlocks.getLast().getType().isFixedSize()) {
             throw new InvalidParameterException("layout must end by a flexible block");
         }
-
         // we remove feed categories from the latest of the layout
         layoutBlocks.getLast().getSettings().setCategoryId(null);
-
         // if we're good, we remove all the items from the user then we insert all the new ones.
         layoutRepository.deleteByUser(user);
 
@@ -62,7 +58,6 @@ public class LayoutService {
         layoutRepository.saveAll(layoutBlocks);
 
         return layoutBlocks;
-
     }
 
     private List<LayoutBlock> defaultLayout() {
@@ -73,7 +68,6 @@ public class LayoutService {
         topStories.setSettings(topStoriesSettings);
         topStories.setOrder(0);
         topStories.setType(LayoutBlockType.topStories);
-
         // a big grid of 6 items
         LayoutBlock grid = new LayoutBlock();
         LayoutBlockSettings gridSettings = new LayoutBlockSettings();
@@ -81,7 +75,6 @@ public class LayoutService {
         grid.setSettings(gridSettings);
         grid.setOrder(1);
         grid.setType(LayoutBlockType.bigGrid);
-
         // small grid
         LayoutBlock smallGrid = new LayoutBlock();
         LayoutBlockSettings smallGridSettings = new LayoutBlockSettings();
@@ -91,7 +84,5 @@ public class LayoutService {
         smallGrid.setOrder(2);
 
         return List.of(topStories, grid, smallGrid);
-
     }
-
 }

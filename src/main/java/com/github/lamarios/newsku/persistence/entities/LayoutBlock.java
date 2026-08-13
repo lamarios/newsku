@@ -10,19 +10,14 @@ import org.hibernate.type.SqlTypes;
 @Entity
 @Table(name = "layout_blocks")
 public class LayoutBlock {
-
     @Id
     private String id;
-
     @Enumerated(EnumType.STRING)
     private LayoutBlockType type;
-
     @Column(name = "display_order")
     private int order;
-
     @JdbcTypeCode(SqlTypes.JSON)
     private LayoutBlockSettings settings;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore

@@ -2,15 +2,11 @@ package com.github.lamarios.newsku.persistence.repositories;
 
 import com.github.lamarios.newsku.persistence.entities.Feed;
 import com.github.lamarios.newsku.persistence.entities.FeedError;
-import com.github.lamarios.newsku.persistence.entities.User;
+import java.util.Collection;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import java.util.Collection;
-import java.util.List;
 
 public interface FeedErrorRepository extends JpaRepository<FeedError, String> {
     List<FeedError> findByFeed(Feed feed);
@@ -22,5 +18,4 @@ public interface FeedErrorRepository extends JpaRepository<FeedError, String> {
     Page findByFeed(Feed feed, Pageable pageable);
 
     long countByFeedInAndTimeCreatedBetween(Collection<Feed> feeds, long timeCreatedAfter, long timeCreatedBefore);
-
 }

@@ -1,7 +1,6 @@
 package com.github.lamarios.newsku.services;
 
 import freemarker.template.TemplateException;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -12,5 +11,7 @@ public interface EmailService {
 
     boolean isEnabled();
 
-    void sendTemplate(String to, String subject, String template, Map<String, Object> data) throws IOException, TemplateException;
+    void sendTemplate(String to, String subject, String template, Map<String, Object> data)
+            throws IOException,
+            TemplateException;
 }

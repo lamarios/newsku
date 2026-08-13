@@ -1,7 +1,6 @@
 package com.github.lamarios.newsku.utils;
 
 import com.apptasticsoftware.rssreader.filter.FeedFilter;
-
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -11,14 +10,12 @@ import java.util.Objects;
 
 /**
  * A {@link FeedFilter} implementation that removes invalid XML characters from the feed stream.
- * <p>
- * This filter wraps the input stream with a {@link StreamingXmlFilterInputStream} to ensure
- * that any characters not allowed in XML 1.0 are filtered out before parsing.
- * </p>
+ *
+ * <p>This filter wraps the input stream with a {@link StreamingXmlFilterInputStream} to ensure that
+ * any characters not allowed in XML 1.0 are filtered out before parsing.
  */
 @Deprecated(forRemoval = true)
 public class TemporaryInvalidXmlCharacterFilter implements FeedFilter {
-
     /**
      * Filters the provided XML feed stream by removing invalid XML characters.
      *
@@ -31,17 +28,16 @@ public class TemporaryInvalidXmlCharacterFilter implements FeedFilter {
     }
 
     /**
-     * A streaming {@link InputStream} that wraps an existing XML input stream and filters out
-     * any characters that are invalid according to the XML 1.0 specification.
-     * <p>
-     * This class ensures that the filtered data can be safely passed to an XML parser like
-     * {@link javax.xml.stream.XMLStreamReader} without encountering parse errors due to
-     * illegal control characters or surrogates.
-     * </p>
+     * A streaming {@link InputStream} that wraps an existing XML input stream and filters out any
+     * characters that are invalid according to the XML 1.0 specification.
      *
-     * <p><strong>Invalid characters removed:</strong> control characters in the range
-     * {@code [\u0000-\u0008]}, {@code [\u000B-\u000C]}, {@code [\u000E-\u001F]},
-     * and surrogates and other forbidden code points.</p>
+     * <p>This class ensures that the filtered data can be safely passed to an XML parser like {@link
+     * javax.xml.stream.XMLStreamReader} without encountering parse errors due to illegal control
+     * characters or surrogates.
+     *
+     * <p><strong>Invalid characters removed:</strong> control characters in the range {@code
+     * [\u0000-\u0008]}, {@code [\u000B-\u000C]}, {@code [\u000E-\u001F]}, and surrogates and other
+     * forbidden code points.
      */
     private static class StreamingXmlFilterInputStream extends InputStream {
         private static final Map<String, String> HTML_ENTITIES;
@@ -62,17 +58,28 @@ public class TemporaryInvalidXmlCharacterFilter implements FeedFilter {
             HTML_ENTITIES.put("rdquo", QUOTE_ESCAPE);
             HTML_ENTITIES.put("rsquo", QUOTE_ESCAPE);
             // Common special characters
-            HTML_ENTITIES.put("auml", "&#228;");  // ä
-            HTML_ENTITIES.put("ouml", "&#246;");  // ö
-            HTML_ENTITIES.put("uuml", "&#252;");  // ü
-            HTML_ENTITIES.put("Auml", "&#196;");  // Ä
-            HTML_ENTITIES.put("Ouml", "&#214;");  // Ö
-            HTML_ENTITIES.put("Uuml", "&#220;");  // Ü
-            HTML_ENTITIES.put("aacute", "&#225;"); // á
-            HTML_ENTITIES.put("eacute", "&#233;"); // é
-            HTML_ENTITIES.put("iacute", "&#237;"); // í
-            HTML_ENTITIES.put("oacute", "&#243;"); // ó
-            HTML_ENTITIES.put("uacute", "&#250;"); // ú
+            // ä
+            HTML_ENTITIES.put("auml", "&#228;");
+            // ö
+            HTML_ENTITIES.put("ouml", "&#246;");
+            // ü
+            HTML_ENTITIES.put("uuml", "&#252;");
+            // Ä
+            HTML_ENTITIES.put("Auml", "&#196;");
+            // Ö
+            HTML_ENTITIES.put("Ouml", "&#214;");
+            // Ü
+            HTML_ENTITIES.put("Uuml", "&#220;");
+            // á
+            HTML_ENTITIES.put("aacute", "&#225;");
+            // é
+            HTML_ENTITIES.put("eacute", "&#233;");
+            // í
+            HTML_ENTITIES.put("iacute", "&#237;");
+            // ó
+            HTML_ENTITIES.put("oacute", "&#243;");
+            // ú
+            HTML_ENTITIES.put("uacute", "&#250;");
         }
 
         private final Reader reader;
@@ -100,7 +107,7 @@ public class TemporaryInvalidXmlCharacterFilter implements FeedFilter {
          * Constructs a new {@code StreamingXmlFilterInputStream} with the specified character encoding.
          *
          * @param inputStream the original XML {@link InputStream}
-         * @param charset     the character encoding used to decode the XML input
+         * @param charset the character encoding used to decode the XML input
          */
         public StreamingXmlFilterInputStream(InputStream inputStream, Charset charset) {
             this.reader = new InputStreamReader(inputStream, charset);
@@ -118,7 +125,8 @@ public class TemporaryInvalidXmlCharacterFilter implements FeedFilter {
             if (bufferPos >= buffer.length) {
                 refillBuffer();
                 if (buffer.length == 0) {
-                    return -1; // EOF
+                    // EOF
+                    return -1;
                 }
             }
             return buffer[bufferPos++] & 0xFF;
@@ -127,7 +135,7 @@ public class TemporaryInvalidXmlCharacterFilter implements FeedFilter {
         /**
          * Reads up to {@code len} bytes of filtered data into an array of bytes.
          *
-         * @param b   the buffer into which the data is read
+         * @param b the buffer into which the data is read
          * @param off the start offset in the destination array {@code b}
          * @param len the maximum number of bytes to read
          * @return the number of bytes read, or -1 if the end of the stream has been reached
@@ -154,8 +162,8 @@ public class TemporaryInvalidXmlCharacterFilter implements FeedFilter {
         }
 
         /**
-         * Refills the internal byte buffer with the next valid XML characters encoded as bytes.
-         * Filters out invalid XML characters as defined by XML 1.0.
+         * Refills the internal byte buffer with the next valid XML characters encoded as bytes. Filters
+         * out invalid XML characters as defined by XML 1.0.
          *
          * @throws IOException if an I/O error occurs
          */
@@ -176,16 +184,15 @@ public class TemporaryInvalidXmlCharacterFilter implements FeedFilter {
                         // Write any incomplete CDATA buffer
                         writeStringToBuffer(cdataBuffer.toString());
                     }
-                    break; // EOF
+                    // EOF
+                    break;
                 }
 
                 char ch = (char) c;
-
                 // Always filter out invalid XML characters, regardless of context
                 if (!isValidXmlChar(ch)) {
                     continue;
                 }
-
                 // Check for CDATA section start
                 if (!inCDATA && ch == CDATA_START.charAt(cdataMatchPos)) {
                     cdataMatchPos++;
@@ -283,9 +290,11 @@ public class TemporaryInvalidXmlCharacterFilter implements FeedFilter {
          * @return {@code true} if the character is valid in XML; {@code false} otherwise
          */
         private boolean isValidXmlChar(char ch) {
-            return (ch == 0x9 || ch == 0xA || ch == 0xD ||
-                    (ch >= 0x20 && ch <= 0xD7FF) ||
-                    (ch >= 0xE000 && ch <= 0xFFFD));
+            return (ch == 0x9
+                    || ch == 0xA
+                    || ch == 0xD
+                    || (ch >= 0x20 && ch <= 0xD7FF)
+                    || (ch >= 0xE000 && ch <= 0xFFFD));
         }
 
         /**

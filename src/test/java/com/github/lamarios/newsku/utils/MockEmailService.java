@@ -4,19 +4,15 @@ import com.github.lamarios.newsku.services.EmailService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MockEmailService implements EmailService {
-
     private final Queue<TemplatedEmailData> emails = new LinkedList<>();
-
     private final Configuration templateEngine;
 
     @Autowired
@@ -25,9 +21,7 @@ public class MockEmailService implements EmailService {
     }
 
     @Override
-    public void sendHtml(String to, String subject, String message) {
-
-    }
+    public void sendHtml(String to, String subject, String message) {}
 
     @Override
     public boolean isEnabled() {
@@ -35,7 +29,9 @@ public class MockEmailService implements EmailService {
     }
 
     @Override
-    public void sendTemplate(String to, String subject, String template, Map<String, Object> data) throws IOException, TemplateException {
+    public void sendTemplate(String to, String subject, String template, Map<String, Object> data)
+            throws IOException,
+            TemplateException {
         String rootUrl = "http://test.com";
         data.put("footerUrl", rootUrl);
         final String s = processTemplate(template, data);

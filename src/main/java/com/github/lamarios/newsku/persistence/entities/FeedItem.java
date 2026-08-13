@@ -1,15 +1,13 @@
 package com.github.lamarios.newsku.persistence.entities;
 
 import jakarta.persistence.*;
+import java.util.List;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.List;
 
 @Entity
 @Table(name = "feed_items")
 public class FeedItem {
-
     @Id
     private String id;
     private String guid;
@@ -23,11 +21,9 @@ public class FeedItem {
     @Column(name = "timecreated")
     private long timeCreated;
     private boolean read;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "feed_id")
     private Feed feed;
-
     @JdbcTypeCode(SqlTypes.ARRAY)
     private List<String> tags;
 

@@ -3,6 +3,7 @@ package com.github.lamarios.newsku.controllers;
 import com.github.lamarios.newsku.models.AppConfig;
 import com.github.lamarios.newsku.services.OidcService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Optional;
 import org.simplejavamail.api.mailer.Mailer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,8 +11,6 @@ import org.springframework.boot.info.BuildProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/config")
@@ -25,7 +24,14 @@ public class ConfigController {
     private final Optional<Mailer> mailer;
 
     @Autowired
-    public ConfigController(OidcService oidcService, @Value("${ALLOW_SIGNUP:0}") boolean allowSignUp, @Value("${ANNOUNCEMENT:}") String announcement, @Value("${DEMO_MODE:0}") boolean demoMode, BuildProperties buildProperties, Optional<Mailer> mailer) {
+    public ConfigController(
+            OidcService oidcService,
+            @Value("${ALLOW_SIGNUP:0}") boolean allowSignUp,
+            @Value("${ANNOUNCEMENT:}") String announcement,
+            @Value("${DEMO_MODE:0}") boolean demoMode,
+            BuildProperties buildProperties,
+            Optional<Mailer> mailer
+    ) {
         this.oidcService = oidcService;
         this.allowSignUp = allowSignUp;
         this.announcement = announcement;

@@ -21,7 +21,11 @@ public class SignUpController {
     private final boolean demoMode;
 
     @Autowired
-    public SignUpController(UserService userService, @Value("${ALLOW_SIGNUP:0}") boolean allowSignUp, @Value("${DEMO_MODE:0}") boolean demoMode) {
+    public SignUpController(
+            UserService userService,
+            @Value("${ALLOW_SIGNUP:0}") boolean allowSignUp,
+            @Value("${DEMO_MODE:0}") boolean demoMode
+    ) {
         this.userService = userService;
         this.allowSignUp = allowSignUp;
         this.demoMode = demoMode;

@@ -2,9 +2,6 @@ package com.github.lamarios.newsku.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "feeds")
@@ -32,11 +29,9 @@ public class Feed {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private FeedCategory category;
-
 
     public User getUser() {
         return user;

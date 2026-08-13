@@ -2,18 +2,16 @@ package com.github.lamarios.newsku.controllers;
 
 import com.github.lamarios.newsku.errors.NewskuException;
 import com.github.lamarios.newsku.persistence.entities.FeedCategory;
-import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
 import com.github.lamarios.newsku.services.FeedCategoriesService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/feed-categories")
@@ -25,7 +23,10 @@ public class FeedCategoryController {
     private final boolean demoMode;
 
     @Autowired
-    public FeedCategoryController(FeedCategoriesService feedCategoriesService, @Value("${DEMO_MODE:0}") boolean demoMode) {
+    public FeedCategoryController(
+            FeedCategoriesService feedCategoriesService,
+            @Value("${DEMO_MODE:0}") boolean demoMode
+    ) {
         this.feedCategoriesService = feedCategoriesService;
         this.demoMode = demoMode;
     }

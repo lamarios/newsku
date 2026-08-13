@@ -4,15 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.lamarios.newsku.models.EmailDigestFrequency;
 import com.github.lamarios.newsku.models.ReadItemHandling;
 import jakarta.persistence.*;
+import java.util.List;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.List;
 
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     private String id;
     private String username;
@@ -25,14 +23,11 @@ public class User {
     private String oidcSub;
     @Column(name = "minimum_importance")
     private int minimumImportance;
-
     @Column(name = "read_item_handling")
     @Enumerated(EnumType.STRING)
     private ReadItemHandling readItemHandling;
-
     @Column(name = "first_time_setup_done")
     private boolean firstTimeSetupDone;
-
     @JdbcTypeCode(SqlTypes.ARRAY)
     @Column(name = "email_digest")
     @Enumerated(EnumType.STRING)
@@ -93,7 +88,6 @@ public class User {
     public void setMinimumImportance(int minimumImportance) {
         this.minimumImportance = minimumImportance;
     }
-
 
     public ReadItemHandling getReadItemHandling() {
         return readItemHandling;

@@ -4,16 +4,15 @@ import com.github.lamarios.newsku.errors.NewskuException;
 import com.github.lamarios.newsku.persistence.entities.FeedCategory;
 import com.github.lamarios.newsku.persistence.entities.User;
 import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.access.AccessDeniedException;
+import java.util.List;
+import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FeedCategoriesService {
@@ -27,10 +26,8 @@ public class FeedCategoriesService {
         this.feedCategoryRepository = feedCategoryRepository;
     }
 
-
     @Transactional
     public FeedCategory addCategory(String name) throws NewskuException {
-
         if (name == null || name.isBlank()) {
             throw new NewskuException("Category name is empty");
         }
@@ -59,7 +56,6 @@ public class FeedCategoriesService {
             feedCategoryRepository.save(category);
             return category;
         }
-
     }
 
     @Transactional
@@ -81,7 +77,5 @@ public class FeedCategoriesService {
         User user = userService.getCurrentUser();
 
         return feedCategoryRepository.getAllByUser(user, Sort.by("name"));
-
     }
-
 }

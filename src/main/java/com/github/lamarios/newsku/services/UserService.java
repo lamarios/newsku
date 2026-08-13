@@ -3,6 +3,9 @@ package com.github.lamarios.newsku.services;
 import com.github.lamarios.newsku.errors.NewskuUserException;
 import com.github.lamarios.newsku.persistence.entities.User;
 import com.github.lamarios.newsku.persistence.repositories.UserRepository;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
@@ -11,19 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
-    private final static String EMAIL_REGEX = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+    private static final String EMAIL_REGEX =
+            "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]"
+            + "*[a-z0-9])?\\\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -36,13 +33,13 @@ public class UserService {
         return userRepository.getUserByUsername(username).stream().findFirst();
     }
 
-
     @Transactional(readOnly = true)
     public User getCurrentUser() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         assert authentication != null;
-        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
 
         assert user != null;
         return getUser(user.getUsername()).orElseThrow();
@@ -60,7 +57,6 @@ public class UserService {
                 // we sleep to limit email scanning
                 Thread.sleep(2000);
             } catch (InterruptedException _) {
-
             }
             throw new NewskuUserException("Email already taken");
         }
@@ -70,7 +66,6 @@ public class UserService {
                 // we sleep to limit email scanning
                 Thread.sleep(2000);
             } catch (InterruptedException _) {
-
             }
             throw new NewskuUserException("Username already taken");
         }
@@ -78,7 +73,6 @@ public class UserService {
         if (!user.getEmail().matches(EMAIL_REGEX)) {
             throw new NewskuUserException("Invalid email address");
         }
-
         // hash password
         if (user.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -100,15 +94,15 @@ public class UserService {
         User currentUser = getCurrentUser();
         if (currentUser.getId().equalsIgnoreCase(user.getId())) {
             // we update the password if it has changed
-            if (user.getPassword() != null && !user.getPassword().trim().isBlank() && !currentUser.getPassword()
-                    .equalsIgnoreCase(user.getPassword())) {
+            if (user.getPassword() != null
+                    && !user.getPassword().trim().isBlank()
+                    && !currentUser.getPassword().equalsIgnoreCase(user.getPassword())) {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
             } else {
                 user.setPassword(currentUser.getPassword());
             }
 
             if (!Objects.equals(user.getEmail(), currentUser.getEmail())) {
-
                 if (user.getEmail().matches(EMAIL_REGEX)) {
                     var alreadyTaken = userRepository.countUserByEmail(user.getEmail()) > 0;
                     if (alreadyTaken) {
@@ -117,7 +111,6 @@ public class UserService {
                 } else {
                     throw new NewskuUserException("Invalid email address");
                 }
-
             }
 
             return updateUser(user);

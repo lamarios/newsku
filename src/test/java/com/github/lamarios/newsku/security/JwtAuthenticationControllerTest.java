@@ -1,13 +1,12 @@
 package com.github.lamarios.newsku.security;
 
+import static org.junit.jupiter.api.Assertions.*;
 import com.github.lamarios.newsku.TestConfig;
 import com.github.lamarios.newsku.TestContainerTest;
 import com.github.lamarios.newsku.models.UserCredentials;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Import(TestConfig.class)
 public class JwtAuthenticationControllerTest extends TestContainerTest {
@@ -21,7 +20,8 @@ public class JwtAuthenticationControllerTest extends TestContainerTest {
         assertNotNull(token);
         assertFalse(token.isEmpty());
 
-        assertThrows(Exception.class, () -> jwtAuthenticationController.login(new UserCredentials("test", "wrongpassword")));
-
+        assertThrows(Exception.class, () -> jwtAuthenticationController.login(
+                new UserCredentials("test", "wrongpassword")
+        ));
     }
 }

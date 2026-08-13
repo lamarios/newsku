@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ScheduleService {
-
     private final FeedRepository feedRepository;
     private final FeedItemService feedItemService;
 
@@ -17,7 +16,6 @@ public class ScheduleService {
         this.feedRepository = feedRepository;
         this.feedItemService = feedItemService;
     }
-
 
     @Scheduled(fixedRate = 1000 * 60 * 60)
     public void refreshFeeds() {

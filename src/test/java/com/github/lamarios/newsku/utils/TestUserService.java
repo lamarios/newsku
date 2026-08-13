@@ -3,7 +3,6 @@ package com.github.lamarios.newsku.utils;
 import com.github.lamarios.newsku.persistence.entities.User;
 import com.github.lamarios.newsku.persistence.repositories.UserRepository;
 import com.github.lamarios.newsku.services.UserService;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class TestUserService extends UserService {

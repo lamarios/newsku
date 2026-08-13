@@ -4,47 +4,37 @@ import com.github.lamarios.newsku.persistence.entities.User;
 import com.github.lamarios.newsku.services.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 @Component
 public class JwtTokenUtil {
     private final SecretKey key;
-
     public static final long JWT_TOKEN_VALIDITY = 90 * 24 * 60 * 60;
     private static final long serialVersionUID = -2550185165626007488L;
-
-
     private final String salt;
-
-//    private final OIDCService oidcService;
-
-
+    //    private final OIDCService oidcService;
     private final UserService userService;
 
     @Autowired
     public JwtTokenUtil(UserService userService, @Value("${SALT}") String salt) throws Exception {
-//        this.oidcService = oidcService;
+        //        this.oidcService = oidcService;
         this.userService = userService;
         this.salt = salt;
 
         this.key = deriveKey(salt);
-
     }
 
     private static SecretKey deriveKey(String salt) throws Exception {
-
         // If shorter than 64 bytes, repeat until length ≥ 64
         byte[] saltBytes = salt.getBytes();
         if (saltBytes.length < 64) {
@@ -60,7 +50,6 @@ public class JwtTokenUtil {
 
         return new SecretKeySpec(saltBytes, "HmacSHA512");
     }
-
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -83,13 +72,13 @@ public class JwtTokenUtil {
         try {
             return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
         } catch (Exception e) {
-/*
-            if (oidcService.getParser() != null) {
-                return oidcService.getParser().parseSignedClaims(token).getPayload();
-            } else {
-*/
+            /*
+                  if (oidcService.getParser() != null) {
+                      return oidcService.getParser().parseSignedClaims(token).getPayload();
+                  } else {
+      */
             throw e;
-//            }
+            //            }
         }
     }
 
@@ -120,16 +109,20 @@ public class JwtTokenUtil {
         }
     }
 
-
     public String doGenerateToken(Map<String, Object> claims, String subject) {
         return doGenerateToken(claims, subject, JWT_TOKEN_VALIDITY * 1000);
     }
 
     public String doGenerateToken(Map<String, Object> claims, String subject, long expiresIn) {
-        return Jwts.builder()
-                .claims(claims).subject(subject).issuedAt(new Date(System.currentTimeMillis()))
-                .issuer("newsku")
-                .expiration(new Date(System.currentTimeMillis() + expiresIn)).signWith(key).compact();
+        return Jwts
+            .builder()
+            .claims(claims)
+            .subject(subject)
+            .issuedAt(new Date(System.currentTimeMillis()))
+            .issuer("newsku")
+            .expiration(new Date(System.currentTimeMillis() + expiresIn))
+            .signWith(key)
+            .compact();
     }
 
     public Boolean canTokenBeRefreshed(String token) {
@@ -139,11 +132,10 @@ public class JwtTokenUtil {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         var user = userService.getUser(userDetails.getUsername());
-        return ((username.equals(userDetails.getUsername())/* || username.equalsIgnoreCase(user.getOidcSub())*/) && !isTokenExpired(token));
+        return ((username.equals(userDetails.getUsername())) && !isTokenExpired(token));
     }
 
     public String getSalt() {
         return salt;
     }
-
 }

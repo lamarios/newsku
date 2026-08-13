@@ -1,5 +1,6 @@
 package com.github.lamarios.newsku.services;
 
+import static java.util.stream.Collectors.toMap;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,9 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Jwk;
 import io.jsonwebtoken.security.Jwks;
+import java.nio.charset.StandardCharsets;
+import java.util.Optional;
+import java.util.Random;
 import kong.unirest.core.GetRequest;
 import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
@@ -22,45 +26,32 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Optional;
-import java.util.Random;
-
-import static java.util.stream.Collectors.toMap;
-
 @Service
 public class OidcService implements ApplicationContextAware {
     @Value("${OIDC_DISCOVERY_URL:}")
     private String oidcDiscoveryUrl;
-
     @Value("${OIDC_AUTO_SIGNUP_USERS:0}")
     private boolean autoSignUpUsers;
-
     @Value("${OIDC_CLIENT_ID:}")
     private String clientId;
-
     @Value("${OIDC_EMAIL_CLAIM:email}")
     private String oidcEmailClaim;
     @Value("${OIDC_USERNAME_CLAIM:preferred_username}")
     private String oidcPreferredUsernameClaim;
-
     @Value("${OIDC_NAME:SSO}")
     private String oidcName;
-
     private JwtParser parser;
-
     private OIDCConfig oidcConfig;
-
     private final ObjectMapper objectMapper = new ObjectMapper();
-
-
     private final UserService userService;
 
     @Autowired
     public OidcService(UserService userService) {
         this.userService = userService;
-        objectMapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        objectMapper.disable(
+                DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES,
+                DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
+        );
     }
 
     public String getOidcDiscoveryUrl() {
@@ -73,7 +64,6 @@ public class OidcService implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-
         if (oidcDiscoveryUrl != null && !oidcDiscoveryUrl.isBlank()) {
             GetRequest request = Unirest.get(oidcDiscoveryUrl);
             try {
@@ -91,25 +81,24 @@ public class OidcService implements ApplicationContextAware {
                 oidcConfig.setUsernameClaim(oidcPreferredUsernameClaim);
                 oidcConfig.setName(oidcName);
 
+                var keyMap =
+                        Jwks
+                    .setParser()
+                    .build()
+                    .parse(bodyStr)
+                    .getKeys()
+                    .stream()
+                    .collect(toMap(Identifiable::getId, Jwk::toKey));
 
-                var keyMap = Jwks.setParser()
-                        .build()
-                        .parse(bodyStr)
-                        .getKeys()
-                        .stream()
-                        .collect(toMap(Identifiable::getId, Jwk::toKey));
-
-                parser = Jwts.parser()
-                        .keyLocator(header -> keyMap.get(header.getOrDefault("kid", "").toString()))
-                        .build();
-
-
+                parser = Jwts
+                    .parser()
+                    .keyLocator(header -> keyMap.get(header.getOrDefault("kid", "").toString()))
+                    .build();
             } catch (UnirestException | JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
 
     public JwtParser getParser() {
         return parser;
@@ -126,25 +115,22 @@ public class OidcService implements ApplicationContextAware {
     public Optional<User> handleUserSub(String sub, String accessToken) throws Exception {
         // check DB if we have a user with this sub
         var userOpt = userService.getByOidcSub(sub);
-
         // if we don't get the info
         if (userOpt.isEmpty()) {
-
-            GetRequest request = Unirest.get(oidcConfig.getUserInfoUrl())
-                    .header("Authorization", "Bearer " + accessToken);
+            GetRequest request =
+                    Unirest.get(oidcConfig.getUserInfoUrl()).header("Authorization", "Bearer " + accessToken);
             var body = request.asJson().getBody();
 
             JSONObject object = body.getObject();
             if (object.has(oidcPreferredUsernameClaim)) {
                 var user = userService.getUser(object.getString(oidcPreferredUsernameClaim)).orElse(null);
-
                 // if we still don't have  auser we might need to sign it up
                 if (user != null) {
                     user.setOidcSub(sub);
                     return Optional.ofNullable(userService.updateUser(user));
                 } else if (autoSignUpUsers) {
-
-                    byte[] array = new byte[50]; // length is bounded by 7
+                    // length is bounded by 7
+                    byte[] array = new byte[50];
                     new Random().nextBytes(array);
                     String generatedString = new String(array, StandardCharsets.UTF_8);
 
@@ -158,11 +144,9 @@ public class OidcService implements ApplicationContextAware {
                 } else {
                     throw new Exception();
                 }
-
             } else {
                 throw new Exception();
             }
-
         } else {
             return userOpt;
         }

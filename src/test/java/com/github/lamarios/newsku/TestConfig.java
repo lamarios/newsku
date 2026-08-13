@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @TestConfiguration
 @PropertySource("classpath:application.properties")
 public class TestConfig {
-
     @Bean
     public OpenaiService openaiService() {
         return new MockOpenaiService();
@@ -37,5 +36,4 @@ public class TestConfig {
     public FakeRssFeedController fakeRssFeedController() {
         return new FakeRssFeedController();
     }
-
 }

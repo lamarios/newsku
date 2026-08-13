@@ -3,7 +3,7 @@ package com.github.lamarios.newsku.persistence.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="feed_clicks")
+@Table(name = "feed_clicks")
 public class FeedClick {
     @Id
     private String id;

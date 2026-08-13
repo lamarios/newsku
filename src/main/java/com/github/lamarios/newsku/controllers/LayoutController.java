@@ -1,17 +1,14 @@
 package com.github.lamarios.newsku.controllers;
 
-
 import com.github.lamarios.newsku.persistence.entities.LayoutBlock;
 import com.github.lamarios.newsku.services.LayoutService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/layout")
@@ -19,7 +16,6 @@ import java.util.List;
 @SecurityRequirement(name = "bearerAuth")
 public class LayoutController {
     private final boolean demoMode;
-
     private final LayoutService layoutService;
 
     @Autowired
@@ -27,7 +23,6 @@ public class LayoutController {
         this.demoMode = demoMode;
         this.layoutService = layoutService;
     }
-
 
     @GetMapping
     public List<LayoutBlock> getLayout() {
@@ -42,6 +37,4 @@ public class LayoutController {
 
         return layoutService.setLayout(blocks);
     }
-
-
 }

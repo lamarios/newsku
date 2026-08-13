@@ -1,7 +1,6 @@
 package com.github.lamarios.newsku.models;
 
 public class LayoutBlockSettings {
-
     private String title;
     private Integer items;
     private String categoryId;

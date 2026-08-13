@@ -6,6 +6,9 @@ import com.github.lamarios.newsku.persistence.repositories.FeedItemRepository;
 import com.github.lamarios.newsku.persistence.repositories.FeedRepository;
 import com.github.lamarios.newsku.persistence.repositories.UserRepository;
 import freemarker.template.TemplateException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +18,21 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-
 @Service
 public class EmailDigestService {
     private final UserRepository userRepository;
     private final EmailService emailService;
     private final FeedItemRepository feedItemRepository;
-    private final static Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger();
     private final FeedRepository feedRepository;
 
     @Autowired
-    public EmailDigestService(UserRepository userRepository, EmailService emailService, FeedItemRepository feedItemRepository, FeedRepository feedRepository) {
+    public EmailDigestService(
+            UserRepository userRepository,
+            EmailService emailService,
+            FeedItemRepository feedItemRepository,
+            FeedRepository feedRepository
+    ) {
         this.userRepository = userRepository;
         this.emailService = emailService;
         this.feedItemRepository = feedItemRepository;
@@ -56,10 +60,13 @@ public class EmailDigestService {
         sendDigestToUsers(EmailDigestFrequency.weekly);
     }
 
-
     @Transactional(readOnly = true)
     public List<User> getUsers(EmailDigestFrequency frequency) {
-        return userRepository.findAll().stream().filter(u -> u.getEmailDigest().contains(frequency)).toList();
+        return userRepository
+            .findAll()
+            .stream()
+            .filter(u -> u.getEmailDigest().contains(frequency))
+            .toList();
     }
 
     @Transactional(readOnly = true)
@@ -81,7 +88,13 @@ public class EmailDigestService {
         var to = System.currentTimeMillis();
         var from = to - frequency.getDaysMs();
 
-        var items = feedItemRepository.findallByTimeAndFeeds(0, from, to, feeds, PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "importance")));
+        var items = feedItemRepository.findallByTimeAndFeeds(
+                0,
+                from,
+                to,
+                feeds,
+                PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "importance"))
+        );
 
         if (items.getContent().isEmpty()) {
             log.info("No feed items found for user {} in the past {} days", user.getId(), frequency.getDays());
@@ -95,5 +108,4 @@ public class EmailDigestService {
         data.put("title", frequency.getEmailTitle());
         emailService.sendTemplate(user.getEmail(), frequency.getEmailTitle(), "email/digest.ftl", data);
     }
-
 }

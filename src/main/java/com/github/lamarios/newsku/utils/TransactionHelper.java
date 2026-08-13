@@ -7,9 +7,13 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 public class TransactionHelper {
-    private final static Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger();
 
-    public static void doInNewTransaction(PlatformTransactionManager transactionManager, boolean readonly, Runnable runnable) {
+    public static void doInNewTransaction(
+            PlatformTransactionManager transactionManager,
+            boolean readonly,
+            Runnable runnable
+    ) {
         DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
         definition.setReadOnly(readonly);
         TransactionStatus status = transactionManager.getTransaction(definition);

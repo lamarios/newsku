@@ -1,18 +1,14 @@
 package com.github.lamarios.newsku.persistence.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "feed_categories")
 public class FeedCategory {
-
     @Id
     private String id;
     private String name;
-
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore

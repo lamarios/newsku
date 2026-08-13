@@ -1,6 +1,5 @@
 package com.github.lamarios.newsku.persistence.entities;
 
-
 import jakarta.persistence.*;
 
 @Entity
@@ -8,13 +7,11 @@ import jakarta.persistence.*;
 public class TagClick {
     @Id
     private String id;
-
     @Column(name = "timecreated")
     private long timeCreated;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     private String tag;
 
     public User getUser() {

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "FeedsErrors")
 @SecurityRequirement(name = "bearerAuth")
 public class FeedErrorController {
-
     private final FeedService feedService;
     private final FeedErrorService feedErrorService;
     private final UserService userService;
@@ -27,19 +26,21 @@ public class FeedErrorController {
         this.userService = userService;
     }
 
-
     @GetMapping("/last-refresh-count")
-    public long countLastRefreshErrors(){
+    public long countLastRefreshErrors() {
         return feedErrorService.countLastRefreshErrors();
     }
 
     @GetMapping("{id}")
-    public Page<FeedError> getErrors(@PathVariable("id") String feedId, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+    public Page<FeedError> getErrors(
+            @PathVariable("id") String feedId,
+            @RequestParam("page") int page,
+            @RequestParam("pageSize") int pageSize
+    ) {
         var feed = feedService.getFeed(feedId);
         if (feed == null) {
             return Page.empty();
         }
         return feedErrorService.getPaginatedErrors(feed, page, pageSize);
-
     }
 }

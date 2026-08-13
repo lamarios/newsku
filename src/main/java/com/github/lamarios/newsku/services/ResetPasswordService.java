@@ -5,22 +5,18 @@ import com.github.lamarios.newsku.persistence.repositories.UserRepository;
 import com.github.lamarios.newsku.security.JwtTokenUtil;
 import freemarker.template.TemplateException;
 import io.jsonwebtoken.security.SignatureException;
+import java.io.IOException;
+import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.security.InvalidParameterException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
-
 @Service
 public class ResetPasswordService {
-
-
     public static final int RESET_PASSOWRD_EXPIRY = 24 * 60 * 60 * 1000;
     private final UserRepository userRepository;
     private final JwtTokenUtil jwtTokenUtil;
@@ -29,7 +25,13 @@ public class ResetPasswordService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ResetPasswordService(UserRepository userRepository, JwtTokenUtil jwtTokenUtil, String rootUrl, EmailService emailService, PasswordEncoder passwordEncoder) {
+    public ResetPasswordService(
+            UserRepository userRepository,
+            JwtTokenUtil jwtTokenUtil,
+            String rootUrl,
+            EmailService emailService,
+            PasswordEncoder passwordEncoder
+    ) {
         this.userRepository = userRepository;
         this.jwtTokenUtil = jwtTokenUtil;
         this.rootUrl = rootUrl;
@@ -45,8 +47,11 @@ public class ResetPasswordService {
             return;
         }
 
-        String token = jwtTokenUtil.doGenerateToken(Map.of("type", "reset-password", "request-id", UUID.randomUUID()
-                .toString(), "server-url", rootUrl), user.getId(), RESET_PASSOWRD_EXPIRY);
+        String token = jwtTokenUtil.doGenerateToken(
+                Map.of("type", "reset-password", "request-id", UUID.randomUUID().toString(), "server-url", rootUrl),
+                user.getId(),
+                RESET_PASSOWRD_EXPIRY
+        );
 
         Map<String, Object> templateData = new HashMap<>();
 
@@ -54,10 +59,15 @@ public class ResetPasswordService {
         templateData.put("url", resetPasswordUrl);
         templateData.put("username", user.getUsername());
 
-        emailService.sendTemplate(user.getEmail(), "[Newsku] Reset password request", "email/reset-password.ftl", templateData);
+        emailService.sendTemplate(
+                user.getEmail(),
+                "[Newsku] Reset password request",
+                "email/reset-password.ftl",
+                templateData
+        );
     }
 
-    @Transactional()
+    @Transactional
     public void resetPassword(String token, String password) {
         try {
             var claims = jwtTokenUtil.getAllClaimsFromToken(token);
@@ -70,11 +80,8 @@ public class ResetPasswordService {
             user.setPassword(passwordEncoder.encode(password));
 
             userRepository.save(user);
-
         } catch (SignatureException e) {
             throw new InvalidParameterException("Invalid token");
         }
-
-
     }
 }
