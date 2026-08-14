@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NewskuError {
 
- ErrorType get type; String? get uuid; String get message;@override@JsonKey(includeToJson: false, includeFromJson: false) StackTrace? get stackTrace;
+ ErrorType get type; String? get uuid; String get message;@JsonKey(includeToJson: false, includeFromJson: false) StackTrace? get stackTrace;
 /// Create a copy of NewskuError
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $NewskuErrorCopyWith<$Res>  {
   factory $NewskuErrorCopyWith(NewskuError value, $Res Function(NewskuError) _then) = _$NewskuErrorCopyWithImpl;
 @useResult
 $Res call({
- ErrorType type, String? uuid, String message,@override@JsonKey(includeToJson: false, includeFromJson: false) StackTrace? stackTrace
+ ErrorType type, String? uuid, String message,@JsonKey(includeToJson: false, includeFromJson: false) StackTrace? stackTrace
 });
 
 
@@ -153,7 +153,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ErrorType type,  String? uuid,  String message, @override@JsonKey(includeToJson: false, includeFromJson: false)  StackTrace? stackTrace)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ErrorType type,  String? uuid,  String message, @JsonKey(includeToJson: false, includeFromJson: false)  StackTrace? stackTrace)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NewskuError() when $default != null:
 return $default(_that.type,_that.uuid,_that.message,_that.stackTrace);case _:
@@ -174,7 +174,7 @@ return $default(_that.type,_that.uuid,_that.message,_that.stackTrace);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ErrorType type,  String? uuid,  String message, @override@JsonKey(includeToJson: false, includeFromJson: false)  StackTrace? stackTrace)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ErrorType type,  String? uuid,  String message, @JsonKey(includeToJson: false, includeFromJson: false)  StackTrace? stackTrace)  $default,) {final _that = this;
 switch (_that) {
 case _NewskuError():
 return $default(_that.type,_that.uuid,_that.message,_that.stackTrace);}
@@ -191,7 +191,7 @@ return $default(_that.type,_that.uuid,_that.message,_that.stackTrace);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ErrorType type,  String? uuid,  String message, @override@JsonKey(includeToJson: false, includeFromJson: false)  StackTrace? stackTrace)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ErrorType type,  String? uuid,  String message, @JsonKey(includeToJson: false, includeFromJson: false)  StackTrace? stackTrace)?  $default,) {final _that = this;
 switch (_that) {
 case _NewskuError() when $default != null:
 return $default(_that.type,_that.uuid,_that.message,_that.stackTrace);case _:
@@ -206,13 +206,13 @@ return $default(_that.type,_that.uuid,_that.message,_that.stackTrace);case _:
 @JsonSerializable()
 
 class _NewskuError extends NewskuError implements Error {
-  const _NewskuError({required this.type, required this.uuid, this.message = "", @override@JsonKey(includeToJson: false, includeFromJson: false) this.stackTrace}): super._();
+  const _NewskuError({required this.type, required this.uuid, this.message = "", @JsonKey(includeToJson: false, includeFromJson: false) this.stackTrace}): super._();
   factory _NewskuError.fromJson(Map<String, dynamic> json) => _$NewskuErrorFromJson(json);
 
 @override final  ErrorType type;
 @override final  String? uuid;
 @override@JsonKey() final  String message;
-@override@override@JsonKey(includeToJson: false, includeFromJson: false) final  StackTrace? stackTrace;
+@override@JsonKey(includeToJson: false, includeFromJson: false) final  StackTrace? stackTrace;
 
 /// Create a copy of NewskuError
 /// with the given fields replaced by the non-null parameter values.
@@ -247,7 +247,7 @@ abstract mixin class _$NewskuErrorCopyWith<$Res> implements $NewskuErrorCopyWith
   factory _$NewskuErrorCopyWith(_NewskuError value, $Res Function(_NewskuError) _then) = __$NewskuErrorCopyWithImpl;
 @override @useResult
 $Res call({
- ErrorType type, String? uuid, String message,@override@JsonKey(includeToJson: false, includeFromJson: false) StackTrace? stackTrace
+ ErrorType type, String? uuid, String message,@JsonKey(includeToJson: false, includeFromJson: false) StackTrace? stackTrace
 });
 
 

@@ -229,7 +229,7 @@ return $default(_that.hasScrolled,_that.currentTime,_that.timeBlock,_that.loadin
 
 class _MainFeedState extends MainFeedState implements WithError {
   const _MainFeedState({this.hasScrolled = false, required this.currentTime, this.timeBlock = TimeBlock.one_day, this.loading = true, final  Map<DateTimeRange, List<FeedItem>> items = const {}, final  List<FeedCategory> categories = const [], final  List<Feed> feeds = const [], this.selectedFeed, this.searchTerms = '', final  List<FeedItem> feedItems = const [], this.page = 0, final  List<LayoutBlock> layout = const [], this.errorCount = 0, this.drawerOpened = false, this.viewMode = FeedViewMode.feeds, this.error, this.stackTrace}): _items = items,_categories = categories,_feeds = feeds,_feedItems = feedItems,_layout = layout,super._();
-
+  
 
 @override@JsonKey() final  bool hasScrolled;
 @override final  DateTime currentTime;

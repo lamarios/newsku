@@ -20,7 +20,7 @@ pkgs.mkShell {
   # to run CI or DB migrations
   shellHook =  ''
   # Setting up mkdocs
-  python -m venv mkdocs/venv
+  python -m venv --clear mkdocs/venv
   source mkdocs/venv/bin/activate
   pip install -r mkdocs/requirements.txt
 
@@ -28,6 +28,22 @@ pkgs.mkShell {
 
   export JAVA_HOME=${pkgs.jdk25}/lib/openjdk
 
+  echo "Setting up submodules"
+  git submodule init
+  git submodule update
+
+
+  "Adding flutter submodule to path"
+  export PATH="${toString ./.}/src/main/app/submodules/flutter/bin:$PATH"
+
+
+  echo "Setting up pre-commit hook"
+  dart run tools/setup_git_hooks.dart
+
+  flutter config --jdk-dir ${pkgs.jdk21}/lib/openjdk
+  flutter doctor
+
+  echo "creating useful aliases..."
   echo -e "\nAll done 🎉 \nAvailable aliases:"
   ''+
           pkgs.lib.concatStrings (map (x: ''echo "${x.name}: ${x.description}";'') aliases);

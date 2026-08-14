@@ -33,11 +33,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cached_network_image: 3.4.1
   cached_network_image_web: 1.3.1
-  device_info_plus: 12.3.0
-  dynamic_color: 1.8.1
+  device_info_plus: 13.2.0
+  dynamic_color: 1.9.0
   easy_debounce: 2.0.3
   feedback: 3.2.0
-  file_picker: 10.3.10
+  file_picker: 12.0.0
   file_saver: 0.4.0
   flutter:
     sdk: flutter
@@ -57,9 +57,9 @@ dependencies:
   logging: 1.3.0
   material_loading_indicator: 1.0.0
   motor: 1.1.0
-  oidc: 0.14.0+2
-  oidc_default_store: 0.6.0+2
-  package_info_plus: 9.0.0
+  oidc: 4.0.0
+  oidc_default_store: 1.1.2
+  package_info_plus: 10.2.1
   shared_preferences: 2.5.5
   url_launcher: 6.3.2
   visibility_detector: 0.4.0+2
@@ -74,10 +74,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: 3.2.5
-  json_serializable: 6.14.0
+  json_serializable: 6.14.1
   mocktail: 1.0.5
   nock: 1.2.3
-  snaptest: 0.3.0
+  snaptest: 0.3.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

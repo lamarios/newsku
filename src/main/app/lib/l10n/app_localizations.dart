@@ -274,7 +274,7 @@ abstract class AppLocalizations {
   /// No description provided for @importedNFeeds.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{No feed imported} =1{Imported 1 feed} other{Importer {count} feeds}}'**
+  /// **'{count, plural, =0{No feed imported} =1{Imported 1 feed} other{Importer {count} feeds}}, processing will happen in the background'**
   String importedNFeeds(num count);
 
   /// No description provided for @cancel.

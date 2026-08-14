@@ -60,12 +60,12 @@ jobs:
       - name: Run tests
         working-directory: src/main/app
         run: |
-          nix-shell --run "flutter test"
+          nix-shell --run "flutter test" ../../../shell.nix
       - name: Build app
         working-directory: src/main/app
         run: |
-          nix-shell --run "./submodules/flutter/bin/flutter build apk --split-per-abi"
-          nix-shell --run "./submodules/flutter/bin/flutter build appbundle"
+          nix-shell --run "./submodules/flutter/bin/flutter build apk --split-per-abi" ../../../shell.nix
+          nix-shell --run "./submodules/flutter/bin/flutter build appbundle" ../../../shell.nix
    #   - name: Set up Ruby
    #     if: startsWith(github.ref, 'refs/tags/')
    #     uses: ruby/setup-ruby@v1

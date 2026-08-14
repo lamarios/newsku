@@ -1,115 +1,117 @@
 package com.github.lamarios.newsku.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 public class OIDCConfig {
-    @JsonProperty("authorization_endpoint")
-    private String authorizationEndpoint;
-    @JsonProperty("jwks_uri")
-    private String jwksUri;
-    private String issuer;
-    @JsonProperty("id_token_signing_alg_values_supported")
-    private List<String> supportedAlgorithm;
-    @JsonProperty("userinfo_endpoint")
-    private String userInfoUrl;
-    private String discoveryUrl;
-    private String clientId;
-    private String emailClaim;
-    private String usernameClaim;
-    private String name;
+  @JsonProperty("authorization_endpoint")
+  private String authorizationEndpoint;
 
+  @JsonProperty("jwks_uri")
+  private String jwksUri;
 
-    @JsonProperty("token_endpoint")
-    private String tokenUrl;
+  private String issuer;
 
+  @JsonProperty("id_token_signing_alg_values_supported")
+  private List<String> supportedAlgorithm;
 
-    public String getAuthorizationEndpoint() {
-        return authorizationEndpoint;
-    }
+  @JsonProperty("userinfo_endpoint")
+  private String userInfoUrl;
 
-    public void setAuthorizationEndpoint(String authorizationEndpoint) {
-        this.authorizationEndpoint = authorizationEndpoint;
-    }
+  private String discoveryUrl;
+  private String clientId;
+  private String emailClaim;
+  private String usernameClaim;
+  private String name;
 
-    public String getJwksUri() {
-        return jwksUri;
-    }
+  @JsonProperty("token_endpoint")
+  private String tokenUrl;
 
-    public void setJwksUri(String jwksUri) {
-        this.jwksUri = jwksUri;
-    }
+  public String getAuthorizationEndpoint() {
+    return authorizationEndpoint;
+  }
 
-    public String getIssuer() {
-        return issuer;
-    }
+  public void setAuthorizationEndpoint(String authorizationEndpoint) {
+    this.authorizationEndpoint = authorizationEndpoint;
+  }
 
-    public void setIssuer(String issuer) {
-        this.issuer = issuer;
-    }
+  public String getJwksUri() {
+    return jwksUri;
+  }
 
-    public String getTokenUrl() {
-        return tokenUrl;
-    }
+  public void setJwksUri(String jwksUri) {
+    this.jwksUri = jwksUri;
+  }
 
-    public void setTokenUrl(String tokenUrl) {
-        this.tokenUrl = tokenUrl;
-    }
+  public String getIssuer() {
+    return issuer;
+  }
 
-    public List<String> getSupportedAlgorithm() {
-        return supportedAlgorithm;
-    }
+  public void setIssuer(String issuer) {
+    this.issuer = issuer;
+  }
 
-    public void setSupportedAlgorithm(List<String> supportedAlgorithm) {
-        this.supportedAlgorithm = supportedAlgorithm;
-    }
+  public String getTokenUrl() {
+    return tokenUrl;
+  }
 
-    public String getUserInfoUrl() {
-        return userInfoUrl;
-    }
+  public void setTokenUrl(String tokenUrl) {
+    this.tokenUrl = tokenUrl;
+  }
 
-    public void setUserInfoUrl(String userInfoUrl) {
-        this.userInfoUrl = userInfoUrl;
-    }
+  public List<String> getSupportedAlgorithm() {
+    return supportedAlgorithm;
+  }
 
-    public String getDiscoveryUrl() {
-        return discoveryUrl;
-    }
+  public void setSupportedAlgorithm(List<String> supportedAlgorithm) {
+    this.supportedAlgorithm = supportedAlgorithm;
+  }
 
-    public void setDiscoveryUrl(String discoveryUrl) {
-        this.discoveryUrl = discoveryUrl;
-    }
+  public String getUserInfoUrl() {
+    return userInfoUrl;
+  }
 
-    public String getClientId() {
-        return clientId;
-    }
+  public void setUserInfoUrl(String userInfoUrl) {
+    this.userInfoUrl = userInfoUrl;
+  }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
+  public String getDiscoveryUrl() {
+    return discoveryUrl;
+  }
 
-    public String getEmailClaim() {
-        return emailClaim;
-    }
+  public void setDiscoveryUrl(String discoveryUrl) {
+    this.discoveryUrl = discoveryUrl;
+  }
 
-    public void setEmailClaim(String emailClaim) {
-        this.emailClaim = emailClaim;
-    }
+  public String getClientId() {
+    return clientId;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setClientId(String clientId) {
+    this.clientId = clientId;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getEmailClaim() {
+    return emailClaim;
+  }
 
-    public String getUsernameClaim() {
-        return usernameClaim;
-    }
+  public void setEmailClaim(String emailClaim) {
+    this.emailClaim = emailClaim;
+  }
 
-    public void setUsernameClaim(String usernameClaim) {
-        this.usernameClaim = usernameClaim;
-    }
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getUsernameClaim() {
+    return usernameClaim;
+  }
+
+  public void setUsernameClaim(String usernameClaim) {
+    this.usernameClaim = usernameClaim;
+  }
 }

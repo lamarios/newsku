@@ -1,137 +1,136 @@
 package com.github.lamarios.newsku.persistence.entities;
 
 import jakarta.persistence.*;
+import java.util.List;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.List;
 
 @Entity
 @Table(name = "feed_items")
 public class FeedItem {
+  @Id private String id;
+  private String guid;
+  private String title;
+  private String description;
+  private String content;
+  private String reasoning;
+  private String imageUrl;
+  private int importance;
+  private String url;
 
-    @Id
-    private String id;
-    private String guid;
-    private String title;
-    private String description;
-    private String content;
-    private String reasoning;
-    private String imageUrl;
-    private int importance;
-    private String url;
-    @Column(name = "timecreated")
-    private long timeCreated;
-    private boolean read;
+  @Column(name = "timecreated")
+  private long timeCreated;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "feed_id")
-    private Feed feed;
+  private boolean read;
 
-    @JdbcTypeCode(SqlTypes.ARRAY)
-    private List<String> tags;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "feed_id")
+  private Feed feed;
 
-    public Feed getFeed() {
-        return feed;
-    }
+  @JdbcTypeCode(SqlTypes.ARRAY)
+  private List<String> tags;
 
-    public void setFeed(Feed feed) {
-        this.feed = feed;
-    }
+  public Feed getFeed() {
+    return feed;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public void setFeed(Feed feed) {
+    this.feed = feed;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getGuid() {
-        return guid;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setGuid(String guid) {
-        this.guid = guid;
-    }
+  public String getGuid() {
+    return guid;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public void setGuid(String guid) {
+    this.guid = guid;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public String getReasoning() {
-        return reasoning;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-    public void setReasoning(String reasoning) {
-        this.reasoning = reasoning;
-    }
+  public String getReasoning() {
+    return reasoning;
+  }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
+  public void setReasoning(String reasoning) {
+    this.reasoning = reasoning;
+  }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+  public String getImageUrl() {
+    return imageUrl;
+  }
 
-    public int getImportance() {
-        return importance;
-    }
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
 
-    public void setImportance(int importance) {
-        this.importance = importance;
-    }
+  public int getImportance() {
+    return importance;
+  }
 
-    public long getTimeCreated() {
-        return timeCreated;
-    }
+  public void setImportance(int importance) {
+    this.importance = importance;
+  }
 
-    public void setTimeCreated(long timecreated) {
-        this.timeCreated = timecreated;
-    }
+  public long getTimeCreated() {
+    return timeCreated;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public void setTimeCreated(long timecreated) {
+    this.timeCreated = timecreated;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public boolean isRead() {
-        return read;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public void setRead(boolean read) {
-        this.read = read;
-    }
+  public boolean isRead() {
+    return read;
+  }
 
-    public List<String> getTags() {
-        return tags;
-    }
+  public void setRead(boolean read) {
+    this.read = read;
+  }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
+  public List<String> getTags() {
+    return tags;
+  }
+
+  public void setTags(List<String> tags) {
+    this.tags = tags;
+  }
 }

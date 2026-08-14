@@ -230,6 +230,22 @@ class LayoutSettingsRouteArgs {
 }
 
 /// generated route for
+/// [LoggedInScreen]
+class LoggedInRoute extends PageRouteInfo<void> {
+  const LoggedInRoute({List<PageRouteInfo>? children})
+    : super(LoggedInRoute.name, initialChildren: children, argsEquality: false);
+
+  static const String name = 'LoggedInRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const LoggedInScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [LoginFormScreen]
 class LoginFormRoute extends PageRouteInfo<void> {
   const LoginFormRoute({List<PageRouteInfo>? children})

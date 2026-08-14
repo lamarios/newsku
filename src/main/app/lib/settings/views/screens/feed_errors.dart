@@ -4,6 +4,7 @@ import 'package:app/l10n/app_localizations.dart';
 import 'package:app/settings/states/feed_errors.dart';
 import 'package:app/settings/views/components/feed_error.dart';
 import 'package:app/utils/utils.dart';
+import 'package:app/utils/views/components/auto_leading_button.dart';
 import 'package:app/utils/views/components/page_switcher.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class FeedErrorsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: NewskuAutoLeadingButton(),
         title: Row(
           spacing: pu4,
           children: [

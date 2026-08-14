@@ -1,63 +1,51 @@
 package com.github.lamarios.newsku.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.github.lamarios.newsku.TestConfig;
 import com.github.lamarios.newsku.TestContainerTest;
 import com.github.lamarios.newsku.errors.NewskuException;
 import com.github.lamarios.newsku.models.TagClickStat;
 import com.github.lamarios.newsku.services.FeedItemService;
+import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @Import(TestConfig.class)
 public class ClickControllerTest extends TestContainerTest {
+  @Autowired private FeedItemController feedItemController;
+  @Autowired private FeedItemService feedItemService;
+  @Autowired private FeedController feedController;
+  @Autowired private ClickController clickController;
 
-    @Autowired
-    private FeedItemController feedItemController;
+  @Test
+  public void testClickFeedItem() throws SQLException, NewskuException {
+    var feed = feedController.addFeed("https://feeds.arstechnica.com/arstechnica/index");
 
-    @Autowired
-    private FeedItemService feedItemService;
+    feedItemService.refreshFeedWorker(feed);
 
-    @Autowired
-    private FeedController feedController;
+    var items = feedItemController.getItems(0L, System.currentTimeMillis(), 0, 9999999);
 
-    @Autowired
-    private ClickController clickController;
+    assertTrue(items.hasContent());
 
-    @Test
-    public void testClickFeedItem() throws SQLException, NewskuException {
-        var feed = feedController.addFeed("https://feeds.arstechnica.com/arstechnica/index");
+    feedItemController.clickItem(items.getContent().getFirst().getId());
 
-        feedItemService.refreshFeedWorker(feed);
+    var stats = clickController.getTagStats(0L, System.currentTimeMillis());
 
-        var items = feedItemController.getItems(0L, System.currentTimeMillis(), 0, 9999999);
+    assertEquals(2, stats.tagClicks().size());
 
-        assertTrue(items.hasContent());
+    var clickedTags = stats.tagClicks().stream().map(TagClickStat::tag).toList();
 
-        feedItemController.clickItem(items.getContent().getFirst().getId());
+    assertTrue(clickedTags.contains(items.getContent().getFirst().getTags().get(0)));
+    assertTrue(clickedTags.contains(items.getContent().getFirst().getTags().get(1)));
 
-        var stats = clickController.getTagStats(0L, System.currentTimeMillis());
+    assertTrue(stats.tagClicks().stream().map(TagClickStat::clicks).allMatch(aLong -> aLong == 1));
 
-        assertEquals(2, stats.tagClicks().size());
-
-        var clickedTags = stats.tagClicks().stream().map(TagClickStat::tag).toList();
-
-        assertTrue(clickedTags.contains(items.getContent().getFirst().getTags().get(0)));
-        assertTrue(clickedTags.contains(items.getContent().getFirst().getTags().get(1)));
-
-        assertTrue(stats.tagClicks().stream().map(TagClickStat::clicks).allMatch(aLong -> aLong == 1));
-
-
-        assertEquals(1, stats.feedClicks().size());
-        var feedClick = stats.feedClicks().getFirst();
-        assertEquals(feed.getUrl(), feedClick.feed().getUrl());
-        assertEquals(1, feedClick.clicks());
-
-    }
+    assertEquals(1, stats.feedClicks().size());
+    var feedClick = stats.feedClicks().getFirst();
+    assertEquals(feed.getUrl(), feedClick.feed().getUrl());
+    assertEquals(1, feedClick.clicks());
+  }
 }

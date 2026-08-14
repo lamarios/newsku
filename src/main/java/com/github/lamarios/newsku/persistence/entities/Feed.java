@@ -2,103 +2,101 @@ package com.github.lamarios.newsku.persistence.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "feeds")
 public class Feed {
-    @Id
-    private String id;
-    private String name;
-    private String description;
-    private String url;
-    @Column(name = "feed_item_preference")
-    private String itemPreference;
-    private String image;
-    @Column(name = "last_refresh_errors")
-    private int lastRefreshErrors;
+  @Id private String id;
+  private String name;
+  private String description;
+  private String url;
 
-    public String getImage() {
-        return image;
-    }
+  @Column(name = "feed_item_preference")
+  private String itemPreference;
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+  private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
+  @Column(name = "last_refresh_errors")
+  private int lastRefreshErrors;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
-    private FeedCategory category;
+  public String getImage() {
+    return image;
+  }
 
+  public void setImage(String image) {
+    this.image = image;
+  }
 
-    public User getUser() {
-        return user;
-    }
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  @JsonIgnore
+  private User user;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "category_id")
+  private FeedCategory category;
 
-    public String getId() {
-        return id;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public String getItemPreference() {
-        return itemPreference;
-    }
+  public String getUrl() {
+    return url;
+  }
 
-    public void setItemPreference(String itemPreference) {
-        this.itemPreference = itemPreference;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public int getLastRefreshErrors() {
-        return lastRefreshErrors;
-    }
+  public String getItemPreference() {
+    return itemPreference;
+  }
 
-    public void setLastRefreshErrors(int lastRefreshErrors) {
-        this.lastRefreshErrors = lastRefreshErrors;
-    }
+  public void setItemPreference(String itemPreference) {
+    this.itemPreference = itemPreference;
+  }
 
-    public FeedCategory getCategory() {
-        return category;
-    }
+  public int getLastRefreshErrors() {
+    return lastRefreshErrors;
+  }
 
-    public void setCategory(FeedCategory category) {
-        this.category = category;
-    }
+  public void setLastRefreshErrors(int lastRefreshErrors) {
+    this.lastRefreshErrors = lastRefreshErrors;
+  }
+
+  public FeedCategory getCategory() {
+    return category;
+  }
+
+  public void setCategory(FeedCategory category) {
+    this.category = category;
+  }
 }

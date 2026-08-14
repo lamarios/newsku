@@ -7,11 +7,10 @@ import Foundation
 
 import device_info_plus
 import dynamic_color
-import file_picker
+import file_picker_darwin
 import file_saver
-import flutter_appauth
 import flutter_secure_storage_darwin
-import oidc_macos
+import oidc_darwin
 import package_info_plus
 import path_provider_foundation
 import shared_preferences_foundation
@@ -24,7 +23,6 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   DynamicColorPlugin.register(with: registry.registrar(forPlugin: "DynamicColorPlugin"))
   FilePickerPlugin.register(with: registry.registrar(forPlugin: "FilePickerPlugin"))
   FileSaverPlugin.register(with: registry.registrar(forPlugin: "FileSaverPlugin"))
-  FlutterAppauthPlugin.register(with: registry.registrar(forPlugin: "FlutterAppauthPlugin"))
   FlutterSecureStorageDarwinPlugin.register(with: registry.registrar(forPlugin: "FlutterSecureStorageDarwinPlugin"))
   OidcPlugin.register(with: registry.registrar(forPlugin: "OidcPlugin"))
   FPPPackageInfoPlusPlugin.register(with: registry.registrar(forPlugin: "FPPPackageInfoPlusPlugin"))

@@ -1,71 +1,70 @@
 package com.github.lamarios.newsku.persistence.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "feed_errors")
 public class FeedError {
-    @Id
-    private String id;
-    @Column(name = "time_created")
-    private long timeCreated;
+  @Id private String id;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "feed_id")
-    private Feed feed;
-    private String error;
-    private String url;
-    private String message;
+  @Column(name = "time_created")
+  private long timeCreated;
 
+  @JsonIgnore
+  @ManyToOne
+  @JoinColumn(name = "feed_id")
+  private Feed feed;
 
-    public String getMessage() {
-        return message;
-    }
+  private String error;
+  private String url;
+  private String message;
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+  public String getMessage() {
+    return message;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public void setMessage(String message) {
+    this.message = message;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public long getTimeCreated() {
-        return timeCreated;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setTimeCreated(long timeCreated) {
-        this.timeCreated = timeCreated;
-    }
+  public long getTimeCreated() {
+    return timeCreated;
+  }
 
-    public Feed getFeed() {
-        return feed;
-    }
+  public void setTimeCreated(long timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
-    public void setFeed(Feed feed) {
-        this.feed = feed;
-    }
+  public Feed getFeed() {
+    return feed;
+  }
 
-    public String getError() {
-        return error;
-    }
+  public void setFeed(Feed feed) {
+    this.feed = feed;
+  }
 
-    public void setError(String error) {
-        this.error = error;
-    }
+  public String getError() {
+    return error;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public void setError(String error) {
+    this.error = error;
+  }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
 }

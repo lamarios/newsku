@@ -77,7 +77,7 @@ class LoginFormScreen extends StatelessWidget {
                                   if (context.mounted) {
                                     await context.read<IdentityCubit>().setToken(token);
                                     if (context.mounted) {
-                                      AutoRouter.of(context).replaceAll([HomeRoute()]);
+                                      AutoRouter.of(context).replaceAll([LoggedInRoute()]);
                                     }
                                   }
                                 } catch (e) {
@@ -103,7 +103,7 @@ class LoginFormScreen extends StatelessWidget {
                         if (context.mounted) {
                           await context.read<IdentityCubit>().setToken(token);
                           if (context.mounted) {
-                            AutoRouter.of(context).replaceAll([HomeRoute()]);
+                            AutoRouter.of(context).replaceAll([LoggedInRoute()]);
                           }
                         }
                       },

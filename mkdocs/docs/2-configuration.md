@@ -2,14 +2,15 @@
 
 ## Environment variables
 
-| Name         | Default | Required | Comments                                     |
-|--------------|---------|----------|----------------------------------------------|
-| SALT         | (none)  | **Yes**  | **Once this is set, do not ever change it.** | 
-| DB_HOST      | (none)  | **Yes**  | Database host                                |
-| DB_USER      | (none)  | **Yes**  |                                              | 
-| DB_PASSWORD  | (none)  | **Yes**  |                                              | 
-| ALLOW_SIGNUP | 0       | No       | 1 = allow signups, 0 = Do not allow signups  |
-| ANNOUNCEMENT | (none)  | No       | Show a message on the login screen           |
+| Name         | Default | Required | Comments                                                                                                 |
+|--------------|---------|----------|----------------------------------------------------------------------------------------------------------|
+| SALT         | (none)  | **Yes**  | **Once this is set, do not ever change it.**                                                             | 
+| DB_HOST      | (none)  | **Yes**  | Database host                                                                                            |
+| DB_USER      | (none)  | **Yes**  |                                                                                                          | 
+| DB_PASSWORD  | (none)  | **Yes**  |                                                                                                          | 
+| ALLOW_SIGNUP | 0       | No       | 1 = allow signups, 0 = Do not allow signups                                                              |
+| ANNOUNCEMENT | (none)  | No       | Show a message on the login screen                                                                       |
+| MAX_RAM      | 256m    | No       | Sets the max RAM the software can use, increase this when you have a lot of RSS feeds (ex: 1024m, 2048m) |
 
 ### AI
 

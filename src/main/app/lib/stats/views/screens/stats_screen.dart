@@ -3,6 +3,7 @@ import 'package:app/router.dart';
 import 'package:app/stats/states/stats_state.dart';
 import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/utils.dart';
+import 'package:app/utils/views/components/auto_leading_button.dart';
 import 'package:app/utils/views/components/conditional_wrap.dart';
 import 'package:app/utils/views/components/error_listener.dart';
 import 'package:auto_route/auto_route.dart';
@@ -22,6 +23,7 @@ class StatsScreen extends StatelessWidget {
       routes: [TagStatsRoute(), FeedStatsRoute()],
       builder: (context, child, tabController) => Scaffold(
         appBar: AppBar(
+          leading: NewskuAutoLeadingButton(),
           title: Text(locals.stats),
           bottom: TabBar(
             controller: tabController,

@@ -94,14 +94,13 @@ class FeedsSettingsTab extends StatelessWidget {
                           ),
                           TextButton.icon(
                             onPressed: () async {
-                              FilePickerResult? result = await FilePicker.platform.pickFiles(
+                              PlatformFile? result = await FilePicker.pickFile(
                                 allowedExtensions: ['opml'],
-                                allowMultiple: false,
                                 type: FileType.custom,
                               );
 
-                              if (result != null && result.files.isNotEmpty) {
-                                final feeds = await cubit.importFeeds(result.files.first.bytes);
+                              if (result != null) {
+                                final feeds = await cubit.importFeeds(await result.readAsBytes());
                                 if (context.mounted && feeds.isNotEmpty) {
                                   ScaffoldMessenger.of(
                                     context,

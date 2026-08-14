@@ -20,6 +20,7 @@ import 'package:app/user/views/components/login_form.dart';
 import 'package:app/user/views/components/server_url.dart';
 import 'package:app/user/views/components/signup_form.dart';
 import 'package:app/user/views/screen/landing.dart';
+import 'package:app/user/views/screen/logged_in.dart';
 import 'package:app/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
@@ -53,29 +54,37 @@ class AppRouter extends RootStackRouter {
     var hasServerUrlSetup = !kIsWeb || kDebugMode;
     return [
       AutoRoute.guarded(
-        page: HomeRoute.page,
+        page: LoggedInRoute.page,
+        onNavigation: loginRequired,
         initial: loggedInOnStart,
-        children: [AutoRoute(page: FeedRoute.page, initial: true)],
-        onNavigation: loginRequired,
-      ),
-      AutoRoute.guarded(page: FeedErrorsRoute.page, onNavigation: loginRequired),
-      AutoRoute.guarded(
-        page: SettingsRoute.page,
-        onNavigation: loginRequired,
+        path: '/home',
         children: [
-          AutoRoute(page: FeedsSettingsRoute.page, initial: true),
-          AutoRoute(page: LayoutSettingsRoute.page),
-          AutoRoute(page: GeneralSettingsRoute.page),
-          AutoRoute(page: UserSettingsRoute.page),
-          AutoRoute(page: InfoRoute.page),
-        ],
-      ),
-      AutoRoute.guarded(
-        page: StatsRoute.page,
-        onNavigation: loginRequired,
-        children: [
-          AutoRoute(page: TagStatsRoute.page, initial: true),
-          AutoRoute(page: FeedStatsRoute.page),
+          AutoRoute(
+            page: HomeRoute.page,
+            initial: true,
+            path: 'feeds',
+            children: [AutoRoute(page: FeedRoute.page, initial: true)],
+          ),
+          AutoRoute(page: FeedErrorsRoute.page, path: 'errors'),
+          AutoRoute(
+            page: SettingsRoute.page,
+            path: 'settings',
+            children: [
+              AutoRoute(page: FeedsSettingsRoute.page, initial: true, path: 'feeds'),
+              AutoRoute(page: LayoutSettingsRoute.page, path: 'layout'),
+              AutoRoute(page: GeneralSettingsRoute.page, path: 'general'),
+              AutoRoute(page: UserSettingsRoute.page, path: 'user-settings'),
+              AutoRoute(page: InfoRoute.page, path: 'info'),
+            ],
+          ),
+          AutoRoute(
+            page: StatsRoute.page,
+            path: 'stats',
+            children: [
+              AutoRoute(page: TagStatsRoute.page, initial: true),
+              AutoRoute(page: FeedStatsRoute.page),
+            ],
+          ),
         ],
       ),
       AutoRoute(page: ResetPasswordRoute.page, path: "/reset-password"),

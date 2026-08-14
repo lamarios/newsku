@@ -1,51 +1,50 @@
 package com.github.lamarios.newsku.persistence.entities;
 
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tag_clicks")
 public class TagClick {
-    @Id
-    private String id;
+  @Id private String id;
 
-    @Column(name = "timecreated")
-    private long timeCreated;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+  @Column(name = "timecreated")
+  private long timeCreated;
 
-    private String tag;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
-    public User getUser() {
-        return user;
-    }
+  private String tag;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public long getTimeCreated() {
-        return timeCreated;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setTimeCreated(long timeCreated) {
-        this.timeCreated = timeCreated;
-    }
+  public long getTimeCreated() {
+    return timeCreated;
+  }
 
-    public String getTag() {
-        return tag;
-    }
+  public void setTimeCreated(long timeCreated) {
+    this.timeCreated = timeCreated;
+  }
 
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
+  public String getTag() {
+    return tag;
+  }
+
+  public void setTag(String tag) {
+    this.tag = tag;
+  }
 }

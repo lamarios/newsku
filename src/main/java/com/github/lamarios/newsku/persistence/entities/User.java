@@ -4,118 +4,119 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.lamarios.newsku.models.EmailDigestFrequency;
 import com.github.lamarios.newsku.models.ReadItemHandling;
 import jakarta.persistence.*;
+import java.util.List;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
-import java.util.List;
 
 @Entity
 @Table(name = "users")
 public class User {
+  @Id private String id;
+  private String username;
 
-    @Id
-    private String id;
-    private String username;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-    private String email;
-    @Column(name = "feed_item_preference")
-    private String feedItemPreference;
-    @Column(name = "oidc_sub")
-    private String oidcSub;
-    @Column(name = "minimum_importance")
-    private int minimumImportance;
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  private String password;
 
-    @Column(name = "read_item_handling")
-    @Enumerated(EnumType.STRING)
-    private ReadItemHandling readItemHandling;
+  private String email;
 
-    @Column(name = "first_time_setup_done")
-    private boolean firstTimeSetupDone;
+  @Column(name = "feed_item_preference")
+  private String feedItemPreference;
 
-    @JdbcTypeCode(SqlTypes.ARRAY)
-    @Column(name = "email_digest")
-    @Enumerated(EnumType.STRING)
-    private List<EmailDigestFrequency> emailDigest;
+  @Column(name = "oidc_sub")
+  private String oidcSub;
 
-    public String getId() {
-        return id;
-    }
+  @Column(name = "minimum_importance")
+  private int minimumImportance;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  @Column(name = "read_item_handling")
+  @Enumerated(EnumType.STRING)
+  private ReadItemHandling readItemHandling;
 
-    public String getUsername() {
-        return username;
-    }
+  @Column(name = "first_time_setup_done")
+  private boolean firstTimeSetupDone;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  @JdbcTypeCode(SqlTypes.ARRAY)
+  @Column(name = "email_digest")
+  @Enumerated(EnumType.STRING)
+  private List<EmailDigestFrequency> emailDigest;
 
-    public String getPassword() {
-        return password;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-    public String getFeedItemPreference() {
-        return feedItemPreference;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setFeedItemPreference(String feedItemPreference) {
-        this.feedItemPreference = feedItemPreference;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public String getOidcSub() {
-        return oidcSub;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setOidcSub(String oidcSub) {
-        this.oidcSub = oidcSub;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public int getMinimumImportance() {
-        return minimumImportance;
-    }
+  public String getFeedItemPreference() {
+    return feedItemPreference;
+  }
 
-    public void setMinimumImportance(int minimumImportance) {
-        this.minimumImportance = minimumImportance;
-    }
+  public void setFeedItemPreference(String feedItemPreference) {
+    this.feedItemPreference = feedItemPreference;
+  }
 
+  public String getOidcSub() {
+    return oidcSub;
+  }
 
-    public ReadItemHandling getReadItemHandling() {
-        return readItemHandling;
-    }
+  public void setOidcSub(String oidcSub) {
+    this.oidcSub = oidcSub;
+  }
 
-    public void setReadItemHandling(ReadItemHandling readItemHandling) {
-        this.readItemHandling = readItemHandling;
-    }
+  public int getMinimumImportance() {
+    return minimumImportance;
+  }
 
-    public boolean isFirstTimeSetupDone() {
-        return firstTimeSetupDone;
-    }
+  public void setMinimumImportance(int minimumImportance) {
+    this.minimumImportance = minimumImportance;
+  }
 
-    public void setFirstTimeSetupDone(boolean firstTimeSetupDone) {
-        this.firstTimeSetupDone = firstTimeSetupDone;
-    }
+  public ReadItemHandling getReadItemHandling() {
+    return readItemHandling;
+  }
 
-    public List<EmailDigestFrequency> getEmailDigest() {
-        return emailDigest;
-    }
+  public void setReadItemHandling(ReadItemHandling readItemHandling) {
+    this.readItemHandling = readItemHandling;
+  }
 
-    public void setEmailDigest(List<EmailDigestFrequency> emailDigest) {
-        this.emailDigest = emailDigest;
-    }
+  public boolean isFirstTimeSetupDone() {
+    return firstTimeSetupDone;
+  }
+
+  public void setFirstTimeSetupDone(boolean firstTimeSetupDone) {
+    this.firstTimeSetupDone = firstTimeSetupDone;
+  }
+
+  public List<EmailDigestFrequency> getEmailDigest() {
+    return emailDigest;
+  }
+
+  public void setEmailDigest(List<EmailDigestFrequency> emailDigest) {
+    this.emailDigest = emailDigest;
+  }
 }

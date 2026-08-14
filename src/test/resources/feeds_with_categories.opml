@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+  <head>
+    <dateCreated>Tue, 11 Aug 2026 20:12:42 GMT</dateCreated>
+    <title>subscriptions</title>
+  </head>
+  <body>
+    <outline text="Subscriptions" title="Subscriptions">
+        <outline title="Rock Paper Shotgun Latest Articles Feed" type="rss" xmlUrl="https://www.rockpapershotgun.com/feed" />
+    </outline>
+    <outline text="Comics" title="Comics">
+        <outline title="Polygon.com - News" type="rss" xmlUrl="https://www.polygon.com/feed/news/" />
+    </outline>
+  </body>
+</opml>
