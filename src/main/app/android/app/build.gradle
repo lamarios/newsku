@@ -85,7 +85,7 @@ android {
         versionCode buildNumber
         versionName flutterVersionName
         manifestPlaceholders += [
-                'appAuthRedirectScheme': 'com.github.lamarios.newsku' // for oidc flutter dependency
+                'oidcRedirectScheme': 'com.github.lamarios.newsku' // for oidc flutter dependency
         ]
     }
 

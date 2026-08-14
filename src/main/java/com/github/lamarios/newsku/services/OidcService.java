@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.lamarios.newsku.models.OIDCConfig;
+import com.github.lamarios.newsku.models.ReadItemHandling;
 import com.github.lamarios.newsku.persistence.entities.User;
 import io.jsonwebtoken.Identifiable;
 import io.jsonwebtoken.JwtParser;
@@ -140,6 +141,7 @@ public class OidcService implements ApplicationContextAware {
           user.setPassword(RandomStringUtils.secure().nextAlphabetic(70));
           user.setEmail(object.getString(oidcEmailClaim));
           user.setUsername(object.getString(oidcPreferredUsernameClaim));
+          user.setReadItemHandling(ReadItemHandling.none);
 
           return Optional.ofNullable(userService.createUser(user));
         } else {
