@@ -6,6 +6,7 @@ import com.github.lamarios.newsku.models.TagClickStat;
 import com.github.lamarios.newsku.persistence.entities.User;
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
+import com.openai.models.ReasoningEffort;
 import com.openai.models.chat.completions.ChatCompletionCreateParams;
 import com.openai.models.chat.completions.StructuredChatCompletionCreateParams;
 import com.openai.models.models.Model;
@@ -69,9 +70,9 @@ public class OpenaiServiceImpl implements OpenaiService {
       Item item, User user, List<TagClickStat> clickStats) {
     String tagPrompt =
         """
-                  These are the tags the user clicked on the most in the past 30 days ordered from the most clicked to the least clicked. Those tags may slightly affect your scoring:
-                  %s
-                """
+                          These are the tags the user clicked on the most in the past 30 days ordered from the most clicked to the least clicked. Those tags may slightly affect your scoring:
+                          %s
+                        """
             .formatted(
                 clickStats.stream()
                     .sorted((o1, o2) -> Long.compare(o2.clicks(), o1.clicks()))
@@ -82,25 +83,25 @@ public class OpenaiServiceImpl implements OpenaiService {
     var start = System.currentTimeMillis();
     String prompt =
         """
-                Your task is to identify is this news item is important or not
-                you will rate the importance from 0 to a 100, 100 being the most important, be very granular in the rating
-                Keep in mind that this is a ranking system for a RSS feed reader so the user might have 100s of news on a daily basis so do not be too eager on overrating news
-                also you will try to figure out if this feed item is an ad or not
+                        Your task is to identify is this news item is important or not
+                        you will rate the importance from 0 to a 100, 100 being the most important, be very granular in the rating
+                        Keep in mind that this is a ranking system for a RSS feed reader so the user might have 100s of news on a daily basis so do not be too eager on overrating news
+                        also you will try to figure out if this feed item is an ad or not
 
-                You will use the name and description of the source to understand what an important news is for a user.
-                You will also tag the article with up to 4 tags
+                        You will use the name and description of the source to understand what an important news is for a user.
+                        You will also tag the article with up to 4 tags
 
-                The user has the following preferences. You will refer to it to figure out how to rate a news item:
-                %s
+                        The user has the following preferences. You will refer to it to figure out how to rate a news item:
+                        %s
 
-                %s
+                        %s
 
-                Here is the news item:
+                        Here is the news item:
 
-                title: %s
-                content: %s
+                        title: %s
+                        content: %s
 
-                """
+                        """
             .formatted(
                 Optional.ofNullable(user.getFeedItemPreference())
                     .filter(s -> !s.isBlank())
@@ -121,6 +122,7 @@ public class OpenaiServiceImpl implements OpenaiService {
         ChatCompletionCreateParams.builder()
             .addUserMessage(prompt)
             .model(model)
+            .reasoningEffort(ReasoningEffort.NONE)
             .responseFormat(OpenAiFeedResponse.class)
             .build();
 
