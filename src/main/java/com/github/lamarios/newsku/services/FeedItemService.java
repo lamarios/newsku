@@ -4,13 +4,11 @@ import static java.lang.Math.max;
 
 import com.apptasticsoftware.rssreader.Enclosure;
 import com.apptasticsoftware.rssreader.Item;
-import com.github.lamarios.newsku.models.FeedToImport;
 import com.github.lamarios.newsku.persistence.entities.*;
 import com.github.lamarios.newsku.persistence.repositories.*;
 import com.github.lamarios.newsku.utils.BackgroundTasks;
 import com.github.lamarios.newsku.utils.HtmlUtils;
 import com.github.lamarios.newsku.utils.TransactionHelper;
-import jakarta.persistence.EntityManager;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +41,6 @@ public class FeedItemService {
   private final PlatformTransactionManager transactionManager;
   private final OpenaiService openaiService;
   private final UserService userService;
-  private final EntityManager entityManager;
   private final FeedRepository feedRepository;
   private final FeedErrorRepository feedErrorRepository;
   private final FeedClicksRepository feedClicksRepository;
@@ -56,7 +53,6 @@ public class FeedItemService {
       PlatformTransactionManager transactionManager,
       OpenaiService openaiService,
       UserService userService,
-      EntityManager entityManager,
       FeedRepository feedRepository,
       FeedErrorRepository feedErrorRepository,
       FeedClicksRepository feedClicksRepository,
@@ -66,7 +62,6 @@ public class FeedItemService {
     this.transactionManager = transactionManager;
     this.openaiService = openaiService;
     this.userService = userService;
-    this.entityManager = entityManager;
     this.feedRepository = feedRepository;
     this.feedErrorRepository = feedErrorRepository;
     this.feedClicksRepository = feedClicksRepository;
@@ -254,8 +249,12 @@ public class FeedItemService {
   private String getImageFromArticle(Item item) {
     try {
       String imageUrl = null;
-      if (item.getLink().isPresent()) {
-        Document doc = Jsoup.connect(item.getLink().get()).timeout(5000).get();
+      Optional<String> articleUrl =
+          item.getLink()
+              .filter(l -> l.startsWith("http"))
+              .or(() -> item.getGuid().filter(s -> s.startsWith("http")));
+      if (articleUrl.isPresent()) {
+        Document doc = Jsoup.connect(articleUrl.get()).timeout(5000).get();
         Element element = doc.selectFirst("meta[property=twitter:image]");
         if (element != null) {
           imageUrl = element.attr("content");
@@ -373,7 +372,4 @@ public class FeedItemService {
     Pageable pageable = PageRequest.of(page, pageSize, Sort.by("timeCreated").descending());
     return feedItemRepository.findFeedItemByFeed(feed, pageable);
   }
-
-  @Transactional
-  public void importFeed(FeedToImport feedToImport) {}
 }
