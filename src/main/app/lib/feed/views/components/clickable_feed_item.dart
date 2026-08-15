@@ -48,7 +48,11 @@ class ClickableFeedItem extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 FeedService(serverUrl!).click(item.id ?? '');
-                launchUrl(Uri.parse(item.url!));
+                var itemUrl = (item.url ?? '');
+                if (!itemUrl.startsWith("http") && (item.guid?.startsWith('http') ?? false)) {
+                  itemUrl = item.guid!;
+                }
+                launchUrl(Uri.parse(itemUrl));
               },
               child: builder(hovered),
             ),
