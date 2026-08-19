@@ -1,4 +1,4 @@
-FROM amazoncorretto:25
+FROM ibm-semeru-runtimes:open-25-jre
 
 RUN mkdir /app
 
