@@ -20,7 +20,7 @@ class FeedImage extends StatelessWidget {
 
     var cubit = context.read<IdentityCubit>();
     return CachedNetworkImage(
-      imageUrl: '${cubit.state.serverUrl!}/api/feeds/${item.id}/image',
+      imageUrl: '${cubit.state.serverUrl!}/images/feeds/${item.id}',
       width: width,
       height: height,
       fit: BoxFit.cover,
@@ -28,7 +28,6 @@ class FeedImage extends StatelessWidget {
       placeholder: (context, url) => ImagePlaceholder(width: width, height: height, icon: Icons.rss_feed, iconSize: 10),
       errorWidget: (context, url, error) =>
           ImagePlaceholder(width: width, height: height, icon: Icons.rss_feed, iconSize: 10),
-      httpHeaders: {'Authorization': 'Bearer ${cubit.state.token}'},
     );
   }
 }

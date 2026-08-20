@@ -10,7 +10,7 @@ build-runner-watch:
 # Web
 web-build:
 	@#$(MAKE) -f $(THIS_FILE) app-icons splashscreen
-	flutter build web --release
+	flutter build web --release --wasm
 
 web-serve:
 	http-server build/web -p 8888  --proxy http://localhost:8888? -c-1

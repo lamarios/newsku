@@ -14,7 +14,7 @@ let
 in
 pkgs.mkShell {
   buildInputs = with pkgs; builtins.concatLists [
-    [ jdk25 maven gnumake python313Packages.pip ]
+    [ jdk25 maven gnumake python313Packages.pip http-server ]
   ];
 
   # to run CI or DB migrations

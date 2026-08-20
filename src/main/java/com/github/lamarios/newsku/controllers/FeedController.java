@@ -1,6 +1,6 @@
 package com.github.lamarios.newsku.controllers;
 
-import static com.github.lamarios.newsku.controllers.FeedItemController.serveFile;
+import static com.github.lamarios.newsku.controllers.ImageController.serveFile;
 
 import be.ceau.opml.OpmlWriteException;
 import com.github.lamarios.newsku.errors.NewskuException;
@@ -9,7 +9,6 @@ import com.github.lamarios.newsku.persistence.entities.Feed;
 import com.github.lamarios.newsku.persistence.entities.FeedItem;
 import com.github.lamarios.newsku.services.FeedItemService;
 import com.github.lamarios.newsku.services.FeedService;
-import com.github.lamarios.newsku.utils.ImageHelper;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
@@ -41,7 +40,6 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 public class FeedController {
   private final FeedService feedService;
   private final FeedItemService feedItemService;
-  private final Path tempDir;
   private final Logger log = LogManager.getLogger();
   private final boolean demoMode;
 
@@ -49,12 +47,10 @@ public class FeedController {
   public FeedController(
       FeedService feedService,
       FeedItemService feedItemService,
-      @Value("${DEMO_MODE:0}") boolean demoMode)
-      throws IOException {
+      @Value("${DEMO_MODE:0}") boolean demoMode) {
     this.feedService = feedService;
     this.feedItemService = feedItemService;
     this.demoMode = demoMode;
-    this.tempDir = Files.createTempDirectory("newsku-feed-images");
   }
 
   @GetMapping
@@ -134,33 +130,11 @@ public class FeedController {
     }
   }
 
-  @GetMapping("/{id}/image")
-  public ResponseEntity<@NotNull StreamingResponseBody> getFeedImage(@PathVariable String id)
-      throws IOException {
-    Feed item = feedService.getFeed(id);
-
-    if (item == null || item.getImage() == null || item.getImage().isBlank()) {
-      return ResponseEntity.status(404).build();
-    }
-
-    var filePath = tempDir.resolve(id);
-
-    if (!filePath.toFile().exists()) {
-      log.info("File doesn't exist in cache, caching it...");
-      ImageHelper.downloadImageToPath(item.getImage(), filePath);
-    } else {
-      log.info("Serving from cache");
-    }
-    // Fetch from remote URL
-    return serveFile(filePath);
-  }
-
   @GetMapping("{id}/items")
   public Page<FeedItem> getFeedItems(
       @PathVariable String id,
       @Min(0) @DefaultValue("0") @RequestParam Integer page,
-      @Min(0) @Max(500) @DefaultValue("100") @RequestParam Integer pageSize)
-      throws IOException {
+      @Min(0) @Max(500) @DefaultValue("100") @RequestParam Integer pageSize) {
     return feedItemService.getFeedItems(id, page, pageSize);
   }
 }

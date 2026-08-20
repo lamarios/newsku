@@ -31,12 +31,11 @@ class FeedItemImage extends StatelessWidget {
         child: (item.imageUrl ?? '').isEmpty
             ? ImagePlaceholder(width: width, height: height)
             : CachedNetworkImage(
-                imageUrl: '${cubit.state.serverUrl!}/api/feeds/items/${item.id}/image',
+                imageUrl: '${cubit.state.serverUrl!}/images/feeds/items/${item.id}',
                 width: width,
                 height: height,
                 fit: BoxFit.cover,
                 imageRenderMethodForWeb: .HttpGet,
-                httpHeaders: {'Authorization': 'Bearer ${cubit.state.token}'},
                 placeholder: (context, url) => ImagePlaceholder(width: width, height: height),
                 errorWidget: (context, url, error) => ImagePlaceholder(width: width, height: height),
               ),
