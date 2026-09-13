@@ -4,17 +4,16 @@ import 'dart:ui';
 import 'package:app/feed/states/main_feed.dart';
 import 'package:app/feed/utils.dart';
 import 'package:app/feed/views/components/date_bar.dart';
+import 'package:app/feed/views/components/feed_image.dart';
 import 'package:app/feed/views/components/search_result.dart';
 import 'package:app/home/views/components/feeds_drawer.dart';
 import 'package:app/identity/states/identity.dart';
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/main.dart';
 import 'package:app/router.dart';
-import 'package:app/user/views/components/fancy_side.dart';
 import 'package:app/user/views/components/user_profile_picture.dart';
 import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/utils.dart';
-import 'package:app/utils/views/components/app_logo.dart';
 import 'package:app/utils/views/components/app_name.dart';
 import 'package:app/utils/views/components/conditional_wrap.dart';
 import 'package:app/utils/views/components/error_listener.dart';
@@ -49,7 +48,6 @@ class FeedScreen extends StatelessWidget {
       child: ErrorHandler<MainFeedCubit, MainFeedState>(
         child: BlocBuilder<MainFeedCubit, MainFeedState>(
           builder: (context, state) {
-            final appColor = localPreferences.appColor;
             var cubit = context.read<MainFeedCubit>();
             return LayoutBuilder(
               builder: (context, constraints) {
@@ -85,9 +83,42 @@ class FeedScreen extends StatelessWidget {
                                             key: Key('app-bar'),
                                             floating: true,
                                             snap: true,
+                                            pinned: state.viewMode == .singleFeed,
                                             elevation: 0,
                                             scrolledUnderElevation: 0,
-                                            leadingWidth: 150,
+                                            backgroundColor: colors.surface,
+                                            bottom: state.viewMode == .singleFeed && state.selectedFeed != null
+                                                ? AppBar(
+                                                    backgroundColor: Colors.transparent,
+                                                    scrolledUnderElevation: 0,
+                                                    elevation: 0,
+                                                    actions: [
+                                                      IconButton(
+                                                        onPressed: () => cubit.selectFeed(null),
+                                                        icon: Icon(Icons.close),
+                                                      ),
+                                                    ],
+                                                    title: Row(
+                                                      children: [
+                                                        ClipRRect(
+                                                          borderRadius: .circular(30),
+                                                          child: FeedImage(
+                                                            item: state.selectedFeed!,
+                                                            width: 30,
+                                                            height: 30,
+                                                          ),
+                                                        ),
+                                                        Gap(pu4),
+                                                        Expanded(
+                                                          child: Text(
+                                                            state.selectedFeed?.name ?? '',
+                                                            style: textTheme.titleLarge,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : null,
                                             title: AnimatedSwitcher(
                                               duration: Duration(milliseconds: 250),
                                               child: state.searchMode
@@ -111,37 +142,16 @@ class FeedScreen extends StatelessWidget {
                                                 ? null
                                                 : InkWell(
                                                     onTap: () => cubit.toggleDrawer(),
-                                                    child: Row(
-                                                      crossAxisAlignment: .stretch,
-                                                      children: [
-                                                        Container(
-                                                          color: appColor,
-                                                          padding: .all(pu),
-                                                          alignment: .center,
-                                                          child: AnimatedIcon(
-                                                            key: Key('drawer-button'),
-                                                            icon: AnimatedIcons.menu_arrow,
-                                                            progress: AlwaysStoppedAnimation<double>(
-                                                              value / drawerMaxWidth,
-                                                            ),
-                                                          ),
+                                                    child: Container(
+                                                      padding: .symmetric(horizontal: pu4),
+                                                      alignment: .centerLeft,
+                                                      child: AnimatedIcon(
+                                                        key: Key('drawer-button'),
+                                                        icon: AnimatedIcons.menu_arrow,
+                                                        progress: AlwaysStoppedAnimation<double>(
+                                                          value / drawerMaxWidth,
                                                         ),
-                                                        Expanded(
-                                                          child: ClipPath(
-                                                            clipper: FancySide(),
-                                                            child: Container(
-                                                              decoration: BoxDecoration(color: appColor),
-                                                              child: Padding(
-                                                                padding: .only(left: pu6),
-                                                                child: Align(
-                                                                  alignment: .centerLeft,
-                                                                  child: AppLogo(color: colors.onSurface, size: 17),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ),
                                                   ),
                                             actions: [
@@ -212,7 +222,7 @@ class FeedScreen extends StatelessWidget {
                                                 ),
                                               ),
                                             ],
-                                            .feeds => state.items.keys.expand((value) {
+                                            .feeds => state.items.keys.map((value) {
                                               var feed = state.items[value] ?? [];
                                               final totalItemCount = feed.length;
                                               // if the user wants ti hide read item, we do so
@@ -225,7 +235,7 @@ class FeedScreen extends StatelessWidget {
                                               }
 
                                               if (feed.isNotEmpty) {
-                                                return FeedUtils.buildSlivers(
+                                                return FeedUtils.buildDaySliver(
                                                   context: context,
                                                   timeRange: value,
                                                   immutableItems: feed,
@@ -235,44 +245,43 @@ class FeedScreen extends StatelessWidget {
                                                   padding: computedPadding,
                                                 );
                                               } else {
-                                                return [
-                                                  SliverPadding(
-                                                    padding: .symmetric(vertical: padding),
-                                                    sliver: SliverStickyHeader.builder(
-                                                      builder: (context, state) => DateBar(
-                                                        date: value.end,
-                                                        isPinned: state.isPinned,
-                                                        isFirst: true,
-                                                      ),
-                                                      sliver: SliverToBoxAdapter(
-                                                        child: SizedBox(
-                                                          height: 500,
-                                                          child: Column(
-                                                            mainAxisAlignment: .center,
-                                                            spacing: pu6,
-                                                            children: [
-                                                              Icon(
-                                                                unreadCount == 0 && totalItemCount > 0
-                                                                    ? Icons.task_alt_outlined
-                                                                    : Icons.newspaper,
-                                                                size: 50,
-                                                                color: colors.onSurface,
+                                                return SliverPadding(
+                                                  padding: .symmetric(vertical: padding),
+                                                  sliver: SliverStickyHeader.builder(
+                                                    builder: (context, state) => DateBar(
+                                                      date: value.end,
+                                                      isPinned: state.isPinned,
+                                                      isFirst: true,
+                                                      padding: .symmetric(horizontal: padding),
+                                                    ),
+                                                    sliver: SliverToBoxAdapter(
+                                                      child: SizedBox(
+                                                        height: 500,
+                                                        child: Column(
+                                                          mainAxisAlignment: .center,
+                                                          spacing: pu6,
+                                                          children: [
+                                                            Icon(
+                                                              unreadCount == 0 && totalItemCount > 0
+                                                                  ? Icons.task_alt_outlined
+                                                                  : Icons.newspaper,
+                                                              size: 50,
+                                                              color: colors.onSurface,
+                                                            ),
+                                                            if (totalItemCount == 0)
+                                                              Text(locals.noNews, style: textTheme.titleLarge),
+                                                            // this is our read item count
+                                                            if (unreadCount == 0 && totalItemCount > 0)
+                                                              Text(
+                                                                locals.readItems(totalItemCount - unreadCount),
+                                                                style: textTheme.titleLarge,
                                                               ),
-                                                              if (totalItemCount == 0)
-                                                                Text(locals.noNews, style: textTheme.titleLarge),
-                                                              // this is our read item count
-                                                              if (unreadCount == 0 && totalItemCount > 0)
-                                                                Text(
-                                                                  locals.readItems(totalItemCount - unreadCount),
-                                                                  style: textTheme.titleLarge,
-                                                                ),
-                                                            ],
-                                                          ),
+                                                          ],
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ];
+                                                );
                                               }
                                             }),
                                             .singleFeed => FeedUtils.buildSingleFeedSliver(

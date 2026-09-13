@@ -25,6 +25,8 @@ class FeedImage extends StatelessWidget {
       height: height,
       fit: BoxFit.cover,
       imageRenderMethodForWeb: .HttpGet,
+      fadeInDuration: Duration(milliseconds: 150),
+      fadeOutDuration: Duration(milliseconds: 150),
       placeholder: (context, url) => ImagePlaceholder(width: width, height: height, icon: Icons.rss_feed, iconSize: 10),
       errorWidget: (context, url, error) =>
           ImagePlaceholder(width: width, height: height, icon: Icons.rss_feed, iconSize: 10),

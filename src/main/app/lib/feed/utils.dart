@@ -1,18 +1,15 @@
 import 'package:app/feed/models/feed.dart';
 import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
-import 'package:app/feed/states/main_feed.dart';
 import 'package:app/feed/views/components/date_bar.dart';
-import 'package:app/feed/views/components/feed_image.dart';
 import 'package:app/feed/views/components/search_result.dart';
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/layouts/models/layout_block.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-import 'package:gap/gap.dart';
 import 'package:logging/logging.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 class FeedUtils {
   static final Logger _log = Logger('FeedUtils');
@@ -23,21 +20,26 @@ class FeedUtils {
     required List<FeedItem> items,
     required EdgeInsets padding,
   }) {
-    final textTheme = Theme.of(context).textTheme;
-    final colors = Theme.of(context).colorScheme;
-    final cubit = context.read<MainFeedCubit>();
-
     if (feed == null) {
       return [];
     }
 
     return [
+      /*
       SliverPadding(
         padding: padding,
         sliver: SliverAppBar(
           pinned: true,
-          backgroundColor: colors.surface,
-          surfaceTintColor: colors.surface,
+          flexibleSpace: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
+              child: Container(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+          backgroundColor: colors.surface.withValues(alpha: 0.6),
+          scrolledUnderElevation: 0,
           actions: [IconButton(onPressed: () => cubit.selectFeed(null), icon: Icon(Icons.close))],
           title: Row(
             children: [
@@ -51,6 +53,7 @@ class FeedUtils {
           ),
         ),
       ),
+*/
       SliverPadding(
         padding: padding,
         sliver: SliverList.builder(
@@ -61,7 +64,7 @@ class FeedUtils {
     ];
   }
 
-  static List<Widget> buildSlivers({
+  static Widget buildDaySliver({
     required BuildContext context,
     required DateTimeRange<DateTime> timeRange,
     required List<FeedItem> immutableItems,
@@ -113,6 +116,7 @@ class FeedUtils {
       }
     }
 
+    /*
     for (int i = 0; i < slivers.length; i++) {
       slivers[i] = SliverPadding(
         padding: padding,
@@ -123,6 +127,7 @@ class FeedUtils {
         ),
       );
     }
+*/
 
     if (readItems > 0) {
       final colors = Theme.of(context).colorScheme;
@@ -145,6 +150,13 @@ class FeedUtils {
       );
     }
 
-    return slivers;
+    return SliverStickyHeader.builder(
+      builder: (context, state) =>
+          DateBar(date: timeRange.end, isPinned: state.isPinned, isFirst: true, padding: padding),
+      sliver: SliverPadding(
+        padding: padding,
+        sliver: MultiSliver(children: slivers),
+      ),
+    );
   }
 }

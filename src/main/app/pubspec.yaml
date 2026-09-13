@@ -61,6 +61,7 @@ dependencies:
   oidc_default_store: 1.1.2
   package_info_plus: 10.2.1
   shared_preferences: 2.5.5
+  sliver_tools: 0.2.12
   url_launcher: 6.3.2
   visibility_detector: 0.4.0+2
 

@@ -35,6 +35,8 @@ class FeedItemImage extends StatelessWidget {
                 width: width,
                 height: height,
                 fit: BoxFit.cover,
+                fadeInDuration: Duration(milliseconds: 150),
+                fadeOutDuration: Duration(milliseconds: 150),
                 imageRenderMethodForWeb: .HttpGet,
                 placeholder: (context, url) => ImagePlaceholder(width: width, height: height),
                 errorWidget: (context, url, error) => ImagePlaceholder(width: width, height: height),
