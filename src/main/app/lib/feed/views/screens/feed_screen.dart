@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:app/feed/states/main_feed.dart';
 import 'package:app/feed/utils.dart';
 import 'package:app/feed/views/components/date_bar.dart';
-import 'package:app/feed/views/components/feed_image.dart';
 import 'package:app/feed/views/components/search_result.dart';
 import 'package:app/home/views/components/feeds_drawer.dart';
 import 'package:app/identity/states/identity.dart';
@@ -87,38 +86,6 @@ class FeedScreen extends StatelessWidget {
                                             elevation: 0,
                                             scrolledUnderElevation: 0,
                                             backgroundColor: colors.surface,
-                                            bottom: state.viewMode == .singleFeed && state.selectedFeed != null
-                                                ? AppBar(
-                                                    backgroundColor: Colors.transparent,
-                                                    scrolledUnderElevation: 0,
-                                                    elevation: 0,
-                                                    actions: [
-                                                      IconButton(
-                                                        onPressed: () => cubit.selectFeed(null),
-                                                        icon: Icon(Icons.close),
-                                                      ),
-                                                    ],
-                                                    title: Row(
-                                                      children: [
-                                                        ClipRRect(
-                                                          borderRadius: .circular(30),
-                                                          child: FeedImage(
-                                                            item: state.selectedFeed!,
-                                                            width: 30,
-                                                            height: 30,
-                                                          ),
-                                                        ),
-                                                        Gap(pu4),
-                                                        Expanded(
-                                                          child: Text(
-                                                            state.selectedFeed?.name ?? '',
-                                                            style: textTheme.titleLarge,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                : null,
                                             title: AnimatedSwitcher(
                                               duration: Duration(milliseconds: 250),
                                               child: state.searchMode

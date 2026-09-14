@@ -1,13 +1,17 @@
 import 'package:app/feed/models/feed.dart';
 import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/models/feed_item.dart';
+import 'package:app/feed/states/main_feed.dart';
 import 'package:app/feed/views/components/date_bar.dart';
+import 'package:app/feed/views/components/feed_image.dart';
 import 'package:app/feed/views/components/search_result.dart';
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/layouts/models/layout_block.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:gap/gap.dart';
 import 'package:logging/logging.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
@@ -24,21 +28,16 @@ class FeedUtils {
       return [];
     }
 
+    final textTheme = Theme.of(context).textTheme;
+    final colors = Theme.of(context).colorScheme;
+    final cubit = context.read<MainFeedCubit>();
+
     return [
-      /*
       SliverPadding(
         padding: padding,
         sliver: SliverAppBar(
           pinned: true,
-          flexibleSpace: ClipRRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
-              child: Container(
-                color: Colors.transparent,
-              ),
-            ),
-          ),
-          backgroundColor: colors.surface.withValues(alpha: 0.6),
+          backgroundColor: colors.surface,
           scrolledUnderElevation: 0,
           actions: [IconButton(onPressed: () => cubit.selectFeed(null), icon: Icon(Icons.close))],
           title: Row(
@@ -53,7 +52,6 @@ class FeedUtils {
           ),
         ),
       ),
-*/
       SliverPadding(
         padding: padding,
         sliver: SliverList.builder(
@@ -107,7 +105,12 @@ class FeedUtils {
 
       if (blockItems.isNotEmpty) {
         _log.fine('Adding block ${block.type} with ${blockItems.length} items');
-        slivers.add(block.type.getSliver(context: context, items: blockItems, block: block, categories: categories));
+        slivers.add(
+          SliverPadding(
+            padding: .only(bottom: pu4),
+            sliver: block.type.getSliver(context: context, items: blockItems, block: block, categories: categories),
+          ),
+        );
       }
 
       // we remove them from the main list
