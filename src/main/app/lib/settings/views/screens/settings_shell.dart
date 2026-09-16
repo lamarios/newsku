@@ -31,6 +31,8 @@ class SettingsShellScreen extends StatelessWidget {
           appBar: AppBar(
             leading: NewskuAutoLeadingButton(),
             title: Text(locals.settings),
+            scrolledUnderElevation: 0,
+            backgroundColor: Colors.transparent,
             actions: [
               TextButton.icon(
                 onPressed: () => getIt.get<IdentityCubit>().logout(),

@@ -5,6 +5,7 @@ class SettingsEmptyDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('empty');
+    final colors = Theme.of(context).colorScheme;
+    return Center(child: Icon(Icons.settings, size: 100, color: colors.outline));
   }
 }

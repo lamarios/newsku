@@ -423,22 +423,6 @@ class SettingsListRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SettingsScreen]
-class SettingsRoute extends PageRouteInfo<void> {
-  const SettingsRoute({List<PageRouteInfo>? children})
-    : super(SettingsRoute.name, initialChildren: children, argsEquality: false);
-
-  static const String name = 'SettingsRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const SettingsScreen();
-    },
-  );
-}
-
-/// generated route for
 /// [SettingsShellScreen]
 class SettingsShellRoute extends PageRouteInfo<void> {
   const SettingsShellRoute({List<PageRouteInfo>? children})

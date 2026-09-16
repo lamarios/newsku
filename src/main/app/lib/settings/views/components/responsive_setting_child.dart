@@ -14,7 +14,7 @@ class ResponsiveSettingChild extends StatelessWidget {
     return ConditionalWrap(
       wrapIf: !disableScaffold && isMobile,
       wrapper: (child) => Scaffold(
-        appBar: AppBar(title: Text(title)),
+        appBar: AppBar(title: Text(title), scrolledUnderElevation: 0, backgroundColor: Colors.transparent),
         body: child,
       ),
       child: child,

@@ -205,7 +205,7 @@ return $default(_that.loading,_that.feeds,_that.categories,_that.error,_that.sta
 
 class _MainSettingsState implements MainSettingsState, WithError {
   const _MainSettingsState({this.loading = true, this.feeds = 0, this.categories = 0, this.error, this.stackTrace});
-
+  
 
 @override@JsonKey() final  bool loading;
 @override@JsonKey() final  int feeds;

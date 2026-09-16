@@ -5,7 +5,6 @@ import 'package:app/feed/views/screens/feed_screen.dart';
 import 'package:app/home/views/screens/home.dart';
 import 'package:app/reset-password/views/screens/reset_password.dart';
 import 'package:app/settings/views/screens/feed_errors.dart';
-import 'package:app/settings/views/screens/settings.dart';
 import 'package:app/settings/views/screens/settings_list_route.dart';
 import 'package:app/settings/views/screens/settings_shell.dart';
 import 'package:app/settings/views/tabs/email_digest.dart';
