@@ -403,6 +403,12 @@ abstract class AppLocalizations {
   /// **'This is guidance for the AI model. Telling it what kind of article you prefer to prioritize for the scoring  of each article. The change only applies to future articles.'**
   String get articlePreferencesExplanation;
 
+  /// No description provided for @articlePreferencesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Guides how articles are scored'**
+  String get articlePreferencesSubtitle;
+
   /// No description provided for @minimumNewsScore.
   ///
   /// In en, this message translates to:

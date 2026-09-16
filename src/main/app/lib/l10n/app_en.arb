@@ -51,6 +51,7 @@
     "update": "Update",
     "layoutSaved": "Layout saved",
     "articlePreferencesExplanation": "This is guidance for the AI model. Telling it what kind of article you prefer to prioritize for the scoring  of each article. The change only applies to future articles.",
+    "articlePreferencesSubtitle": "Guides how articles are scored",
     "minimumNewsScore": "Minimum news score",
     "minimumNewsScoreExplanation": "This will filter out from your feed any news that has been scored lower than the selected value",
     "preferenceUpdated": "Preferences updated",
