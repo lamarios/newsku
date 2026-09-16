@@ -58,14 +58,14 @@ class _FirstTimeSetupDialogState extends State<FirstTimeSetupDialog> {
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: pu4),
-                      child: FeedsSettingsTab(),
+                      child: FeedsSettingsTab(fromFirstTimeSetup: true),
                     ),
                   ),
                   LlmPreference(),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: pu6),
-                      child: LayoutSettingsTab(fadeColor: colors.surfaceContainerHigh),
+                      child: LayoutSettingsTab(fadeColor: colors.surfaceContainerHigh, fromFirstTimeWizard: true),
                     ),
                   ),
                   Done(),

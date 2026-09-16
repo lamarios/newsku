@@ -1,6 +1,6 @@
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/settings/states/user_settings.dart';
-import 'package:app/user/models/email_digest_frequency.dart';
+import 'package:app/settings/views/components/responsive_setting_child.dart';
 import 'package:app/utils/utils.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
@@ -15,112 +15,90 @@ class UserSettingsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final locals = AppLocalizations.of(context)!;
-    return BlocProvider(
-      create: (context) => UserSettingsCubit(
-        UserSettingsState(
-          email: identityCubit.currentUser?.email ?? '',
-          digest: identityCubit.currentUser?.emailDigest ?? [],
+    return ResponsiveSettingChild(
+      title: locals.emailAndPassword,
+      child: BlocProvider(
+        create: (context) => UserSettingsCubit(
+          UserSettingsState(
+            email: identityCubit.currentUser?.email ?? '',
+            digest: identityCubit.currentUser?.emailDigest ?? [],
+          ),
         ),
-      ),
-      child: BlocBuilder<UserSettingsCubit, UserSettingsState>(
-        builder: (context, state) {
-          final cubit = context.read<UserSettingsCubit>();
-          final serverConfig = config;
-          return Padding(
-            padding: .symmetric(horizontal: pu2),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: .stretch,
-                children: [
-                  Gap(pu4),
-                  if (serverConfig?.canResetPassword ?? false) ...[
-                    Text(locals.emailDigestTitle, style: textTheme.titleMedium),
-                    Text(locals.emailDigestExplanation),
+        child: BlocBuilder<UserSettingsCubit, UserSettingsState>(
+          builder: (context, state) {
+            final cubit = context.read<UserSettingsCubit>();
+            return Padding(
+              padding: .symmetric(horizontal: pu2),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: .stretch,
+                  children: [
+                    Text(locals.changeEmail, style: textTheme.titleMedium),
                     Gap(pu4),
-                    SegmentedButton<EmailDigestFrequency>(
-                      multiSelectionEnabled: true,
-                      emptySelectionAllowed: true,
-                      onSelectionChanged: (values) =>
-                          cubit.setDigestPreference(values.whereType<EmailDigestFrequency>().toList()),
-                      segments: EmailDigestFrequency.values
-                          .map(
-                            (e) => ButtonSegment<EmailDigestFrequency>(
-                              value: e,
-                              enabled: serverConfig?.canResetPassword ?? false,
-                              label: Text(locals.emailDigest(e.name)),
-                              icon: Icon(Icons.close),
-                            ),
-                          )
-                          .toList(),
-                      selected: state.digest.toSet(),
+                    Text(locals.newEmail),
+                    TextField(
+                      key: Key('email'),
+                      controller: cubit.email,
+                      decoration: InputDecoration(error: state.validEmail ? null : Text(locals.invalidEmail)),
+                    ),
+                    Gap(pu2),
+                    Align(
+                      alignment: .centerRight,
+                      child: FilledButton.tonalIcon(
+                        onPressed: state.loading || !state.validEmail
+                            ? null
+                            : () async {
+                                await cubit.updateEmail();
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(
+                                    context,
+                                  ).showSnackBar(SnackBar(content: Text(locals.emailUpdated)));
+                                }
+                              },
+                        label: Text(locals.update),
+                        icon: Icon(Icons.save),
+                      ),
                     ),
                     Gap(pu8),
+                    Text(locals.changePassword, style: textTheme.titleMedium),
+                    Gap(pu4),
+                    Text(locals.newPassword),
+                    TextField(key: Key('new-password'), controller: cubit.password, obscureText: true),
+                    Gap(pu2),
+                    Text(locals.confirmPassword),
+                    TextField(
+                      key: Key('repeat-password'),
+                      controller: cubit.repeatPassword,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        error: (state.password != state.repeatPassword) ? Text(locals.passwordsNotMatch) : null,
+                      ),
+                    ),
+                    Gap(pu2),
+                    Align(
+                      alignment: .centerRight,
+                      child: FilledButton.tonalIcon(
+                        key: Key('password-update-button'),
+                        onPressed: state.loading || state.password != state.repeatPassword || state.password.isEmpty
+                            ? null
+                            : () async {
+                                await cubit.resetPassword();
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(
+                                    context,
+                                  ).showSnackBar(SnackBar(content: Text(locals.passwordUpdated)));
+                                }
+                              },
+                        label: Text(locals.update),
+                        icon: Icon(Icons.save),
+                      ),
+                    ),
                   ],
-                  Text(locals.changeEmail, style: textTheme.titleMedium),
-                  Gap(pu4),
-                  Text(locals.newEmail),
-                  TextField(
-                    key: Key('email'),
-                    controller: cubit.email,
-                    decoration: InputDecoration(error: state.validEmail ? null : Text(locals.invalidEmail)),
-                  ),
-                  Gap(pu2),
-                  Align(
-                    alignment: .centerRight,
-                    child: FilledButton.tonalIcon(
-                      onPressed: state.loading || !state.validEmail
-                          ? null
-                          : () async {
-                              await cubit.updateEmail();
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(
-                                  context,
-                                ).showSnackBar(SnackBar(content: Text(locals.emailUpdated)));
-                              }
-                            },
-                      label: Text(locals.update),
-                      icon: Icon(Icons.save),
-                    ),
-                  ),
-                  Gap(pu8),
-                  Text(locals.changePassword, style: textTheme.titleMedium),
-                  Gap(pu4),
-                  Text(locals.newPassword),
-                  TextField(key: Key('new-password'), controller: cubit.password, obscureText: true),
-                  Gap(pu2),
-                  Text(locals.confirmPassword),
-                  TextField(
-                    key: Key('repeat-password'),
-                    controller: cubit.repeatPassword,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      error: (state.password != state.repeatPassword) ? Text(locals.passwordsNotMatch) : null,
-                    ),
-                  ),
-                  Gap(pu2),
-                  Align(
-                    alignment: .centerRight,
-                    child: FilledButton.tonalIcon(
-                      key: Key('password-update-button'),
-                      onPressed: state.loading || state.password != state.repeatPassword || state.password.isEmpty
-                          ? null
-                          : () async {
-                              await cubit.resetPassword();
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(
-                                  context,
-                                ).showSnackBar(SnackBar(content: Text(locals.passwordUpdated)));
-                              }
-                            },
-                      label: Text(locals.update),
-                      icon: Icon(Icons.save),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

@@ -894,6 +894,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This block will only display blocks of the selected category'**
   String get layoutBlockCategoryExplanation;
+
+  /// No description provided for @content.
+  ///
+  /// In en, this message translates to:
+  /// **'Content'**
+  String get content;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @emailAndPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Email and password'**
+  String get emailAndPassword;
+
+  /// No description provided for @nFeedsAndCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'{feeds, plural, =1{1 feed} other{{feeds} feeds}} {categories, plural, =0{uncategorized}=1{in 1 category} other{across {categories} categories}}'**
+  String nFeedsAndCategories(num categories, num feeds);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

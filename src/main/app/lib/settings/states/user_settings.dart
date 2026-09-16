@@ -67,6 +67,7 @@ class UserSettingsCubit extends Cubit<UserSettingsState> {
       emit(state.copyWith(digest: list));
       user = user.copyWith(emailDigest: list);
       await updateUser(user);
+      await identityCubit.getUser();
     }
   }
 }

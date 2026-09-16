@@ -11,6 +11,26 @@
 part of 'router.dart';
 
 /// generated route for
+/// [EmailDigestTab]
+class EmailDigestRoute extends PageRouteInfo<void> {
+  const EmailDigestRoute({List<PageRouteInfo>? children})
+    : super(
+        EmailDigestRoute.name,
+        initialChildren: children,
+        argsEquality: false,
+      );
+
+  static const String name = 'EmailDigestRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const EmailDigestTab();
+    },
+  );
+}
+
+/// generated route for
 /// [FeedErrorsScreen]
 class FeedErrorsRoute extends PageRouteInfo<FeedErrorsRouteArgs> {
   FeedErrorsRoute({Key? key, required Feed feed, List<PageRouteInfo>? children})
@@ -83,22 +103,48 @@ class FeedStatsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [FeedsSettingsTab]
-class FeedsSettingsRoute extends PageRouteInfo<void> {
-  const FeedsSettingsRoute({List<PageRouteInfo>? children})
-    : super(
-        FeedsSettingsRoute.name,
-        initialChildren: children,
-        argsEquality: false,
-      );
+class FeedsSettingsRoute extends PageRouteInfo<FeedsSettingsRouteArgs> {
+  FeedsSettingsRoute({
+    Key? key,
+    bool fromFirstTimeSetup = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+         FeedsSettingsRoute.name,
+         args: FeedsSettingsRouteArgs(
+           key: key,
+           fromFirstTimeSetup: fromFirstTimeSetup,
+         ),
+         initialChildren: children,
+         argsEquality: false,
+       );
 
   static const String name = 'FeedsSettingsRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const FeedsSettingsTab();
+      final args = data.argsAs<FeedsSettingsRouteArgs>(
+        orElse: () => const FeedsSettingsRouteArgs(),
+      );
+      return FeedsSettingsTab(
+        key: args.key,
+        fromFirstTimeSetup: args.fromFirstTimeSetup,
+      );
     },
   );
+}
+
+class FeedsSettingsRouteArgs {
+  const FeedsSettingsRouteArgs({this.key, this.fromFirstTimeSetup = false});
+
+  final Key? key;
+
+  final bool fromFirstTimeSetup;
+
+  @override
+  String toString() {
+    return 'FeedsSettingsRouteArgs{key: $key, fromFirstTimeSetup: $fromFirstTimeSetup}';
+  }
 }
 
 /// generated route for
@@ -195,10 +241,15 @@ class LayoutSettingsRoute extends PageRouteInfo<LayoutSettingsRouteArgs> {
   LayoutSettingsRoute({
     Key? key,
     Color? fadeColor,
+    bool fromFirstTimeWizard = false,
     List<PageRouteInfo>? children,
   }) : super(
          LayoutSettingsRoute.name,
-         args: LayoutSettingsRouteArgs(key: key, fadeColor: fadeColor),
+         args: LayoutSettingsRouteArgs(
+           key: key,
+           fadeColor: fadeColor,
+           fromFirstTimeWizard: fromFirstTimeWizard,
+         ),
          initialChildren: children,
          argsEquality: false,
        );
@@ -211,21 +262,31 @@ class LayoutSettingsRoute extends PageRouteInfo<LayoutSettingsRouteArgs> {
       final args = data.argsAs<LayoutSettingsRouteArgs>(
         orElse: () => const LayoutSettingsRouteArgs(),
       );
-      return LayoutSettingsTab(key: args.key, fadeColor: args.fadeColor);
+      return LayoutSettingsTab(
+        key: args.key,
+        fadeColor: args.fadeColor,
+        fromFirstTimeWizard: args.fromFirstTimeWizard,
+      );
     },
   );
 }
 
 class LayoutSettingsRouteArgs {
-  const LayoutSettingsRouteArgs({this.key, this.fadeColor});
+  const LayoutSettingsRouteArgs({
+    this.key,
+    this.fadeColor,
+    this.fromFirstTimeWizard = false,
+  });
 
   final Key? key;
 
   final Color? fadeColor;
 
+  final bool fromFirstTimeWizard;
+
   @override
   String toString() {
-    return 'LayoutSettingsRouteArgs{key: $key, fadeColor: $fadeColor}';
+    return 'LayoutSettingsRouteArgs{key: $key, fadeColor: $fadeColor, fromFirstTimeWizard: $fromFirstTimeWizard}';
   }
 }
 
@@ -342,17 +403,41 @@ class ServerUrlRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SettingsScreen]
-class SettingsRoute extends PageRouteInfo<void> {
-  const SettingsRoute({List<PageRouteInfo>? children})
-    : super(SettingsRoute.name, initialChildren: children, argsEquality: false);
+/// [SettingsListScreen]
+class SettingsListRoute extends PageRouteInfo<void> {
+  const SettingsListRoute({List<PageRouteInfo>? children})
+    : super(
+        SettingsListRoute.name,
+        initialChildren: children,
+        argsEquality: false,
+      );
 
-  static const String name = 'SettingsRoute';
+  static const String name = 'SettingsListRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SettingsScreen();
+      return const SettingsListScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [SettingsShellScreen]
+class SettingsShellRoute extends PageRouteInfo<void> {
+  const SettingsShellRoute({List<PageRouteInfo>? children})
+    : super(
+        SettingsShellRoute.name,
+        initialChildren: children,
+        argsEquality: false,
+      );
+
+  static const String name = 'SettingsShellRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SettingsShellScreen();
     },
   );
 }

@@ -132,5 +132,10 @@
     "deleteCategoryExplanation": "Deleting a category will also delete all the feeds it contains. This cannot be undone",
     "any": "Any",
     "feedCategory": "Category",
-    "layoutBlockCategoryExplanation": "This block will only display blocks of the selected category"
+    "layoutBlockCategoryExplanation": "This block will only display blocks of the selected category",
+    "content": "Content",
+    "appearance": "Appearance",
+    "account": "Account",
+    "emailAndPassword": "Email and password",
+    "nFeedsAndCategories": "{feeds, plural, =1{1 feed} other{{feeds} feeds}} {categories, plural, =0{uncategorized}=1{in 1 category} other{across {categories} categories}}"
 }

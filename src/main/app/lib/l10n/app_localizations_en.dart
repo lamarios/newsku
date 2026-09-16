@@ -480,4 +480,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get layoutBlockCategoryExplanation => 'This block will only display blocks of the selected category';
+
+  @override
+  String get content => 'Content';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get emailAndPassword => 'Email and password';
+
+  @override
+  String nFeedsAndCategories(num categories, num feeds) {
+    String _temp0 = intl.Intl.pluralLogic(feeds, locale: localeName, other: '$feeds feeds', one: '1 feed');
+    String _temp1 = intl.Intl.pluralLogic(
+      categories,
+      locale: localeName,
+      other: 'across $categories categories',
+      one: 'in 1 category',
+      zero: 'uncategorized',
+    );
+    return '$_temp0 $_temp1';
+  }
 }
