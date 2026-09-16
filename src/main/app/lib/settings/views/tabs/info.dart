@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/l10n/app_localizations.dart';
+import 'package:app/settings/views/components/responsive_setting_child.dart';
 import 'package:app/utils/models/imgur_error.dart';
 import 'package:app/utils/service/imgur_service.dart';
 import 'package:app/utils/utils.dart';
@@ -81,56 +82,59 @@ class InfoTab extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     var titlesTheme = textTheme.labelSmall?.copyWith(color: colors.tertiary);
 
-    return SelectionArea(
-      child: FutureBuilder(
-        future: PackageInfo.fromPlatform(),
-        builder: (context, snapshot) => snapshot.data == null
-            ? Center(child: LoadingIndicator())
-            : Column(
-                crossAxisAlignment: .center,
+    return ResponsiveSettingChild(
+      title: locals.about,
+      child: SelectionArea(
+        child: FutureBuilder(
+          future: PackageInfo.fromPlatform(),
+          builder: (context, snapshot) => snapshot.data == null
+              ? Center(child: LoadingIndicator())
+              : Column(
+                  crossAxisAlignment: .center,
 
-                children: [
-                  Gap(pu4),
-                  AppLogo(size: 75),
-                  Gap(pu6),
-                  AppName(style: textTheme.displaySmall, alignment: .center),
-                  Gap(pu6),
-                  Text(locals.version, style: titlesTheme),
-                  Text(snapshot.data?.version ?? '-'),
-                  Gap(pu2),
-                  Text(locals.buildNumber, style: titlesTheme),
-                  Text(snapshot.data?.buildNumber ?? '-'),
-                  Gap(pu2),
-                  Text(locals.backendVersion, style: titlesTheme),
-                  Text(serverUrl ?? '-'),
-                  Gap(pu2),
-                  Text(locals.backendVersion, style: titlesTheme),
-                  Text(config?.backendVersion ?? '-'),
-                  Gap(pu6),
-                  FilledButton.tonalIcon(
-                    icon: Icon(Icons.info_outline),
-                    onPressed: () {
-                      showLicensePage(context: context, applicationIcon: AppLogo(size: 20));
-                    },
-                    label: Text(locals.licenses),
-                  ),
-                  /*
-                  Gap(pu6),
-                  FilledButton.tonalIcon(
-                    icon: Icon(Icons.feedback),
-                    onPressed: () {
-                      okCancelDialog(
-                        context,
-                        title: locals.submitFeedback,
-                        content: Text(locals.feedbackDisclaimer),
-                        onOk: () => BetterFeedback.of(context).show((feedback) => sendFeedBack(context, feedback)),
-                      );
-                    },
-                    label: Text(locals.feedback),
-                  ),
-*/
-                ],
-              ),
+                  children: [
+                    Gap(pu4),
+                    AppLogo(size: 75),
+                    Gap(pu6),
+                    AppName(style: textTheme.displaySmall, alignment: .center),
+                    Gap(pu6),
+                    Text(locals.version, style: titlesTheme),
+                    Text(snapshot.data?.version ?? '-'),
+                    Gap(pu2),
+                    Text(locals.buildNumber, style: titlesTheme),
+                    Text(snapshot.data?.buildNumber ?? '-'),
+                    Gap(pu2),
+                    Text(locals.backendVersion, style: titlesTheme),
+                    Text(serverUrl ?? '-'),
+                    Gap(pu2),
+                    Text(locals.backendVersion, style: titlesTheme),
+                    Text(config?.backendVersion ?? '-'),
+                    Gap(pu6),
+                    FilledButton.tonalIcon(
+                      icon: Icon(Icons.info_outline),
+                      onPressed: () {
+                        showLicensePage(context: context, applicationIcon: AppLogo(size: 20));
+                      },
+                      label: Text(locals.licenses),
+                    ),
+                    /*
+                    Gap(pu6),
+                    FilledButton.tonalIcon(
+                      icon: Icon(Icons.feedback),
+                      onPressed: () {
+                        okCancelDialog(
+                          context,
+                          title: locals.submitFeedback,
+                          content: Text(locals.feedbackDisclaimer),
+                          onOk: () => BetterFeedback.of(context).show((feedback) => sendFeedBack(context, feedback)),
+                        );
+                      },
+                      label: Text(locals.feedback),
+                    ),
+      */
+                  ],
+                ),
+        ),
       ),
     );
   }

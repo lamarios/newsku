@@ -160,7 +160,7 @@ class FeedScreen extends StatelessWidget {
                                                       child: Text(locals.settings),
                                                       onPressed: () => AutoRouter.of(
                                                         context,
-                                                      ).push(SettingsRoute()).then((value) => cubit.refresh()),
+                                                      ).push(SettingsShellRoute()).then((value) => cubit.refresh()),
                                                     ),
                                                   Divider(),
                                                   MenuItemButton(

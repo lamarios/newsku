@@ -32,12 +32,6 @@ void main() {
 
     var updateUser = nock(validServerUrl).post('/api/users', (body) => true)..reply(200, loadFixture('user.json'));
 
-    await tester.tap(find.text('Weekly'));
-    await tester.pumpAndSettle();
-    expect(updateUser.isDone, true);
-
-    updateUser = nock(validServerUrl).post('/api/users', (body) => true)..reply(200, loadFixture('user.json'));
-
     expect((tester.widget(find.byKey(Key('email'))) as TextField).controller?.text, 'test@test.com');
 
     await tester.tap(find.text('Update').first);

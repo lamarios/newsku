@@ -1,6 +1,7 @@
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/settings/states/feeds.dart';
 import 'package:app/settings/views/components/feed_category.dart';
+import 'package:app/settings/views/components/responsive_setting_child.dart';
 import 'package:app/utils/dialog.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/utils/views/components/error_listener.dart';
@@ -16,7 +17,8 @@ final _formKey = GlobalKey<FormState>();
 
 @RoutePage()
 class FeedsSettingsTab extends StatelessWidget {
-  const FeedsSettingsTab({super.key});
+  final bool fromFirstTimeSetup;
+  const FeedsSettingsTab({super.key, this.fromFirstTimeSetup = false});
 
   Future<void> addCategory(BuildContext context) async {
     final locals = AppLocalizations.of(context)!;
@@ -32,116 +34,120 @@ class FeedsSettingsTab extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     final locals = AppLocalizations.of(context)!;
-    return BlocProvider(
-      create: (context) => FeedsSettingsCubit(FeedsSettingsState()),
-      child: ErrorHandler<FeedsSettingsCubit, FeedsSettingsState>(
-        child: BlocBuilder<FeedsSettingsCubit, FeedsSettingsState>(
-          builder: (context, state) {
-            var cubit = context.read<FeedsSettingsCubit>();
-            return state.loading
-                ? Center(child: SizedBox(width: 50, height: 50, child: LoadingIndicator()))
-                : Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(pu2),
-                        child: Form(
-                          key: _formKey,
-                          child: Row(
-                            crossAxisAlignment: .center,
-                            spacing: pu2,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: cubit.newFeedController,
-                                  autofillHints: [AutofillHints.url],
-                                  decoration: InputDecoration(label: Text(locals.newFeedUrl)),
-                                  validator: (value) {
-                                    if (!RegExp(_validUrl).hasMatch(value ?? '')) {
-                                      return locals.invalidUrl;
+    return ResponsiveSettingChild(
+      disableScaffold: fromFirstTimeSetup,
+      title: locals.feeds,
+      child: BlocProvider(
+        create: (context) => FeedsSettingsCubit(FeedsSettingsState()),
+        child: ErrorHandler<FeedsSettingsCubit, FeedsSettingsState>(
+          child: BlocBuilder<FeedsSettingsCubit, FeedsSettingsState>(
+            builder: (context, state) {
+              var cubit = context.read<FeedsSettingsCubit>();
+              return state.loading
+                  ? Center(child: SizedBox(width: 50, height: 50, child: LoadingIndicator()))
+                  : Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(pu2),
+                          child: Form(
+                            key: _formKey,
+                            child: Row(
+                              crossAxisAlignment: .center,
+                              spacing: pu2,
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: cubit.newFeedController,
+                                    autofillHints: [AutofillHints.url],
+                                    decoration: InputDecoration(label: Text(locals.newFeedUrl)),
+                                    validator: (value) {
+                                      if (!RegExp(_validUrl).hasMatch(value ?? '')) {
+                                        return locals.invalidUrl;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                FilledButton.tonalIcon(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      cubit.addFeed();
                                     }
-                                    return null;
+                                  },
+                                  label: Text(locals.addFeed),
+                                  icon: Icon(Icons.add),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: .start,
+                          spacing: pu2,
+                          children: [
+                            if (state.feeds.isNotEmpty)
+                              TextButton.icon(
+                                key: Key('add-category'),
+                                onPressed: () => addCategory(context),
+                                label: Text(locals.addCategory),
+                                icon: Icon(Icons.add),
+                              ),
+                            TextButton.icon(
+                              onPressed: () => cubit.exportFeed(),
+                              label: Text(locals.export),
+                              icon: Icon(Icons.download),
+                            ),
+                            TextButton.icon(
+                              onPressed: () async {
+                                PlatformFile? result = await FilePicker.pickFile(
+                                  allowedExtensions: ['opml'],
+                                  type: FileType.custom,
+                                );
+
+                                if (result != null) {
+                                  final feeds = await cubit.importFeeds(await result.readAsBytes());
+                                  if (context.mounted && feeds.isNotEmpty) {
+                                    ScaffoldMessenger.of(
+                                      context,
+                                    ).showSnackBar(SnackBar(content: Text(locals.importedNFeeds(feeds.length))));
+                                  }
+                                }
+                              },
+                              label: Text(locals.import),
+                              icon: Icon(Icons.upload),
+                            ),
+                          ],
+                        ),
+                        state.feeds.isEmpty
+                            ? Expanded(
+                                child: Column(
+                                  crossAxisAlignment: .center,
+                                  mainAxisAlignment: .center,
+                                  spacing: pu6,
+                                  children: [
+                                    Icon(Icons.sentiment_neutral_outlined, size: 50),
+                                    Text(locals.noFeeds, style: textTheme.bodyLarge),
+                                  ],
+                                ),
+                              )
+                            : Expanded(
+                                child: ListView.builder(
+                                  itemCount: state.categories.length,
+                                  itemBuilder: (context, index) {
+                                    final c = state.categories[index];
+                                    return state.draggingFeed
+                                        ? FeedCategoryDragTarget(category: c)
+                                        : FeedCategoryView(
+                                            category: c,
+                                            feeds: state.feeds.where((f) => f.category?.id == c.id).toList(),
+                                          );
                                   },
                                 ),
                               ),
-                              FilledButton.tonalIcon(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    cubit.addFeed();
-                                  }
-                                },
-                                label: Text(locals.addFeed),
-                                icon: Icon(Icons.add),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: .start,
-                        spacing: pu2,
-                        children: [
-                          if (state.feeds.isNotEmpty)
-                            TextButton.icon(
-                              key: Key('add-category'),
-                              onPressed: () => addCategory(context),
-                              label: Text(locals.addCategory),
-                              icon: Icon(Icons.add),
-                            ),
-                          TextButton.icon(
-                            onPressed: () => cubit.exportFeed(),
-                            label: Text(locals.export),
-                            icon: Icon(Icons.download),
-                          ),
-                          TextButton.icon(
-                            onPressed: () async {
-                              PlatformFile? result = await FilePicker.pickFile(
-                                allowedExtensions: ['opml'],
-                                type: FileType.custom,
-                              );
-
-                              if (result != null) {
-                                final feeds = await cubit.importFeeds(await result.readAsBytes());
-                                if (context.mounted && feeds.isNotEmpty) {
-                                  ScaffoldMessenger.of(
-                                    context,
-                                  ).showSnackBar(SnackBar(content: Text(locals.importedNFeeds(feeds.length))));
-                                }
-                              }
-                            },
-                            label: Text(locals.import),
-                            icon: Icon(Icons.upload),
-                          ),
-                        ],
-                      ),
-                      state.feeds.isEmpty
-                          ? Expanded(
-                              child: Column(
-                                crossAxisAlignment: .center,
-                                mainAxisAlignment: .center,
-                                spacing: pu6,
-                                children: [
-                                  Icon(Icons.sentiment_neutral_outlined, size: 50),
-                                  Text(locals.noFeeds, style: textTheme.bodyLarge),
-                                ],
-                              ),
-                            )
-                          : Expanded(
-                              child: ListView.builder(
-                                itemCount: state.categories.length,
-                                itemBuilder: (context, index) {
-                                  final c = state.categories[index];
-                                  return state.draggingFeed
-                                      ? FeedCategoryDragTarget(category: c)
-                                      : FeedCategoryView(
-                                          category: c,
-                                          feeds: state.feeds.where((f) => f.category?.id == c.id).toList(),
-                                        );
-                                },
-                              ),
-                            ),
-                    ],
-                  );
-          },
+                      ],
+                    );
+            },
+          ),
         ),
       ),
     );

@@ -6,6 +6,9 @@ import 'package:app/home/views/screens/home.dart';
 import 'package:app/reset-password/views/screens/reset_password.dart';
 import 'package:app/settings/views/screens/feed_errors.dart';
 import 'package:app/settings/views/screens/settings.dart';
+import 'package:app/settings/views/screens/settings_list_route.dart';
+import 'package:app/settings/views/screens/settings_shell.dart';
+import 'package:app/settings/views/tabs/email_digest.dart';
 import 'package:app/settings/views/tabs/feeds.dart';
 import 'package:app/settings/views/tabs/general.dart';
 import 'package:app/settings/views/tabs/info.dart';
@@ -67,10 +70,12 @@ class AppRouter extends RootStackRouter {
           ),
           AutoRoute(page: FeedErrorsRoute.page, path: 'errors'),
           AutoRoute(
-            page: SettingsRoute.page,
+            page: SettingsShellRoute.page,
             path: 'settings',
             children: [
-              AutoRoute(page: FeedsSettingsRoute.page, initial: true, path: 'feeds'),
+              AutoRoute(page: SettingsListRoute.page, path: '', initial: true),
+              AutoRoute(page: FeedsSettingsRoute.page, path: 'feeds'),
+              AutoRoute(page: EmailDigestRoute.page, path: 'email-digest'),
               AutoRoute(page: LayoutSettingsRoute.page, path: 'layout'),
               AutoRoute(page: GeneralSettingsRoute.page, path: 'general'),
               AutoRoute(page: UserSettingsRoute.page, path: 'user-settings'),
