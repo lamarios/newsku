@@ -52,6 +52,13 @@ class SettingsMasterList extends StatelessWidget {
                     trailing: Icon(Icons.chevron_right),
                     onTap: () => onTap(LayoutSettingsRoute()),
                   ),
+                  ListTile(
+                    title: Text(locals.articlePreference),
+                    subtitle: Text(locals.articlePreferencesSubtitle),
+                    leading: Icon(Icons.auto_awesome),
+                    trailing: Icon(Icons.chevron_right),
+                    onTap: () => onTap(GeneralSettingsRoute()),
+                  ),
                   _SectionTitle(title: locals.appearance, topPadding: true),
                   ListTile(
                     title: Container(

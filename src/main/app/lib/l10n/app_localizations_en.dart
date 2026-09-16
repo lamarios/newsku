@@ -196,6 +196,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'This is guidance for the AI model. Telling it what kind of article you prefer to prioritize for the scoring  of each article. The change only applies to future articles.';
 
   @override
+  String get articlePreferencesSubtitle => 'Guides how articles are scored';
+
+  @override
   String get minimumNewsScore => 'Minimum news score';
 
   @override
