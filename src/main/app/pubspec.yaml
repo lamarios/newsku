@@ -30,7 +30,6 @@ environment:
 dependencies:
   auto_route: 11.1.0
   awesome_notifications: 0.12.1
-  awesome_notifications_core: 0.10.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cached_network_image: 3.4.1

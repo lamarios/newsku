@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/home/state/local_preferences.dart';
 import 'package:app/identity/states/identity.dart';
 import 'package:app/l10n/app_localizations.dart';
@@ -21,7 +23,9 @@ Future<void> main() async {
     print('${record.level.name}: ${record.time}: ${record.message}');
   });
   WidgetsFlutterBinding.ensureInitialized();
-  NotificationHandler.initialize();
+  if (!kIsWeb && Platform.isAndroid) {
+    NotificationHandler.initialize();
+  }
   addAppLicense();
   var identityCubit = IdentityCubit(IdentityState());
   getIt.registerSingleton<IdentityCubit>(identityCubit);
