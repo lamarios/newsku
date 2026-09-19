@@ -116,7 +116,7 @@ class FeedService extends BaseService {
     Map<String, dynamic> json = jsonDecode(response.body);
 
     var prefs = await SharedPreferences.getInstance();
-    prefs.setInt('last-sync', DateTime.now().millisecondsSinceEpoch);
+    await prefs.setInt('last-sync', DateTime.now().millisecondsSinceEpoch);
 
     return Paginated<FeedItem>.fromJson(json, (feedItem) => FeedItem.fromJson(feedItem as Map<String, dynamic>));
   }

@@ -93,14 +93,13 @@ class NotificationHandler {
       var notifications = prefs.getBool('notifications') ?? false;
       var notificationsFrequency = prefs.getInt('notifications-frequency') ?? 1;
 
+      await Workmanager().cancelByUniqueName('check-notifications');
       if (notifications) {
-        Workmanager().registerPeriodicTask(
+        await Workmanager().registerPeriodicTask(
           'check-notifications',
           'check-notifications',
-          frequency: Duration(hours: notificationsFrequency),
+          frequency: kDebugMode ? Duration(minutes: 1) : Duration(hours: notificationsFrequency),
         );
-      } else {
-        Workmanager().cancelByUniqueName('check-notifications');
       }
     }
   }

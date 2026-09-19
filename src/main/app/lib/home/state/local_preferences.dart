@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:app/notifications/notification_handler.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,14 +89,18 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
 
   Future<void> setNotifications(bool enabled) async {
     var prefs = await SharedPreferences.getInstance();
-    prefs.setBool('notifications', enabled);
     emit(state.copyWith(notifications: enabled));
+    await prefs.setBool('notifications', enabled);
+    NotificationHandler.setupNotifications();
   }
 
   Future<void> setNotificationsFrequency(int frequency) async {
-    var prefs = await SharedPreferences.getInstance();
-    prefs.setInt('notifications-frequency', frequency);
     emit(state.copyWith(notificationsFrequency: frequency));
+    EasyDebounce.debounce('set-notification-frequency', Duration(milliseconds: 500), () async {
+      var prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('notifications-frequency', frequency);
+      NotificationHandler.setupNotifications();
+    });
   }
 }
 
