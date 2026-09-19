@@ -15,9 +15,23 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+
+// Issue with awesome notification that does not compile
+subprojects {
+    afterEvaluate {
+        if (plugins.hasPlugin("com.android.library") || plugins.hasPlugin("com.android.application")) {
+            extensions.findByName("android")?.withGroovyBuilder {
+                setProperty("compileSdk", 36)
+            }
+        }
+    }
+}
+// end of fix for awesome notifications
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
+
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)

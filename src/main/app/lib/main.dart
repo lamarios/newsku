@@ -1,6 +1,7 @@
 import 'package:app/home/state/local_preferences.dart';
 import 'package:app/identity/states/identity.dart';
 import 'package:app/l10n/app_localizations.dart';
+import 'package:app/notifications/notification_handler.dart';
 import 'package:app/router.dart';
 import 'package:app/utils/utils.dart';
 import 'package:feedback/feedback.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
     print('${record.level.name}: ${record.time}: ${record.message}');
   });
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationHandler.initialize();
   addAppLicense();
   var identityCubit = IdentityCubit(IdentityState());
   getIt.registerSingleton<IdentityCubit>(identityCubit);

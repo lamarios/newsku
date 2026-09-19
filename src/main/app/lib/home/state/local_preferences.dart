@@ -31,6 +31,9 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
 
     var density = prefs.getDouble('density');
 
+    var notifications = prefs.getBool('notifications') ?? false;
+    var notificationsFrequency = prefs.getInt('notifications-frequency') ?? 1;
+
     var theme = ThemeMode.values.where((v) => v.name == prefs.getString(_brightness)).firstOrNull ?? ThemeMode.system;
 
     // we save the system color scheme if any
@@ -45,6 +48,8 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
         blackBackground: blackbackground ?? false,
         density: density ?? 4,
         theme: theme,
+        notifications: notifications,
+        notificationsFrequency: notificationsFrequency,
         systemColors: systemColors,
       ),
     );
@@ -79,6 +84,18 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
     prefs.setDouble('density', density);
     emit(state.copyWith(density: density));
   }
+
+  Future<void> setNotifications(bool enabled) async {
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setBool('notifications', enabled);
+    emit(state.copyWith(notifications: enabled));
+  }
+
+  Future<void> setNotificationsFrequency(int frequency) async {
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setInt('notifications-frequency', frequency);
+    emit(state.copyWith(notificationsFrequency: frequency));
+  }
 }
 
 @freezed
@@ -89,6 +106,8 @@ sealed class LocalPreferencesState with _$LocalPreferencesState {
     @Default(false) bool blackBackground,
     @Default(4) double density,
     @Default(ThemeMode.system) ThemeMode theme,
+    @Default(false) bool notifications,
+    @Default(1) int notificationsFrequency,
     ColorScheme? systemColors,
   }) = _LocalPreferencesState;
 

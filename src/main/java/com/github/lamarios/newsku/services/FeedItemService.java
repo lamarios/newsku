@@ -303,6 +303,12 @@ public class FeedItemService {
   }
 
   @Transactional(readOnly = true)
+  public long countItemsSince(long since) {
+    List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
+    return feedItemRepository.countByFeedInAndTimeCreatedGreaterThan(feeds, since);
+  }
+
+  @Transactional(readOnly = true)
   public Page<@NotNull FeedItem> getItems(Long from, Long to, int page, int pageSize) {
     List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
     var user = userService.getCurrentUser();

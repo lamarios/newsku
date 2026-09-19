@@ -343,6 +343,26 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [NotificationsTab]
+class NotificationsRoute extends PageRouteInfo<void> {
+  const NotificationsRoute({List<PageRouteInfo>? children})
+    : super(
+        NotificationsRoute.name,
+        initialChildren: children,
+        argsEquality: false,
+      );
+
+  static const String name = 'NotificationsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const NotificationsTab();
+    },
+  );
+}
+
+/// generated route for
 /// [ResetPasswordScreen]
 class ResetPasswordRoute extends PageRouteInfo<ResetPasswordRouteArgs> {
   ResetPasswordRoute({Key? key, String? token, List<PageRouteInfo>? children})

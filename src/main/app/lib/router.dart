@@ -12,6 +12,7 @@ import 'package:app/settings/views/tabs/feeds.dart';
 import 'package:app/settings/views/tabs/general.dart';
 import 'package:app/settings/views/tabs/info.dart';
 import 'package:app/settings/views/tabs/layout.dart';
+import 'package:app/settings/views/tabs/notifications.dart';
 import 'package:app/settings/views/tabs/user.dart';
 import 'package:app/stats/views/screens/stats_screen.dart';
 import 'package:app/stats/views/tabs/feed_stats.dart';
@@ -79,6 +80,7 @@ class AppRouter extends RootStackRouter {
               AutoRoute(page: GeneralSettingsRoute.page, path: 'general'),
               AutoRoute(page: UserSettingsRoute.page, path: 'user-settings'),
               AutoRoute(page: InfoRoute.page, path: 'info'),
+              AutoRoute(page: NotificationsRoute.page, path: 'notifications'),
             ],
           ),
           AutoRoute(

@@ -930,6 +930,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{feeds, plural, =1{1 feed} other{{feeds} feeds}} {categories, plural, =0{uncategorized}=1{in 1 category} other{across {categories} categories}}'**
   String nFeedsAndCategories(num categories, num feeds);
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @notificationsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get to know how many new articles you have'**
+  String get notificationsSubtitle;
+
+  /// No description provided for @notificationFrequency.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification frequency'**
+  String get notificationFrequency;
+
+  /// No description provided for @nHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours, plural, =1{1 Hour} other{{hours} Hours}}'**
+  String nHours(num hours);
+
+  /// No description provided for @newFeedItemsNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 new article}  other{{count} new articles}  }'**
+  String newFeedItemsNotificationTitle(num count);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

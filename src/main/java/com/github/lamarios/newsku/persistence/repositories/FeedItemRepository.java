@@ -12,7 +12,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface FeedItemRepository extends JpaRepository<FeedItem, String> {
-  FeedItem getFirstByGuid(String guid);
 
   @Query(
       value =
@@ -29,13 +28,9 @@ public interface FeedItemRepository extends JpaRepository<FeedItem, String> {
 
   List<FeedItem> findByIdInAndFeedIn(Collection<String> ids, Collection<Feed> feeds);
 
-  FeedItem getFirstByGuidAndFeed(String guid, Feed feed);
-
   FeedItem getFirstByIdAndFeedIn(String id, Collection<Feed> feeds);
 
   Page<FeedItem> findFeedItemByFeed(Feed feed, Pageable pageable);
-
-  List<FeedItem> findAllByGuid(String guid);
 
   Stream<FeedItem> findAllByGuidInAndFeed(Collection<String> guids, Feed feed);
 
@@ -60,4 +55,7 @@ public interface FeedItemRepository extends JpaRepository<FeedItem, String> {
       @Param("feeds") List<String> feeds,
       @Param("offset") int offset,
       @Param("limit") int limit);
+
+  long countByFeedInAndTimeCreatedGreaterThan(
+      Collection<Feed> feeds, long timeCreatedIsGreaterThan);
 }

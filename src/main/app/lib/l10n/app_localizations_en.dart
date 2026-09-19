@@ -508,4 +508,30 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0 $_temp1';
   }
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get notificationsSubtitle => 'Get to know how many new articles you have';
+
+  @override
+  String get notificationFrequency => 'Notification frequency';
+
+  @override
+  String nHours(num hours) {
+    String _temp0 = intl.Intl.pluralLogic(hours, locale: localeName, other: '$hours Hours', one: '1 Hour');
+    return '$_temp0';
+  }
+
+  @override
+  String newFeedItemsNotificationTitle(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new articles',
+      one: '1 new article',
+    );
+    return '$_temp0';
+  }
 }

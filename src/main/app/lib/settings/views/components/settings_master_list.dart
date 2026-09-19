@@ -59,6 +59,14 @@ class SettingsMasterList extends StatelessWidget {
                     trailing: Icon(Icons.chevron_right),
                     onTap: () => onTap(GeneralSettingsRoute()),
                   ),
+                  if (!kIsWeb && Platform.isAndroid)
+                    ListTile(
+                      title: Text(locals.notifications),
+                      subtitle: Text(locals.notificationsSubtitle),
+                      leading: Icon(Icons.notifications),
+                      trailing: Icon(Icons.chevron_right),
+                      onTap: () => onTap(NotificationsRoute()),
+                    ),
                   _SectionTitle(title: locals.appearance, topPadding: true),
                   ListTile(
                     title: Container(

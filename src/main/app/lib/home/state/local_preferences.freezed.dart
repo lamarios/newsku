@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LocalPreferencesState implements DiagnosticableTreeMixin {
 
- Color get themeColor; bool get dynamicColor; bool get blackBackground; double get density; ThemeMode get theme; ColorScheme? get systemColors;
+ Color get themeColor; bool get dynamicColor; bool get blackBackground; double get density; ThemeMode get theme; bool get notifications; int get notificationsFrequency; ColorScheme? get systemColors;
 /// Create a copy of LocalPreferencesState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,21 +26,21 @@ $LocalPreferencesStateCopyWith<LocalPreferencesState> get copyWith => _$LocalPre
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'LocalPreferencesState'))
-    ..add(DiagnosticsProperty('themeColor', themeColor))..add(DiagnosticsProperty('dynamicColor', dynamicColor))..add(DiagnosticsProperty('blackBackground', blackBackground))..add(DiagnosticsProperty('density', density))..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('systemColors', systemColors));
+    ..add(DiagnosticsProperty('themeColor', themeColor))..add(DiagnosticsProperty('dynamicColor', dynamicColor))..add(DiagnosticsProperty('blackBackground', blackBackground))..add(DiagnosticsProperty('density', density))..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('notifications', notifications))..add(DiagnosticsProperty('notificationsFrequency', notificationsFrequency))..add(DiagnosticsProperty('systemColors', systemColors));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LocalPreferencesState&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.dynamicColor, dynamicColor) || other.dynamicColor == dynamicColor)&&(identical(other.blackBackground, blackBackground) || other.blackBackground == blackBackground)&&(identical(other.density, density) || other.density == density)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.systemColors, systemColors) || other.systemColors == systemColors));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LocalPreferencesState&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.dynamicColor, dynamicColor) || other.dynamicColor == dynamicColor)&&(identical(other.blackBackground, blackBackground) || other.blackBackground == blackBackground)&&(identical(other.density, density) || other.density == density)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.notifications, notifications) || other.notifications == notifications)&&(identical(other.notificationsFrequency, notificationsFrequency) || other.notificationsFrequency == notificationsFrequency)&&(identical(other.systemColors, systemColors) || other.systemColors == systemColors));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,themeColor,dynamicColor,blackBackground,density,theme,systemColors);
+int get hashCode => Object.hash(runtimeType,themeColor,dynamicColor,blackBackground,density,theme,notifications,notificationsFrequency,systemColors);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'LocalPreferencesState(themeColor: $themeColor, dynamicColor: $dynamicColor, blackBackground: $blackBackground, density: $density, theme: $theme, systemColors: $systemColors)';
+  return 'LocalPreferencesState(themeColor: $themeColor, dynamicColor: $dynamicColor, blackBackground: $blackBackground, density: $density, theme: $theme, notifications: $notifications, notificationsFrequency: $notificationsFrequency, systemColors: $systemColors)';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $LocalPreferencesStateCopyWith<$Res>  {
   factory $LocalPreferencesStateCopyWith(LocalPreferencesState value, $Res Function(LocalPreferencesState) _then) = _$LocalPreferencesStateCopyWithImpl;
 @useResult
 $Res call({
- Color themeColor, bool dynamicColor, bool blackBackground, double density, ThemeMode theme, ColorScheme? systemColors
+ Color themeColor, bool dynamicColor, bool blackBackground, double density, ThemeMode theme, bool notifications, int notificationsFrequency, ColorScheme? systemColors
 });
 
 
@@ -68,14 +68,16 @@ class _$LocalPreferencesStateCopyWithImpl<$Res>
 
 /// Create a copy of LocalPreferencesState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeColor = null,Object? dynamicColor = null,Object? blackBackground = null,Object? density = null,Object? theme = null,Object? systemColors = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeColor = null,Object? dynamicColor = null,Object? blackBackground = null,Object? density = null,Object? theme = null,Object? notifications = null,Object? notificationsFrequency = null,Object? systemColors = freezed,}) {
   return _then(_self.copyWith(
 themeColor: null == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
 as Color,dynamicColor: null == dynamicColor ? _self.dynamicColor : dynamicColor // ignore: cast_nullable_to_non_nullable
 as bool,blackBackground: null == blackBackground ? _self.blackBackground : blackBackground // ignore: cast_nullable_to_non_nullable
 as bool,density: null == density ? _self.density : density // ignore: cast_nullable_to_non_nullable
 as double,theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
-as ThemeMode,systemColors: freezed == systemColors ? _self.systemColors : systemColors // ignore: cast_nullable_to_non_nullable
+as ThemeMode,notifications: null == notifications ? _self.notifications : notifications // ignore: cast_nullable_to_non_nullable
+as bool,notificationsFrequency: null == notificationsFrequency ? _self.notificationsFrequency : notificationsFrequency // ignore: cast_nullable_to_non_nullable
+as int,systemColors: freezed == systemColors ? _self.systemColors : systemColors // ignore: cast_nullable_to_non_nullable
 as ColorScheme?,
   ));
 }
@@ -158,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Color themeColor,  bool dynamicColor,  bool blackBackground,  double density,  ThemeMode theme,  ColorScheme? systemColors)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Color themeColor,  bool dynamicColor,  bool blackBackground,  double density,  ThemeMode theme,  bool notifications,  int notificationsFrequency,  ColorScheme? systemColors)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LocalPreferencesState() when $default != null:
-return $default(_that.themeColor,_that.dynamicColor,_that.blackBackground,_that.density,_that.theme,_that.systemColors);case _:
+return $default(_that.themeColor,_that.dynamicColor,_that.blackBackground,_that.density,_that.theme,_that.notifications,_that.notificationsFrequency,_that.systemColors);case _:
   return orElse();
 
 }
@@ -179,10 +181,10 @@ return $default(_that.themeColor,_that.dynamicColor,_that.blackBackground,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Color themeColor,  bool dynamicColor,  bool blackBackground,  double density,  ThemeMode theme,  ColorScheme? systemColors)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Color themeColor,  bool dynamicColor,  bool blackBackground,  double density,  ThemeMode theme,  bool notifications,  int notificationsFrequency,  ColorScheme? systemColors)  $default,) {final _that = this;
 switch (_that) {
 case _LocalPreferencesState():
-return $default(_that.themeColor,_that.dynamicColor,_that.blackBackground,_that.density,_that.theme,_that.systemColors);}
+return $default(_that.themeColor,_that.dynamicColor,_that.blackBackground,_that.density,_that.theme,_that.notifications,_that.notificationsFrequency,_that.systemColors);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -196,10 +198,10 @@ return $default(_that.themeColor,_that.dynamicColor,_that.blackBackground,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Color themeColor,  bool dynamicColor,  bool blackBackground,  double density,  ThemeMode theme,  ColorScheme? systemColors)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Color themeColor,  bool dynamicColor,  bool blackBackground,  double density,  ThemeMode theme,  bool notifications,  int notificationsFrequency,  ColorScheme? systemColors)?  $default,) {final _that = this;
 switch (_that) {
 case _LocalPreferencesState() when $default != null:
-return $default(_that.themeColor,_that.dynamicColor,_that.blackBackground,_that.density,_that.theme,_that.systemColors);case _:
+return $default(_that.themeColor,_that.dynamicColor,_that.blackBackground,_that.density,_that.theme,_that.notifications,_that.notificationsFrequency,_that.systemColors);case _:
   return null;
 
 }
@@ -211,7 +213,7 @@ return $default(_that.themeColor,_that.dynamicColor,_that.blackBackground,_that.
 
 
 class _LocalPreferencesState extends LocalPreferencesState with DiagnosticableTreeMixin {
-  const _LocalPreferencesState({this.themeColor = _defaultColor, this.dynamicColor = false, this.blackBackground = false, this.density = 4, this.theme = ThemeMode.system, this.systemColors}): super._();
+  const _LocalPreferencesState({this.themeColor = _defaultColor, this.dynamicColor = false, this.blackBackground = false, this.density = 4, this.theme = ThemeMode.system, this.notifications = false, this.notificationsFrequency = 1, this.systemColors}): super._();
   
 
 @override@JsonKey() final  Color themeColor;
@@ -219,6 +221,8 @@ class _LocalPreferencesState extends LocalPreferencesState with DiagnosticableTr
 @override@JsonKey() final  bool blackBackground;
 @override@JsonKey() final  double density;
 @override@JsonKey() final  ThemeMode theme;
+@override@JsonKey() final  bool notifications;
+@override@JsonKey() final  int notificationsFrequency;
 @override final  ColorScheme? systemColors;
 
 /// Create a copy of LocalPreferencesState
@@ -232,21 +236,21 @@ _$LocalPreferencesStateCopyWith<_LocalPreferencesState> get copyWith => __$Local
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'LocalPreferencesState'))
-    ..add(DiagnosticsProperty('themeColor', themeColor))..add(DiagnosticsProperty('dynamicColor', dynamicColor))..add(DiagnosticsProperty('blackBackground', blackBackground))..add(DiagnosticsProperty('density', density))..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('systemColors', systemColors));
+    ..add(DiagnosticsProperty('themeColor', themeColor))..add(DiagnosticsProperty('dynamicColor', dynamicColor))..add(DiagnosticsProperty('blackBackground', blackBackground))..add(DiagnosticsProperty('density', density))..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('notifications', notifications))..add(DiagnosticsProperty('notificationsFrequency', notificationsFrequency))..add(DiagnosticsProperty('systemColors', systemColors));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LocalPreferencesState&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.dynamicColor, dynamicColor) || other.dynamicColor == dynamicColor)&&(identical(other.blackBackground, blackBackground) || other.blackBackground == blackBackground)&&(identical(other.density, density) || other.density == density)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.systemColors, systemColors) || other.systemColors == systemColors));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LocalPreferencesState&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.dynamicColor, dynamicColor) || other.dynamicColor == dynamicColor)&&(identical(other.blackBackground, blackBackground) || other.blackBackground == blackBackground)&&(identical(other.density, density) || other.density == density)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.notifications, notifications) || other.notifications == notifications)&&(identical(other.notificationsFrequency, notificationsFrequency) || other.notificationsFrequency == notificationsFrequency)&&(identical(other.systemColors, systemColors) || other.systemColors == systemColors));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,themeColor,dynamicColor,blackBackground,density,theme,systemColors);
+int get hashCode => Object.hash(runtimeType,themeColor,dynamicColor,blackBackground,density,theme,notifications,notificationsFrequency,systemColors);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'LocalPreferencesState(themeColor: $themeColor, dynamicColor: $dynamicColor, blackBackground: $blackBackground, density: $density, theme: $theme, systemColors: $systemColors)';
+  return 'LocalPreferencesState(themeColor: $themeColor, dynamicColor: $dynamicColor, blackBackground: $blackBackground, density: $density, theme: $theme, notifications: $notifications, notificationsFrequency: $notificationsFrequency, systemColors: $systemColors)';
 }
 
 
@@ -257,7 +261,7 @@ abstract mixin class _$LocalPreferencesStateCopyWith<$Res> implements $LocalPref
   factory _$LocalPreferencesStateCopyWith(_LocalPreferencesState value, $Res Function(_LocalPreferencesState) _then) = __$LocalPreferencesStateCopyWithImpl;
 @override @useResult
 $Res call({
- Color themeColor, bool dynamicColor, bool blackBackground, double density, ThemeMode theme, ColorScheme? systemColors
+ Color themeColor, bool dynamicColor, bool blackBackground, double density, ThemeMode theme, bool notifications, int notificationsFrequency, ColorScheme? systemColors
 });
 
 
@@ -274,14 +278,16 @@ class __$LocalPreferencesStateCopyWithImpl<$Res>
 
 /// Create a copy of LocalPreferencesState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeColor = null,Object? dynamicColor = null,Object? blackBackground = null,Object? density = null,Object? theme = null,Object? systemColors = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeColor = null,Object? dynamicColor = null,Object? blackBackground = null,Object? density = null,Object? theme = null,Object? notifications = null,Object? notificationsFrequency = null,Object? systemColors = freezed,}) {
   return _then(_LocalPreferencesState(
 themeColor: null == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
 as Color,dynamicColor: null == dynamicColor ? _self.dynamicColor : dynamicColor // ignore: cast_nullable_to_non_nullable
 as bool,blackBackground: null == blackBackground ? _self.blackBackground : blackBackground // ignore: cast_nullable_to_non_nullable
 as bool,density: null == density ? _self.density : density // ignore: cast_nullable_to_non_nullable
 as double,theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
-as ThemeMode,systemColors: freezed == systemColors ? _self.systemColors : systemColors // ignore: cast_nullable_to_non_nullable
+as ThemeMode,notifications: null == notifications ? _self.notifications : notifications // ignore: cast_nullable_to_non_nullable
+as bool,notificationsFrequency: null == notificationsFrequency ? _self.notificationsFrequency : notificationsFrequency // ignore: cast_nullable_to_non_nullable
+as int,systemColors: freezed == systemColors ? _self.systemColors : systemColors // ignore: cast_nullable_to_non_nullable
 as ColorScheme?,
   ));
 }

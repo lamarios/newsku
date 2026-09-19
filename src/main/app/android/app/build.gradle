@@ -28,26 +28,9 @@ if (keyFile == null) {
     keyFile = '/home/gz/dev/android/keys/key.properties'
 }
 
-def buildNumber = flutterVersionCode.toInteger()
-if (ENV['TAG_NAME'] != null) {
-    buildNumber = ENV['TAG_NAME'].toInteger()
-}
-/*
-if (ENV['DRONE_BUILD_NUMBER'] != null) {
-    buildNumber = ENV['DRONE_BUILD_NUMBER'].toInteger()
-}
-
-def tag = ENV['TAG_NAME']
-if(tag != null) {
-    flutterVersionName = tag
-}
-*/
-
-
-
 print flutterVersionName
 print ":"
-println buildNumber
+println flutterVersionCode
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = file(keyFile)
@@ -73,7 +56,7 @@ android {
         applicationId "com.github.lamarios.newsku"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
-        versionCode buildNumber
+        versionCode flutterVersionCode
         versionName flutterVersionName
         manifestPlaceholders += [
                 'oidcRedirectScheme': 'com.github.lamarios.newsku' // for oidc flutter dependency

@@ -8,6 +8,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:material_loading_indicator/loading_indicator.dart';
 
 @RoutePage()
 class GeneralSettingsTab extends StatelessWidget {
@@ -31,76 +32,78 @@ class GeneralSettingsTab extends StatelessWidget {
             builder: (context, state) {
               final cubit = context.read<GeneralSettingsCubit>();
               return ErrorHandler<GeneralSettingsCubit, GeneralSettingsState>(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: .start,
-                    children: [
-                      Text(locals.articlePreference),
-                      TextField(
-                        key: Key('article-preferences'),
-                        controller: cubit.preferenceController,
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          helper: Text(locals.articlePreferencesExplanation, style: subTextTheme),
-                        ),
-                      ),
-                      Gap(pu2),
-                      Align(
-                        alignment: .centerRight,
-                        child: FilledButton.tonalIcon(
-                          onPressed: state.loading
-                              ? null
-                              : () async {
-                                  await cubit.setAiPreferences();
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(
-                                      context,
-                                    ).showSnackBar(SnackBar(content: Text(locals.preferenceUpdated)));
-                                  }
-                                },
-                          label: Text(locals.update),
-                          icon: Icon(Icons.save),
-                        ),
-                      ),
-                      Gap(pu8),
-                      Divider(),
-                      Gap(pu8),
-                      Text(locals.minimumNewsScore),
-                      Text(locals.minimumNewsScoreExplanation, style: subTextTheme),
-                      Slider(
-                        min: 0,
-                        max: 100,
-                        divisions: 20,
-                        label: state.user?.minimumImportance.toString(),
-                        value: (state.user?.minimumImportance ?? 0).toDouble(),
-                        onChanged: (double value) => cubit.setAndSaveImportance(value),
-                      ),
-                      Gap(pu4),
-                      Row(
-                        spacing: pu2,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: .stretch,
+                child: state.loading
+                    ? Center(child: SizedBox(width: 50, height: 50, child: LoadingIndicator()))
+                    : SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: .start,
+                          children: [
+                            Text(locals.articlePreference),
+                            TextField(
+                              key: Key('article-preferences'),
+                              controller: cubit.preferenceController,
+                              maxLines: 5,
+                              decoration: InputDecoration(
+                                helper: Text(locals.articlePreferencesExplanation, style: subTextTheme),
+                              ),
+                            ),
+                            Gap(pu2),
+                            Align(
+                              alignment: .centerRight,
+                              child: FilledButton.tonalIcon(
+                                onPressed: state.loading
+                                    ? null
+                                    : () async {
+                                        await cubit.setAiPreferences();
+                                        if (context.mounted) {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(SnackBar(content: Text(locals.preferenceUpdated)));
+                                        }
+                                      },
+                                label: Text(locals.update),
+                                icon: Icon(Icons.save),
+                              ),
+                            ),
+                            Gap(pu8),
+                            Divider(),
+                            Gap(pu8),
+                            Text(locals.minimumNewsScore),
+                            Text(locals.minimumNewsScoreExplanation, style: subTextTheme),
+                            Slider(
+                              min: 0,
+                              max: 100,
+                              divisions: 20,
+                              label: state.user?.minimumImportance.toString(),
+                              value: (state.user?.minimumImportance ?? 0).toDouble(),
+                              onChanged: (double value) => cubit.setAndSaveImportance(value),
+                            ),
+                            Gap(pu4),
+                            Row(
+                              spacing: pu2,
                               children: [
-                                Text(locals.readItemHandling),
-                                Text(locals.readItemHandlingExplanation, style: subTextTheme),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: .stretch,
+                                    children: [
+                                      Text(locals.readItemHandling),
+                                      Text(locals.readItemHandlingExplanation, style: subTextTheme),
+                                    ],
+                                  ),
+                                ),
+                                DropdownMenu<ReadItemHandling>(
+                                  key: Key('read-item-handling'),
+                                  initialSelection: state.user?.readItemHandling ?? ReadItemHandling.none,
+                                  onSelected: cubit.setReadItemPreference,
+                                  dropdownMenuEntries: ReadItemHandling.values
+                                      .map((h) => DropdownMenuEntry(value: h, label: h.getLabel(context)))
+                                      .toList(),
+                                ),
                               ],
                             ),
-                          ),
-                          DropdownMenu<ReadItemHandling>(
-                            key: Key('read-item-handling'),
-                            initialSelection: state.user?.readItemHandling ?? ReadItemHandling.none,
-                            onSelected: cubit.setReadItemPreference,
-                            dropdownMenuEntries: ReadItemHandling.values
-                                .map((h) => DropdownMenuEntry(value: h, label: h.getLabel(context)))
-                                .toList(),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
               );
             },
           ),

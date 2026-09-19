@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.2.4+1
+version: 1.3.0+1
 
 environment:
   sdk: ^3.10.0
@@ -29,6 +29,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   auto_route: 11.1.0
+  awesome_notifications: 0.12.1
+  awesome_notifications_core: 0.10.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cached_network_image: 3.4.1
@@ -64,6 +66,7 @@ dependencies:
   sliver_tools: 0.2.12
   url_launcher: 6.3.2
   visibility_detector: 0.4.0+2
+  workmanager: 0.10.10
 
 
 

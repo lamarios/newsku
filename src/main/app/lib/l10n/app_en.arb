@@ -138,5 +138,10 @@
     "appearance": "Appearance",
     "account": "Account",
     "emailAndPassword": "Email and password",
-    "nFeedsAndCategories": "{feeds, plural, =1{1 feed} other{{feeds} feeds}} {categories, plural, =0{uncategorized}=1{in 1 category} other{across {categories} categories}}"
+    "nFeedsAndCategories": "{feeds, plural, =1{1 feed} other{{feeds} feeds}} {categories, plural, =0{uncategorized}=1{in 1 category} other{across {categories} categories}}",
+    "notifications": "Notifications",
+    "notificationsSubtitle": "Get to know how many new articles you have",
+    "notificationFrequency": "Notification frequency",
+    "nHours": "{hours, plural, =1{1 Hour} other{{hours} Hours}}",
+    "newFeedItemsNotificationTitle": "{count, plural, =1{1 new article}  other{{count} new articles}  }"
 }

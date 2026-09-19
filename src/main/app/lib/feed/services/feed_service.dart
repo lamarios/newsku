@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/base_service.dart';
 import 'package:app/feed/models/feed.dart';
 import 'package:app/feed/models/feed_category.dart';
@@ -114,6 +115,9 @@ class FeedService extends BaseService {
 
     Map<String, dynamic> json = jsonDecode(response.body);
 
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setInt('last-sync', DateTime.now().millisecondsSinceEpoch);
+
     return Paginated<FeedItem>.fromJson(json, (feedItem) => FeedItem.fromJson(feedItem as Map<String, dynamic>));
   }
 
@@ -202,5 +206,13 @@ class FeedService extends BaseService {
 
     var response = await http.delete(uri, headers: await headers);
     processResponse(response);
+  }
+
+  Future<int> countItemsSince(int since) async {
+    var url = await formatUrl('/api/feeds/items/count/$since');
+
+    var response = await http.get(url, headers: await headers);
+    processResponse(response);
+    return int.parse(response.body);
   }
 }

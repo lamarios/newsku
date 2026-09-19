@@ -10,10 +10,12 @@ class ResponsiveSettingChild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     final isMobile = BreakPoint.get(context) == .mobile;
     return ConditionalWrap(
       wrapIf: !disableScaffold && isMobile,
       wrapper: (child) => Scaffold(
+        backgroundColor: colors.surface,
         appBar: AppBar(title: Text(title), scrolledUnderElevation: 0, backgroundColor: Colors.transparent),
         body: child,
       ),
