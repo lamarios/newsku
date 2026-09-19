@@ -50,9 +50,11 @@ class NotificationHandler {
   }
 
   static Future<void> initialize() async {
-    await Workmanager().initialize(callbackDispatcher);
-    _log.fine("Work manager initialized");
-    await initNotifications();
+    if (!kIsWeb && Platform.isAndroid) {
+      await Workmanager().initialize(callbackDispatcher);
+      _log.fine("Work manager initialized");
+      await initNotifications();
+    }
   }
 
   static void testWorkmanager() {

@@ -56,7 +56,7 @@ android {
         applicationId "com.github.lamarios.newsku"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
-        versionCode flutterVersionCode
+        versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         manifestPlaceholders += [
                 'oidcRedirectScheme': 'com.github.lamarios.newsku' // for oidc flutter dependency
