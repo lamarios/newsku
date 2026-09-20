@@ -2,7 +2,7 @@
 class NotificationHandler {
   static Future<void> initialize() async {}
 
-  static Future<void> setupNotifications() async {}
+  static Future<void> setupNotifications({bool cancelExisting = true}) async {}
 
   static void testWorkmanager() {}
 

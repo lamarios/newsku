@@ -17,8 +17,13 @@ const _brightness = 'brightness';
 const _themeColor = 'theme-color';
 const _dynamicColor = 'dynamic-color';
 const _blackBackground = 'black-background';
+const notifications = 'notifications';
+const notificationFrequency = 'notification-frequency';
 
 class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
+  static const notifications = 'notifications';
+  static const notificationFrequency = 'notification-frequency';
+
   LocalPreferencesCubit(super.initialState) {
     init();
   }
@@ -33,8 +38,8 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
 
     var density = prefs.getDouble('density');
 
-    var notifications = prefs.getBool('notifications') ?? false;
-    var notificationsFrequency = prefs.getInt('notifications-frequency') ?? 1;
+    var notifications = prefs.getBool(LocalPreferencesCubit.notifications) ?? false;
+    var notificationsFrequency = prefs.getInt(notificationFrequency) ?? 1;
 
     var theme = ThemeMode.values.where((v) => v.name == prefs.getString(_brightness)).firstOrNull ?? ThemeMode.system;
 
@@ -90,16 +95,16 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
   Future<void> setNotifications(bool enabled) async {
     var prefs = await SharedPreferences.getInstance();
     emit(state.copyWith(notifications: enabled));
-    await prefs.setBool('notifications', enabled);
-    NotificationHandler.setupNotifications();
+    await prefs.setBool(notifications, enabled);
+    await NotificationHandler.setupNotifications();
   }
 
   Future<void> setNotificationsFrequency(int frequency) async {
     emit(state.copyWith(notificationsFrequency: frequency));
     EasyDebounce.debounce('set-notification-frequency', Duration(milliseconds: 500), () async {
       var prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('notifications-frequency', frequency);
-      NotificationHandler.setupNotifications();
+      await prefs.setInt(notificationFrequency, frequency);
+      await NotificationHandler.setupNotifications();
     });
   }
 }

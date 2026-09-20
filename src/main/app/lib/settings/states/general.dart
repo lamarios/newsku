@@ -40,13 +40,10 @@ class GeneralSettingsCubit extends Cubit<GeneralSettingsState> {
 
   Future<void> updateUser() async {
     try {
-      emit(state.copyWith(loading: true));
       await UserService(serverUrl!).updateUser(state.user!);
       await getIt.get<IdentityCubit>().getUser();
     } catch (e, s) {
       emit(state.copyWith(error: e, stackTrace: s));
-    } finally {
-      emit(state.copyWith(loading: false));
     }
   }
 

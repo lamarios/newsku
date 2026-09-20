@@ -104,7 +104,9 @@ public class FeedItemService {
                 .forEach(
                     s -> {
                       var removed =
-                          items.removeIf(item -> item.getGuid().get().equalsIgnoreCase(s));
+                          items.removeIf(
+                              item ->
+                                  item.getGuid().filter(s2 -> s2.equalsIgnoreCase(s)).isPresent());
                       if (removed) {
                         logger.info("Feed {} already processed", s);
                       }
@@ -304,8 +306,10 @@ public class FeedItemService {
 
   @Transactional(readOnly = true)
   public long countItemsSince(long since) {
-    List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
-    return feedItemRepository.countByFeedInAndTimeCreatedGreaterThan(feeds, since);
+    User currentUser = userService.getCurrentUser();
+    List<Feed> feeds = feedRepository.getFeedsByUser(currentUser);
+    return feedItemRepository.countByFeedInAndTimeCreatedGreaterThanAndImportanceGreaterThanEqual(
+        feeds, since, currentUser.getMinimumImportance());
   }
 
   @Transactional(readOnly = true)

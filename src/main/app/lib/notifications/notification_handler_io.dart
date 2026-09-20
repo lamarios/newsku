@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:app/feed/services/feed_service.dart';
+import 'package:app/home/state/local_preferences.dart';
 import 'package:app/l10n/app_localizations_en.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
@@ -87,17 +88,20 @@ class NotificationHandler {
     }
   }
 
-  static Future<void> setupNotifications() async {
+  static Future<void> setupNotifications({bool cancelExisting = true}) async {
     if (!kIsWeb && Platform.isAndroid) {
       var prefs = await SharedPreferences.getInstance();
-      var notifications = prefs.getBool('notifications') ?? false;
-      var notificationsFrequency = prefs.getInt('notifications-frequency') ?? 1;
+      var notifications = prefs.getBool(LocalPreferencesCubit.notifications) ?? false;
+      var notificationsFrequency = prefs.getInt(LocalPreferencesCubit.notificationFrequency) ?? 1;
 
-      await Workmanager().cancelByUniqueName('check-notifications');
+      var uniqueName = 'check-notifications';
+      if (!notifications || cancelExisting) {
+        await Workmanager().cancelByUniqueName(uniqueName);
+      }
       if (notifications) {
         await Workmanager().registerPeriodicTask(
-          'check-notifications',
-          'check-notifications',
+          uniqueName,
+          uniqueName,
           frequency: kDebugMode ? Duration(minutes: 1) : Duration(hours: notificationsFrequency),
         );
       }

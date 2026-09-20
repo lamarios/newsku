@@ -25,6 +25,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb && Platform.isAndroid) {
     NotificationHandler.initialize();
+    NotificationHandler.setupNotifications(cancelExisting: false);
   }
   addAppLicense();
   var identityCubit = IdentityCubit(IdentityState());
