@@ -67,9 +67,8 @@ class NotificationHandler {
 
     var prefs = await SharedPreferences.getInstance();
     var server = prefs.getString('server');
-    var lastSync = prefs.getInt('last-sync');
 
-    if (lastSync != null && server != null) {
+    if (server != null) {
       var newItems = await FeedService(server).countNewItems();
       _log.info("New items from background job: $newItems");
 
@@ -84,6 +83,8 @@ class NotificationHandler {
             title: locals.newFeedItemsNotificationTitle(newItems),
           ),
         );
+      } else {
+        await AwesomeNotifications().dismissNotificationsByChannelKey(newItemsChannel);
       }
     }
   }
