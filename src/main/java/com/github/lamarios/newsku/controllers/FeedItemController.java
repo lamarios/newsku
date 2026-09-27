@@ -4,7 +4,6 @@ import com.github.lamarios.newsku.persistence.entities.FeedItem;
 import com.github.lamarios.newsku.services.FeedItemService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.websocket.server.PathParam;
 import java.security.InvalidParameterException;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -39,9 +38,9 @@ public class FeedItemController {
     return feedItemService.getItems(from, to, page, pageSize);
   }
 
-  @GetMapping("/count/{since}")
-  public long countItems(@PathVariable @PathParam("since") long since) {
-    return feedItemService.countItemsSince(since);
+  @GetMapping("/new")
+  public long countNewItems() {
+    return feedItemService.countNewItems();
   }
 
   @PostMapping("/read")

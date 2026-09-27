@@ -46,6 +46,7 @@ public class FeedItemService {
   private final FeedClicksRepository feedClicksRepository;
   private final TagClicksRepository tagClicksRepository;
   private final ClickService clickService;
+  private final UserRepository userRepository;
 
   @Autowired
   public FeedItemService(
@@ -57,7 +58,8 @@ public class FeedItemService {
       FeedErrorRepository feedErrorRepository,
       FeedClicksRepository feedClicksRepository,
       TagClicksRepository tagClicksRepository,
-      ClickService clickService) {
+      ClickService clickService,
+      UserRepository userRepository) {
     this.feedItemRepository = feedItemRepository;
     this.transactionManager = transactionManager;
     this.openaiService = openaiService;
@@ -67,6 +69,7 @@ public class FeedItemService {
     this.feedClicksRepository = feedClicksRepository;
     this.tagClicksRepository = tagClicksRepository;
     this.clickService = clickService;
+    this.userRepository = userRepository;
   }
 
   public void refreshFeed(Feed feed) {
@@ -305,30 +308,51 @@ public class FeedItemService {
   }
 
   @Transactional(readOnly = true)
-  public long countItemsSince(long since) {
+  public long countNewItems() {
     User currentUser = userService.getCurrentUser();
     List<Feed> feeds = feedRepository.getFeedsByUser(currentUser);
     return feedItemRepository.countByFeedInAndTimeCreatedGreaterThanAndImportanceGreaterThanEqual(
-        feeds, since, currentUser.getMinimumImportance());
+        feeds, currentUser.getLastRefresh(), currentUser.getMinimumImportance());
   }
 
-  @Transactional(readOnly = true)
+  @Transactional
   public Page<@NotNull FeedItem> getItems(Long from, Long to, int page, int pageSize) {
     List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
     var user = userService.getCurrentUser();
 
-    return feedItemRepository.findallByTimeAndFeeds(
-        user.getMinimumImportance(),
-        from,
-        to,
-        feeds,
-        PageRequest.of(
-            page,
-            pageSize,
-            Sort.by(
-                List.of(
-                    new Sort.Order(Sort.Direction.DESC, "importance"),
-                    new Sort.Order(Sort.Direction.DESC, "timeCreated")))));
+    Page<FeedItem> feedItems =
+        feedItemRepository.findallByTimeAndFeeds(
+            user.getMinimumImportance(),
+            from,
+            to,
+            feeds,
+            PageRequest.of(
+                page,
+                pageSize,
+                Sort.by(
+                    List.of(
+                        new Sort.Order(Sort.Direction.DESC, "importance"),
+                        new Sort.Order(Sort.Direction.DESC, "timeCreated")))));
+
+    // we check the newest item, if it is newer than the user's saved last refresh, we update it.
+    feedItems.stream()
+        .min((o1, o2) -> Long.compare(o2.getTimeCreated(), o1.getTimeCreated()))
+        .map(FeedItem::getTimeCreated)
+        .filter(newestTime -> newestTime > user.getLastRefresh())
+        .ifPresent(
+            newestTime -> {
+              try {
+
+                logger.info("Newest time is {} for user: {}", newestTime, user.getId());
+                user.setLastRefresh(newestTime);
+
+                userRepository.save(user);
+              } catch (Exception e) {
+                logger.warn("Could not update last refresh time for user {}", user.getId(), e);
+              }
+            });
+
+    return feedItems;
   }
 
   @Transactional(readOnly = true)

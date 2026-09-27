@@ -40,6 +40,17 @@ public class User {
   @Enumerated(EnumType.STRING)
   private List<EmailDigestFrequency> emailDigest;
 
+  @Column(name = "last_refresh")
+  private long lastRefresh;
+
+  public long getLastRefresh() {
+    return lastRefresh;
+  }
+
+  public void setLastRefresh(long lastRefresh) {
+    this.lastRefresh = lastRefresh;
+  }
+
   public String getId() {
     return id;
   }

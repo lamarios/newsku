@@ -70,7 +70,7 @@ class NotificationHandler {
     var lastSync = prefs.getInt('last-sync');
 
     if (lastSync != null && server != null) {
-      var newItems = await FeedService(server).countItemsSince(kDebugMode ? 0 : lastSync);
+      var newItems = await FeedService(server).countNewItems();
       _log.info("New items from background job: $newItems");
 
       if (newItems > 0) {
