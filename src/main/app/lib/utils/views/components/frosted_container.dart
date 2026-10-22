@@ -2,18 +2,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class FrostedContainer extends StatelessWidget {
-  const FrostedContainer({super.key, required this.child, this.decoration, this.padding});
+  const FrostedContainer({super.key, required this.child, this.decoration, this.padding, this.blur = 10});
 
   final BoxDecoration? decoration;
   final Widget child;
   final EdgeInsets? padding;
+  final double blur;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: decoration?.borderRadius ?? BorderRadius.circular(16),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
         child: Container(
           padding: padding,
           decoration:

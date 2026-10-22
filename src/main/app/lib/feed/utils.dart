@@ -153,12 +153,19 @@ class FeedUtils {
       );
     }
 
-    return SliverStickyHeader.builder(
-      builder: (context, state) =>
-          DateBar(date: timeRange.end, isPinned: state.isPinned, isFirst: true, padding: padding),
-      sliver: SliverPadding(
-        padding: padding,
-        sliver: MultiSliver(children: slivers),
+    return SliverLayoutBuilder(
+      builder: (context, constraints) => SliverStickyHeader.builder(
+        builder: (context, state) => DateBar(
+          date: timeRange.end,
+          isPinned: state.isPinned,
+          isFirst: true,
+          padding: padding,
+          overlap: constraints.overlap,
+        ),
+        sliver: SliverPadding(
+          padding: padding,
+          sliver: MultiSliver(children: slivers),
+        ),
       ),
     );
   }
