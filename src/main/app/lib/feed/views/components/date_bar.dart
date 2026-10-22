@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app/utils/utils.dart';
+import 'package:app/utils/views/components/frosted_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:motor/motor.dart';
@@ -24,32 +25,41 @@ class DateBar extends StatelessWidget {
       return SizedBox(height: 64);
     }
 
-    return SingleMotionBuilder(
-      motion: MaterialSpringMotion.expressiveSpatialDefault(),
-      from: 0,
-      value: isPinned ? 0 : 1,
-      builder: (context, value, child) => Container(
-        decoration: BoxDecoration(
-          // color: Color.lerp(colors.surface.withValues(alpha: 0.5), colors.surface.withValues(alpha: 0), value),
-          color: colors.surface,
-        ),
-        padding: .symmetric(vertical: lerpDouble(pu2, pu * 10, value.clamp(0, 1))!),
-        child: Padding(
-          padding: .only(left: padding.left, right: padding.right),
-          child: Row(
-            mainAxisSize: .max,
-            children: [
-              Expanded(flex: 1, child: Divider(thickness: lerpDouble(1, 3, value))),
-              Expanded(
-                flex: 3,
-                child: Text(
-                  _df.format(date),
-                  textAlign: .center,
-                  style: textTheme.bodyLarge?.copyWith(fontSize: lerpDouble(13, 35, value)),
-                ),
+    final topInset = MediaQuery.paddingOf(context).top;
+
+    return Center(
+      child: SingleMotionBuilder(
+        motion: MaterialSpringMotion.expressiveSpatialDefault(),
+        from: 0,
+        value: isPinned ? 0 : 1,
+        // when pinned, push the bar below the status bar
+        builder: (context, value, child) => Padding(
+          padding: .only(top: lerpDouble(topInset, 0, value.clamp(0, 1))!),
+          child: FrostedContainer(
+            decoration: BoxDecoration(
+              borderRadius: .circular(100),
+              color: Color.lerp(
+                colors.primaryContainer.withValues(alpha: 0.5),
+                colors.primaryContainer.withValues(alpha: 0),
+                value,
               ),
-              Expanded(flex: 1, child: Divider(thickness: lerpDouble(1, 3, value))),
-            ],
+              boxShadow: [],
+            ),
+            padding: .symmetric(vertical: lerpDouble(pu2, pu * 10, value.clamp(0, 1))!),
+            child: Padding(
+              padding: .only(left: padding.left, right: padding.right),
+              child: Row(
+                mainAxisSize: .min,
+                mainAxisAlignment: .center,
+                children: [
+                  Text(
+                    _df.format(date),
+                    textAlign: .center,
+                    style: textTheme.bodyLarge?.copyWith(fontSize: lerpDouble(20, 35, value)),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
