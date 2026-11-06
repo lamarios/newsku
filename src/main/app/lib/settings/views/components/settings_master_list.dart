@@ -181,6 +181,13 @@ class SettingsMasterList extends StatelessWidget {
                     onTap: () => onTap(UserSettingsRoute()),
                   ),
                   ListTile(
+                    title: Text(locals.apiKeys),
+                    subtitle: Text(locals.apiKeysSubtitle),
+                    leading: Icon(Icons.key),
+                    trailing: Icon(Icons.chevron_right),
+                    onTap: () => onTap(ApiKeysSettingsRoute()),
+                  ),
+                  ListTile(
                     title: Text(locals.about),
                     leading: Icon(Icons.info),
                     trailing: Icon(Icons.chevron_right),

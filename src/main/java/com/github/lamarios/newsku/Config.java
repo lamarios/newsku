@@ -29,6 +29,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     type = SecuritySchemeType.HTTP,
     bearerFormat = "J" + "WT",
     in = SecuritySchemeIn.HEADER)
+@SecurityScheme(
+    name = "apiKey",
+    description =
+        "API key created from /api/api-keys, passed as is in the Authorization header without the"
+            + " Bearer prefix. Example: Authorization: nsk_xxx",
+    type = SecuritySchemeType.APIKEY,
+    paramName = "Authorization",
+    in = SecuritySchemeIn.HEADER)
 public class Config {
   @Value("${SMTP_USERNAME:}")
   private String smtpUsername;

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/feed-errors")
 @Tag(name = "FeedsErrors")
 @SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "apiKey")
 public class FeedErrorController {
   private final FeedService feedService;
   private final FeedErrorService feedErrorService;

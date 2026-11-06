@@ -1,5 +1,7 @@
 package com.github.lamarios.newsku.security;
 
+import com.github.lamarios.newsku.persistence.entities.User;
+import com.github.lamarios.newsku.services.ApiKeyService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,14 +23,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
   private static final Logger logger = LogManager.getLogger();
   private final JwtTokenUtil jwtTokenUtil;
   private final JwtAuthenticationController jwtAuthenticationController;
+  private final ApiKeyService apiKeyService;
   private final String[] AUTH_CHECK = new String[] {"/api/"};
 
   @Autowired
   public JwtRequestFilter(
-      JwtTokenUtil jwtTokenUtil, JwtAuthenticationController jwtAuthenticationController) {
+      JwtTokenUtil jwtTokenUtil,
+      JwtAuthenticationController jwtAuthenticationController,
+      ApiKeyService apiKeyService) {
     //        this.jwtUserDetailsService = jwtUserDetailsService;
     this.jwtTokenUtil = jwtTokenUtil;
     this.jwtAuthenticationController = jwtAuthenticationController;
+    this.apiKeyService = apiKeyService;
   }
 
   @Override
@@ -46,6 +52,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
           jwtToken = requestTokenHeader.substring(7);
           username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+        } else if (requestTokenHeader != null && !requestTokenHeader.isBlank()) {
+          // Anything else in the Authorization header is treated as an API key
+          username =
+              apiKeyService.getUserFromKey(requestTokenHeader).map(User::getUsername).orElse(null);
+          fromApiKey = username != null;
         }
         // Once we get the token validate it.
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

@@ -960,6 +960,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 new article}  other{{count} new articles}  }'**
   String newFeedItemsNotificationTitle(num count);
+
+  /// No description provided for @apiKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'API keys'**
+  String get apiKeys;
+
+  /// No description provided for @apiKeysSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Access your data programmatically'**
+  String get apiKeysSubtitle;
+
+  /// No description provided for @apiKeysExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'API keys can be used to access your data programmatically or to connect to the Newsku MCP server. Pass the key as is in the Authorization header of your requests, without the Bearer prefix.'**
+  String get apiKeysExplanation;
+
+  /// No description provided for @createApiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Create API key'**
+  String get createApiKey;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
+
+  /// No description provided for @apiKeyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get apiKeyName;
+
+  /// No description provided for @apiKeyExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry'**
+  String get apiKeyExpiry;
+
+  /// No description provided for @apiKeyExpiryOption.
+  ///
+  /// In en, this message translates to:
+  /// **'{expiry, select, never{Never} days30{30 days} days90{90 days} year{1 year} custom{Custom date} other{{expiry}}}'**
+  String apiKeyExpiryOption(String expiry);
+
+  /// No description provided for @apiKeyPickDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a date'**
+  String get apiKeyPickDate;
+
+  /// No description provided for @apiKeyNeverExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Never expires'**
+  String get apiKeyNeverExpires;
+
+  /// No description provided for @apiKeyExpiresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires on {date}'**
+  String apiKeyExpiresOn(Object date);
+
+  /// No description provided for @apiKeyExpiredOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired on {date}'**
+  String apiKeyExpiredOn(Object date);
+
+  /// No description provided for @apiKeyCreatedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Created on {date}'**
+  String apiKeyCreatedOn(Object date);
+
+  /// No description provided for @apiKeyLastUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Last used {date}'**
+  String apiKeyLastUsed(Object date);
+
+  /// No description provided for @apiKeyNeverUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Never used'**
+  String get apiKeyNeverUsed;
+
+  /// No description provided for @apiKeyCreatedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'API key created'**
+  String get apiKeyCreatedTitle;
+
+  /// No description provided for @apiKeyCreatedExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy your key now and store it somewhere safe, you won\'t be able to see it again.'**
+  String get apiKeyCreatedExplanation;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @copiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get copiedToClipboard;
+
+  /// No description provided for @deleteApiKeyExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Any application using this key will lose access. This cannot be undone'**
+  String get deleteApiKeyExplanation;
+
+  /// No description provided for @noApiKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have any API keys yet'**
+  String get noApiKeys;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

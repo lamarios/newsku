@@ -37,6 +37,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 @RequestMapping("/api/feeds")
 @Tag(name = "Feeds")
 @SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "apiKey")
 public class FeedController {
   private final FeedService feedService;
   private final FeedItemService feedItemService;

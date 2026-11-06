@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/feed-categories")
 @Tag(name = "Feed Categories")
 @SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "apiKey")
 public class FeedCategoryController {
   private final FeedCategoriesService feedCategoriesService;
   private final Logger log = LogManager.getLogger();
