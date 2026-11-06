@@ -7,6 +7,7 @@ import 'package:app/reset-password/views/screens/reset_password.dart';
 import 'package:app/settings/views/screens/feed_errors.dart';
 import 'package:app/settings/views/screens/settings_list_route.dart';
 import 'package:app/settings/views/screens/settings_shell.dart';
+import 'package:app/settings/views/tabs/api_keys.dart';
 import 'package:app/settings/views/tabs/email_digest.dart';
 import 'package:app/settings/views/tabs/feeds.dart';
 import 'package:app/settings/views/tabs/general.dart';
@@ -79,6 +80,7 @@ class AppRouter extends RootStackRouter {
               AutoRoute(page: LayoutSettingsRoute.page, path: 'layout'),
               AutoRoute(page: GeneralSettingsRoute.page, path: 'general'),
               AutoRoute(page: UserSettingsRoute.page, path: 'user-settings'),
+              AutoRoute(page: ApiKeysSettingsRoute.page, path: 'api-keys'),
               AutoRoute(page: InfoRoute.page, path: 'info'),
               AutoRoute(page: NotificationsRoute.page, path: 'notifications'),
             ],

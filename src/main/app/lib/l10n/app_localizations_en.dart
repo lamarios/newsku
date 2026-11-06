@@ -225,6 +225,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get blackBackgroundExplanation => 'Use black background for the dark theme';
 
   @override
+  String get reduceMotion => 'Reduce motion';
+
+  @override
+  String get reduceMotionExplanation =>
+      'Turn off sliding and other animations. Always on when your device asks for reduced motion';
+
+  @override
   String get dynamicColor => 'Dynamic color';
 
   @override
@@ -534,4 +541,87 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get apiKeys => 'API keys';
+
+  @override
+  String get apiKeysSubtitle => 'Access your data programmatically';
+
+  @override
+  String get apiKeysExplanation =>
+      'API keys can be used to access your data programmatically or to connect to the Newsku MCP server. Pass the key as is in the Authorization header of your requests, without the Bearer prefix.';
+
+  @override
+  String get createApiKey => 'Create API key';
+
+  @override
+  String get create => 'Create';
+
+  @override
+  String get apiKeyName => 'Name';
+
+  @override
+  String get apiKeyExpiry => 'Expiry';
+
+  @override
+  String apiKeyExpiryOption(String expiry) {
+    String _temp0 = intl.Intl.selectLogic(expiry, {
+      'never': 'Never',
+      'days30': '30 days',
+      'days90': '90 days',
+      'year': '1 year',
+      'custom': 'Custom date',
+      'other': '$expiry',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get apiKeyPickDate => 'Pick a date';
+
+  @override
+  String get apiKeyNeverExpires => 'Never expires';
+
+  @override
+  String apiKeyExpiresOn(Object date) {
+    return 'Expires on $date';
+  }
+
+  @override
+  String apiKeyExpiredOn(Object date) {
+    return 'Expired on $date';
+  }
+
+  @override
+  String apiKeyCreatedOn(Object date) {
+    return 'Created on $date';
+  }
+
+  @override
+  String apiKeyLastUsed(Object date) {
+    return 'Last used $date';
+  }
+
+  @override
+  String get apiKeyNeverUsed => 'Never used';
+
+  @override
+  String get apiKeyCreatedTitle => 'API key created';
+
+  @override
+  String get apiKeyCreatedExplanation =>
+      'Copy your key now and store it somewhere safe, you won\'t be able to see it again.';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get copiedToClipboard => 'Copied to clipboard';
+
+  @override
+  String get deleteApiKeyExplanation => 'Any application using this key will lose access. This cannot be undone';
+
+  @override
+  String get noApiKeys => 'You don\'t have any API keys yet';
 }

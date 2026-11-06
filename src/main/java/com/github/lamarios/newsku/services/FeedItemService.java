@@ -315,24 +315,33 @@ public class FeedItemService {
         feeds, currentUser.getLastRefresh(), currentUser.getMinimumImportance());
   }
 
+  /**
+   * Same as {@link #getItems(Long, Long, int, int)} but without updating the user's last refresh
+   * time, for clients (API, MCP) that shouldn't mark items as seen.
+   */
+  @Transactional(readOnly = true)
+  public Page<@NotNull FeedItem> findItems(long from, long to, int page, int pageSize) {
+    var user = userService.getCurrentUser();
+    List<Feed> feeds = feedRepository.getFeedsByUser(user);
+
+    return feedItemRepository.findallByTimeAndFeeds(
+        user.getMinimumImportance(),
+        from,
+        to,
+        feeds,
+        PageRequest.of(
+            page,
+            pageSize,
+            Sort.by(
+                List.of(
+                    new Sort.Order(Sort.Direction.DESC, "importance"),
+                    new Sort.Order(Sort.Direction.DESC, "timeCreated")))));
+  }
+
   @Transactional
   public Page<@NotNull FeedItem> getItems(Long from, Long to, int page, int pageSize) {
-    List<Feed> feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
     var user = userService.getCurrentUser();
-
-    Page<FeedItem> feedItems =
-        feedItemRepository.findallByTimeAndFeeds(
-            user.getMinimumImportance(),
-            from,
-            to,
-            feeds,
-            PageRequest.of(
-                page,
-                pageSize,
-                Sort.by(
-                    List.of(
-                        new Sort.Order(Sort.Direction.DESC, "importance"),
-                        new Sort.Order(Sort.Direction.DESC, "timeCreated")))));
+    Page<FeedItem> feedItems = findItems(from, to, page, pageSize);
 
     // we check the newest item, if it is newer than the user's saved last refresh, we update it.
     feedItems.stream()
@@ -387,6 +396,18 @@ public class FeedItemService {
 
   @Transactional
   public boolean readItems(List<String> ids) {
+    markItemsAsRead(ids);
+    return true;
+  }
+
+  /**
+   * Marks the given items as read, ignoring ids that don't exist or don't belong to the current
+   * user.
+   *
+   * @return the ids of the items that were marked as read
+   */
+  @Transactional
+  public List<String> markItemsAsRead(List<String> ids) {
     var feeds = feedRepository.getFeedsByUser(userService.getCurrentUser());
     var items = feedItemRepository.findByIdInAndFeedIn(ids, feeds);
 
@@ -394,7 +415,7 @@ public class FeedItemService {
 
     feedItemRepository.saveAll(items);
 
-    return true;
+    return items.stream().map(FeedItem::getId).toList();
   }
 
   @Transactional(readOnly = true)

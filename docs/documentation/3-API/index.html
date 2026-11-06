@@ -360,6 +360,67 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-a-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up a client
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -432,6 +493,67 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Available tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-a-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up a client
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -453,7 +575,68 @@
 <p>If you ever want to integrate with newsku via API you can.</p>
 <h2 id="openapi">OpenAPI</h2>
 <p>The OpenAPI descriptions are here: https://your.newsku.url/v3/api-docs
-Swagger ui is available at https://your.newsku.url/swagger-ui/index.html</p></div>
+Swagger ui is available at https://your.newsku.url/swagger-ui/index.html</p>
+<h2 id="authentication">Authentication</h2>
+<p>All the endpoints under <code>/api/</code> require authentication through the <code>Authorization</code> header. You can use either:</p>
+<ul>
+<li><strong>A JWT token</strong>, obtained by logging in (<code>POST /login</code>), passed with the <code>Bearer</code> prefix: <code>Authorization: Bearer &lt;token&gt;</code></li>
+<li><strong>An API key</strong>, passed as is, without the <code>Bearer</code> prefix: <code>Authorization: nsk_...</code></li>
+</ul>
+<h2 id="api-keys">API keys</h2>
+<p>API keys are the easiest way to access your data from scripts, other applications or AI assistants.</p>
+<p>To create one, go to Settings &gt; API keys and click on <strong>Create API key</strong>. Give it a name so you remember where it is used,
+and optionally an expiry date.</p>
+<p>The key is only displayed once, right after it is created, so copy it and store it somewhere safe. Newsku doesn't store
+the key itself, only a hash of it, so it can't be shown again. If you lose it, delete it and create a new one.</p>
+<p>The API keys list shows when each key was last used. Deleting a key immediately revokes access for anything using it.</p>
+<p>Example:</p>
+<pre><code class="language-bash">curl -H "Authorization: nsk_your_api_key" "https://your.newsku.url/api/users"
+</code></pre>
+<h2 id="mcp-server">MCP server</h2>
+<p>Newsku has a built-in <a href="https://modelcontextprotocol.io">MCP</a> server, so AI assistants can read your news for you, e.g.
+"What are the most important articles from yesterday?" or "Summarize this week's Linux news and mark those articles as
+read".</p>
+<p>The server uses the Streamable HTTP transport and is available at:</p>
+<pre><code>https://your.newsku.url/api/mcp
+</code></pre>
+<p>It is authenticated with an API key passed in the <code>Authorization</code> header, without the <code>Bearer</code> prefix.</p>
+<h3 id="available-tools">Available tools</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_feed_items</code></td>
+<td>Gets the articles from your feeds published within a date range, most important first. Dates are ISO-8601, either a date (<code>2025-11-01</code>) or a date-time (<code>2025-11-01T08:00:00Z</code>). Articles below your minimum importance are excluded.</td>
+</tr>
+<tr>
+<td><code>mark_feed_items_as_read</code></td>
+<td>Marks articles as read, using the ids returned by <code>get_feed_items</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Reading articles through MCP doesn't mark them as seen for the new articles notifications.</p>
+<h3 id="setting-up-a-client">Setting up a client</h3>
+<p>With <a href="https://docs.claude.com/en/docs/claude-code">Claude Code</a>:</p>
+<pre><code class="language-bash">claude mcp add --transport http newsku https://your.newsku.url/api/mcp --header "Authorization: nsk_your_api_key"
+</code></pre>
+<p>Other clients that support remote MCP servers over HTTP usually take a configuration similar to this one:</p>
+<pre><code class="language-json">{
+  "mcpServers": {
+    "newsku": {
+      "type": "http",
+      "url": "https://your.newsku.url/api/mcp",
+      "headers": {
+        "Authorization": "nsk_your_api_key"
+      }
+    }
+  }
+}
+</code></pre></div>
 
 
 

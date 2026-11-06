@@ -17,6 +17,7 @@ const _brightness = 'brightness';
 const _themeColor = 'theme-color';
 const _dynamicColor = 'dynamic-color';
 const _blackBackground = 'black-background';
+const _reduceMotion = 'reduce-motion';
 const notifications = 'notifications';
 const notificationFrequency = 'notification-frequency';
 
@@ -35,6 +36,7 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
 
     var dynamic = prefs.getBool(_dynamicColor);
     var blackbackground = prefs.getBool(_blackBackground);
+    var reduceMotion = prefs.getBool(_reduceMotion);
 
     var density = prefs.getDouble('density');
 
@@ -53,6 +55,7 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
         themeColor: color,
         dynamicColor: dynamic ?? false,
         blackBackground: blackbackground ?? false,
+        reduceMotion: reduceMotion ?? false,
         density: density ?? 4,
         theme: theme,
         notifications: notifications,
@@ -86,6 +89,12 @@ class LocalPreferencesCubit extends Cubit<LocalPreferencesState> {
     emit(state.copyWith(blackBackground: bool));
   }
 
+  Future<void> setReduceMotion(bool bool) async {
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setBool(_reduceMotion, bool);
+    emit(state.copyWith(reduceMotion: bool));
+  }
+
   Future<void> setDensity(double density) async {
     var prefs = await SharedPreferences.getInstance();
     prefs.setDouble('density', density);
@@ -115,6 +124,7 @@ sealed class LocalPreferencesState with _$LocalPreferencesState {
     @Default(_defaultColor) Color themeColor,
     @Default(false) bool dynamicColor,
     @Default(false) bool blackBackground,
+    @Default(false) bool reduceMotion,
     @Default(4) double density,
     @Default(ThemeMode.system) ThemeMode theme,
     @Default(false) bool notifications,

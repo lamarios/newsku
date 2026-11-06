@@ -1,6 +1,7 @@
 import 'package:app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 class StatBar extends StatelessWidget {
   final Widget heading;
@@ -32,7 +33,7 @@ class StatBar extends StatelessWidget {
                 alignment: .centerLeft,
                 child: child,
               ),
-              motion: MaterialSpringMotion.expressiveSpatialSlow(),
+              motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialSlow()),
               child: Container(
                 decoration: BoxDecoration(color: colors.primary, borderRadius: .circular(10)),
               ),

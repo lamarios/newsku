@@ -39,3 +39,9 @@ The only limit here is that you need to end your layout with a "Dynamic article 
 | List                | flexible           | ![image](./blocks/single_item_row_preview.png)  | ![image](./blocks/single_item_row.png)  |
 
 
+
+## API keys and AI assistants
+
+You can create API keys in Settings > API keys to access your data programmatically, or to connect an AI assistant to
+Newsku through its MCP server so it can read your news and mark articles as read. See the [API](3-API.md) page for
+details.

@@ -11,6 +11,26 @@
 part of 'router.dart';
 
 /// generated route for
+/// [ApiKeysSettingsTab]
+class ApiKeysSettingsRoute extends PageRouteInfo<void> {
+  const ApiKeysSettingsRoute({List<PageRouteInfo>? children})
+    : super(
+        ApiKeysSettingsRoute.name,
+        initialChildren: children,
+        argsEquality: false,
+      );
+
+  static const String name = 'ApiKeysSettingsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ApiKeysSettingsTab();
+    },
+  );
+}
+
+/// generated route for
 /// [EmailDigestTab]
 class EmailDigestRoute extends PageRouteInfo<void> {
   const EmailDigestRoute({List<PageRouteInfo>? children})

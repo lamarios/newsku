@@ -26,6 +26,7 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:material_loading_indicator/loading_indicator.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 final articleDateFormat = DateFormat.Hm();
 final fullArticleDateFormat = DateFormat.yMMMd().add_Hm();
@@ -65,7 +66,7 @@ class FeedScreen extends StatelessWidget {
 
                   return Center(
                     child: SingleMotionBuilder(
-                      motion: MaterialSpringMotion.expressiveSpatialDefault(),
+                      motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialDefault()),
                       from: 0,
                       value: state.drawerOpened ? drawerMaxWidth : 0,
                       builder: (context, value, child) {
@@ -97,7 +98,7 @@ class FeedScreen extends StatelessWidget {
                                               scrolledUnderElevation: 0,
                                               backgroundColor: colors.surface,
                                               title: AnimatedSwitcher(
-                                                duration: Duration(milliseconds: 250),
+                                                duration: durationOrZero(context, Duration(milliseconds: 250)),
                                                 child: state.searchMode
                                                     ? TextField(
                                                         controller: cubit.searchController,
@@ -331,7 +332,7 @@ class FeedScreen extends StatelessWidget {
                               ),
                             ),
                             SingleMotionBuilder(
-                              motion: MaterialSpringMotion.expressiveSpatialDefault(),
+                              motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialDefault()),
                               from: 0,
                               value: state.hasScrolled ? 1 : 0,
                               builder: (context, value, child) => Positioned(
@@ -340,7 +341,8 @@ class FeedScreen extends StatelessWidget {
                                 child: Opacity(opacity: value.clamp(0, 1), child: child!),
                               ),
                               child: FloatingActionButton(
-                                onPressed: () => cubit.scrollController.animateTo(
+                                onPressed: () => scrollTo(
+                                  cubit.scrollController,
                                   0,
                                   duration: Duration(milliseconds: 500),
                                   curve: Curves.easeInOutQuart,

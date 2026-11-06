@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/search")
 @Tag(name = "Search")
 @SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "apiKey")
 public class SearchController {
   private final FeedItemService feedItemService;
 

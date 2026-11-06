@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/layout")
 @Tag(name = "Layout")
 @SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "apiKey")
 public class LayoutController {
   private final boolean demoMode;
   private final LayoutService layoutService;

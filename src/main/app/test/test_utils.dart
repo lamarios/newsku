@@ -13,6 +13,7 @@ import 'package:path_provider_platform_interface/path_provider_platform_interfac
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'utils/path_provider.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 final String validServerUrl = 'http://localhost:123';
 
@@ -30,6 +31,8 @@ Future<void> setupTests({bool withConfig = true, bool loggedIn = false}) async {
 
   SharedPreferences.setMockInitialValues({});
   TestWidgetsFlutterBinding.ensureInitialized();
+  // visibility updates are otherwise batched behind a timer that can still be pending when a test ends
+  VisibilityDetectorController.instance.updateInterval = Duration.zero;
   var identityCubit = IdentityCubit(IdentityState());
   await identityCubit.init();
   getIt.registerSingleton<IdentityCubit>(identityCubit);

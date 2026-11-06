@@ -12,9 +12,13 @@ public class TestUserService extends UserService {
     super(userRepository, passwordEncoder);
   }
 
+  /**
+   * Returns the user set with {@link #setCurrentUser(User)}, or the authenticated user from the
+   * security context when none is set (for tests going through real HTTP authentication)
+   */
   @Override
   public User getCurrentUser() {
-    return currentUser;
+    return currentUser != null ? currentUser : super.getCurrentUser();
   }
 
   public void setCurrentUser(User currentUser) {
