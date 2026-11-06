@@ -8,6 +8,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 @RoutePage()
 class LoginScreen extends StatelessWidget {
@@ -22,7 +23,7 @@ class LoginScreen extends StatelessWidget {
       children: [
         if (announcement.isNotEmpty) ...[
           SingleMotionBuilder(
-            motion: MaterialSpringMotion.expressiveSpatialDefault(),
+            motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialDefault()),
             value: 1,
             from: 0,
             builder: (context, value, child) => Opacity(

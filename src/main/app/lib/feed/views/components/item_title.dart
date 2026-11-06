@@ -1,4 +1,5 @@
 import 'package:app/feed/models/feed_item.dart';
+import 'package:app/utils/motion.dart';
 import 'package:flutter/material.dart';
 import 'package:motor/motor.dart';
 
@@ -14,7 +15,7 @@ class ItemTitle extends StatelessWidget {
   @override
   Widget build(BuildContext outerContext) {
     return SingleMotionBuilder(
-      motion: LinearMotion(Duration(milliseconds: 250)),
+      motion: motionOrNone(outerContext, LinearMotion(Duration(milliseconds: 250))),
       value: hovered ? 1 : 0,
       from: 0,
       builder: (context, value, child) {

@@ -7,6 +7,7 @@ import 'package:app/settings/states/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 class LayoutSeparator extends StatelessWidget {
   final int index;
@@ -26,7 +27,7 @@ class LayoutSeparator extends StatelessWidget {
         return SingleMotionBuilder(
           value: dragging ? 1 : 0,
           from: 0,
-          motion: MaterialSpringMotion.expressiveSpatialSlow(),
+          motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialSlow()),
           builder: (context, value, child) => Container(
             margin: .symmetric(horizontal: 56, vertical: max(0, lerpDouble(0, 32, value)!)),
             decoration: BoxDecoration(
@@ -38,7 +39,7 @@ class LayoutSeparator extends StatelessWidget {
             child: child,
           ),
           child: AnimatedSwitcher(
-            duration: Duration(milliseconds: 250),
+            duration: durationOrZero(context, Duration(milliseconds: 250)),
             child: dragging ? Text(locals.dropBlockHere, style: TextStyle(color: colors.primary)) : SizedBox.shrink(),
           ),
         );

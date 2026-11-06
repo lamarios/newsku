@@ -457,6 +457,18 @@ abstract class AppLocalizations {
   /// **'Use black background for the dark theme'**
   String get blackBackgroundExplanation;
 
+  /// No description provided for @reduceMotion.
+  ///
+  /// In en, this message translates to:
+  /// **'Reduce motion'**
+  String get reduceMotion;
+
+  /// No description provided for @reduceMotionExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off sliding and other animations. Always on when your device asks for reduced motion'**
+  String get reduceMotionExplanation;
+
   /// No description provided for @dynamicColor.
   ///
   /// In en, this message translates to:

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 @RoutePage()
 class ServerUrlScreen extends StatelessWidget {
@@ -32,7 +33,7 @@ class ServerUrlScreen extends StatelessWidget {
             crossAxisAlignment: .center,
             children: [
               SingleMotionBuilder(
-                motion: Motion.smoothSpring(duration: Duration(seconds: 1)),
+                motion: motionOrNone(context, Motion.smoothSpring(duration: Duration(seconds: 1))),
                 from: 0,
                 value: 1,
                 builder: (context, value, child) => Opacity(

@@ -5,6 +5,7 @@ import 'package:app/utils/utils.dart';
 import 'package:app/utils/views/components/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -18,7 +19,7 @@ class Welcome extends StatelessWidget {
       padding: EdgeInsets.all(pu6),
       child: SingleMotionBuilder(
         // motion: Motion.linear(Duration(milliseconds: 250)),
-        motion: MaterialSpringMotion.expressiveSpatialSlow(),
+        motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialSlow()),
         from: 0,
         value: 1,
         builder: (context, value, child) => Opacity(

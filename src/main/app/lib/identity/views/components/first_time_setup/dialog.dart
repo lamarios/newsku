@@ -15,6 +15,7 @@ import 'package:app/utils/views/components/simple_cubit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 class FirstTimeSetupDialog extends StatefulWidget {
   const FirstTimeSetupDialog({super.key});
@@ -131,7 +132,7 @@ class _Pager extends StatelessWidget {
         SingleMotionBuilder(
           value: i == page ? 1 : 0,
           from: 0,
-          motion: MaterialSpringMotion.expressiveSpatialDefault(),
+          motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialDefault()),
           builder: (context, value, child) {
             return Transform.scale(
               scale: lerpDouble(1, 1.5, value),

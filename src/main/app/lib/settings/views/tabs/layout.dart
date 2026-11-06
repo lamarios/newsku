@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:material_loading_indicator/loading_indicator.dart';
+import 'package:app/utils/motion.dart';
 
 @RoutePage()
 class LayoutSettingsTab extends StatelessWidget {
@@ -162,7 +163,8 @@ class LayoutSettingsTab extends StatelessWidget {
                                                     state.blocks.length - 1,
                                                     DragTargetDetails(data: newBlock, offset: .zero),
                                                   );
-                                                  cubit.scrollController.animateTo(
+                                                  scrollTo(
+                                                    cubit.scrollController,
                                                     cubit.scrollController.position.maxScrollExtent +
                                                         cubit.scrollController.position.viewportDimension,
                                                     duration: Duration(seconds: 1),

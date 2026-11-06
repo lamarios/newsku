@@ -60,6 +60,8 @@
     "appColor": "App color",
     "blackBackground": "Black background",
     "blackBackgroundExplanation": "Use black background for the dark theme",
+    "reduceMotion": "Reduce motion",
+    "reduceMotionExplanation": "Turn off sliding and other animations. Always on when your device asks for reduced motion",
     "dynamicColor": "Dynamic color",
     "dynamicColorExplanation": "User device accent color",
     "changePassword": "Change password",

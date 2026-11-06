@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 class SettingsMasterList extends StatelessWidget {
   final String selectedRouteName;
@@ -96,6 +97,12 @@ class SettingsMasterList extends StatelessWidget {
                     value: context.select((LocalPreferencesCubit p) => p.state.blackBackground),
                     onChanged: (value) => getIt.get<LocalPreferencesCubit>().setBlackBackground(value),
                   ),
+                  SwitchListTile(
+                    title: Text(locals.reduceMotion),
+                    subtitle: Text(locals.reduceMotionExplanation, style: subTextTheme),
+                    value: context.select((LocalPreferencesCubit p) => p.state.reduceMotion),
+                    onChanged: (value) => getIt.get<LocalPreferencesCubit>().setReduceMotion(value),
+                  ),
                   ListTile(
                     title: Text(locals.theme),
                     trailing: DropdownMenu<ThemeMode>(
@@ -136,7 +143,7 @@ class SettingsMasterList extends StatelessWidget {
                                             c.toARGB32()
                                         ? 1
                                         : 0,
-                                    motion: MaterialSpringMotion.expressiveSpatialSlow(),
+                                    motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialSlow()),
                                     builder: (context, value, child) => Transform.scale(
                                       scale: lerpDouble(1, 1.3, value),
                                       child: Container(

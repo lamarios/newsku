@@ -6,6 +6,7 @@ import 'package:app/utils/views/components/frosted_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 final _df = DateFormat.yMMMd();
 
@@ -44,7 +45,7 @@ class DateBar extends StatelessWidget {
       padding: .only(left: padding.left, right: padding.right),
       child: Center(
         child: SingleMotionBuilder(
-          motion: MaterialSpringMotion.expressiveSpatialDefault(),
+          motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialDefault()),
           from: 0,
           value: isPinned ? 0 : 1,
           // when pinned, push the bar below the status bar, minus whatever part of it the app bar already covers

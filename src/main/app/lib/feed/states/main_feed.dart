@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logging/logging.dart';
+import 'package:app/utils/motion.dart';
 
 part 'main_feed.freezed.dart';
 
@@ -121,7 +122,7 @@ class MainFeedCubit extends Cubit<MainFeedState> {
       state.copyWith(viewMode: enable ? .search : .feeds, page: 0, feedItems: [], searchTerms: '', drawerOpened: false),
     );
     searchController.text = '';
-    scrollController.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeOutQuart);
+    scrollTo(scrollController, 0, duration: Duration(milliseconds: 500), curve: Curves.easeOutQuart);
   }
 
   Future<void> refresh() async {

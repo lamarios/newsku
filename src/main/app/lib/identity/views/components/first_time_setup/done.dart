@@ -4,6 +4,7 @@ import 'package:app/l10n/app_localizations.dart';
 import 'package:app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 class Done extends StatelessWidget {
   const Done({super.key});
@@ -14,7 +15,7 @@ class Done extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return SingleMotionBuilder(
-      motion: MaterialSpringMotion.expressiveSpatialSlow(),
+      motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialSlow()),
       from: 0,
       value: 1,
       builder: (context, value, child) => Opacity(

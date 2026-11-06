@@ -5,6 +5,7 @@ import 'package:app/identity/states/identity.dart';
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/notifications/notification_handler.dart';
 import 'package:app/router.dart';
+import 'package:app/utils/motion.dart';
 import 'package:app/utils/utils.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter/foundation.dart';
@@ -60,6 +61,20 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             routerConfig: appRouter.config(),
+            builder: (context, child) {
+              // The in-app setting is folded into MediaQuery.disableAnimations, which already reflects the OS
+              // reduced motion setting, so widgets only need to check one place (see utils/motion.dart).
+              final mediaQuery = MediaQuery.of(context);
+              final disableAnimations = preferences.reduceMotion || mediaQuery.disableAnimations;
+              final theme = Theme.of(context);
+              return MediaQuery(
+                data: mediaQuery.copyWith(disableAnimations: disableAnimations),
+                child: Theme(
+                  data: disableAnimations ? theme.copyWith(pageTransitionsTheme: noPageTransitionsTheme) : theme,
+                  child: child!,
+                ),
+              );
+            },
 
             darkTheme: ThemeData(
               colorScheme: .fromSeed(

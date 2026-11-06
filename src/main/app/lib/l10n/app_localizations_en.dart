@@ -225,6 +225,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get blackBackgroundExplanation => 'Use black background for the dark theme';
 
   @override
+  String get reduceMotion => 'Reduce motion';
+
+  @override
+  String get reduceMotionExplanation =>
+      'Turn off sliding and other animations. Always on when your device asks for reduced motion';
+
+  @override
   String get dynamicColor => 'Dynamic color';
 
   @override

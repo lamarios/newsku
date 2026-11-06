@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:motor/motor.dart';
+import 'package:app/utils/motion.dart';
 
 class FeedCategoryView extends StatelessWidget {
   final FeedCategory category;
@@ -54,7 +55,7 @@ class FeedCategoryView extends StatelessWidget {
                   SingleMotionBuilder(
                     value: expanded ? 0 : math.pi,
                     from: 0,
-                    motion: MaterialSpringMotion.expressiveEffectsSlow(),
+                    motion: motionOrNone(context, MaterialSpringMotion.expressiveEffectsSlow()),
                     builder: (BuildContext context, double value, Widget? child) =>
                         Transform.rotate(angle: value, child: child),
                     child: Icon(Icons.expand_less),
@@ -164,7 +165,7 @@ class FeedCategoryDragTarget extends StatelessWidget {
           child: SingleMotionBuilder(
             from: 0,
             value: candidates.isNotEmpty ? 1 : 0,
-            motion: MaterialSpringMotion.expressiveSpatialDefault(),
+            motion: motionOrNone(context, MaterialSpringMotion.expressiveSpatialDefault()),
             builder: (context, value, child) => Container(
               padding: EdgeInsets.all(pu2),
               margin: .only(bottom: pu2, left: pu, right: pu),
