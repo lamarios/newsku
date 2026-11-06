@@ -20,6 +20,21 @@ spring:
     locations: classpath:db/migration
     baseline-on-migrate: true
 
+  ai:
+    mcp:
+      server:
+        name: newsku
+        version: 1.0.0
+        type: sync
+        # stateless: each request is authenticated on its own with an API key, no session needed
+        protocol: stateless
+        instructions: >-
+          Newsku is an RSS reader that ranks articles by importance using the user's preferences.
+          Use these tools to read the user's news.
+        streamable-http:
+          # under /api/ so it goes through the API key / JWT authentication
+          mcp-endpoint: /api/mcp
+
  # jpa:
  #   show-sql: true
  #   properties:
