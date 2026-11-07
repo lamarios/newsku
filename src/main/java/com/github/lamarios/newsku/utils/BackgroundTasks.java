@@ -21,6 +21,10 @@ public class BackgroundTasks {
         () -> {
           try {
             task.run();
+          } catch (Throwable t) {
+            // submit() would otherwise swallow it silently in the returned future
+            logger.error("Background task failed", t);
+            throw t;
           } finally {
             var inFlightAfter = IN_FLIGHT.decrementAndGet();
             logger.info("Done with task, {} remaining", inFlightAfter);

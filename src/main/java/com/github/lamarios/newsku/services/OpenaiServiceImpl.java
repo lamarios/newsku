@@ -1,18 +1,22 @@
 package com.github.lamarios.newsku.services;
 
 import com.apptasticsoftware.rssreader.Item;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.lamarios.newsku.models.OpenAiFeedResponse;
 import com.github.lamarios.newsku.models.TagClickStat;
 import com.github.lamarios.newsku.persistence.entities.User;
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
+import com.openai.core.JsonValue;
 import com.openai.models.ReasoningEffort;
+import com.openai.models.ResponseFormatJsonSchema;
 import com.openai.models.chat.completions.ChatCompletionCreateParams;
-import com.openai.models.chat.completions.StructuredChatCompletionCreateParams;
 import com.openai.models.models.Model;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +28,38 @@ import org.springframework.stereotype.Service;
 @Service("openaiService")
 public class OpenaiServiceImpl implements OpenaiService {
   private static final Logger logger = LogManager.getLogger();
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+  // Schema of OpenAiFeedResponse, written by hand instead of using responseFormat(Class) as the
+  // openai sdk generates it with victools jsonschema-generator 4.x (jackson 2) while spring-ai
+  // requires 5.x (jackson 3), which makes the sdk throw a NoSuchMethodError.
+  private static final ResponseFormatJsonSchema RESPONSE_FORMAT =
+      ResponseFormatJsonSchema.builder()
+          .jsonSchema(
+              ResponseFormatJsonSchema.JsonSchema.builder()
+                  .name("OpenAiFeedResponse")
+                  .strict(true)
+                  .schema(
+                      ResponseFormatJsonSchema.JsonSchema.Schema.builder()
+                          .putAdditionalProperty("type", JsonValue.from("object"))
+                          .putAdditionalProperty(
+                              "properties",
+                              JsonValue.from(
+                                  Map.of(
+                                      "importance", Map.of("type", "integer"),
+                                      "possibleAd", Map.of("type", "boolean"),
+                                      "reasoning", Map.of("type", "string"),
+                                      "tags",
+                                          Map.of(
+                                              "type", "array", "items", Map.of("type", "string")))))
+                          .putAdditionalProperty(
+                              "required",
+                              JsonValue.from(
+                                  List.of("importance", "possibleAd", "reasoning", "tags")))
+                          .putAdditionalProperty("additionalProperties", JsonValue.from(false))
+                          .build())
+                  .build())
+          .build();
   private final String url;
   private final String apiKey;
   private final String model;
@@ -118,17 +154,18 @@ public class OpenaiServiceImpl implements OpenaiService {
                     %s
                     """, item.getGuid(), prompt);
     */
-    StructuredChatCompletionCreateParams<OpenAiFeedResponse> params =
+    ChatCompletionCreateParams params =
         ChatCompletionCreateParams.builder()
             .addUserMessage(prompt)
             .model(model)
             .reasoningEffort(ReasoningEffort.NONE)
-            .responseFormat(OpenAiFeedResponse.class)
+            .responseFormat(RESPONSE_FORMAT)
             .build();
 
     List<OpenAiFeedResponse> analysis =
         getClient().chat().completions().create(params).choices().stream()
             .flatMap(choice -> choice.message().content().stream())
+            .map(OpenaiServiceImpl::parseResponse)
             .toList();
 
     Optional<OpenAiFeedResponse> first = analysis.stream().findFirst();
@@ -143,5 +180,13 @@ public class OpenaiServiceImpl implements OpenaiService {
                 String.join(",", openAiFeedResponse.tags()),
                 (System.currentTimeMillis() - start) / 1000));
     return first;
+  }
+
+  private static OpenAiFeedResponse parseResponse(String content) {
+    try {
+      return OBJECT_MAPPER.readValue(content, OpenAiFeedResponse.class);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException("Couldn't parse openai response: " + content, e);
+    }
   }
 }
