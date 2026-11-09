@@ -1098,6 +1098,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You don\'t have any API keys yet'**
   String get noApiKeys;
+
+  /// No description provided for @singleSignOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Single sign-on ({provider})'**
+  String singleSignOn(String provider);
+
+  /// No description provided for @ssoLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is linked to your SSO account, you can log in with it'**
+  String get ssoLinked;
+
+  /// No description provided for @ssoNotLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'Link your SSO account to be able to log in with it'**
+  String get ssoNotLinked;
+
+  /// No description provided for @linkSsoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Link SSO account'**
+  String get linkSsoAccount;
+
+  /// No description provided for @unlink.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlink'**
+  String get unlink;
+
+  /// No description provided for @unlinkSsoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlink SSO account?'**
+  String get unlinkSsoTitle;
+
+  /// No description provided for @unlinkSsoWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'You won\'t be able to log in with SSO anymore. Make sure you have set a password before unlinking, otherwise you will lose access to your account'**
+  String get unlinkSsoWarning;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

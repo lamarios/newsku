@@ -20,6 +20,10 @@ import org.springframework.stereotype.Component;
 public class JwtTokenUtil {
   private final SecretKey key;
   public static final long JWT_TOKEN_VALIDITY = 90 * 24 * 60 * 60;
+  public static final String TYPE_CLAIM = "type";
+  public static final String VERSION_CLAIM = "tv";
+  public static final String SESSION_TYPE = "session";
+  public static final String RESET_PASSWORD_TYPE = "reset-password";
   private static final long serialVersionUID = -2550185165626007488L;
   private final String salt;
   //    private final OIDCService oidcService;
@@ -102,6 +106,8 @@ public class JwtTokenUtil {
 
       Map<String, Object> claims = new HashMap<>();
       claims.put("user", userClaim);
+      claims.put(TYPE_CLAIM, SESSION_TYPE);
+      claims.put(VERSION_CLAIM, user.getTokenVersion());
       return doGenerateToken(claims, userDetails.getUsername());
     } catch (Exception e) {
       e.printStackTrace();
@@ -128,10 +134,29 @@ public class JwtTokenUtil {
     return (!isTokenExpired(token) || ignoreTokenExpiration(token));
   }
 
-  public Boolean validateToken(String token, UserDetails userDetails) {
-    final String username = getUsernameFromToken(token);
-    var user = userService.getUser(userDetails.getUsername());
-    return ((username.equals(userDetails.getUsername())) && !isTokenExpired(token));
+  /**
+   * Checks that the token is a login session token for this user that hasn't been invalidated.
+   * Tokens issued before the type and version claims existed have neither, they're considered
+   * session tokens of version 0.
+   */
+  public boolean validateToken(String token, User user) {
+    final Claims claims = getAllClaimsFromToken(token);
+    if (!user.getUsername().equals(claims.getSubject())
+        || claims.getExpiration().before(new Date())) {
+      return false;
+    }
+
+    String type = claims.get(TYPE_CLAIM, String.class);
+    if (type != null && !SESSION_TYPE.equals(type)) {
+      return false;
+    }
+
+    return getTokenVersion(claims) == user.getTokenVersion();
+  }
+
+  public static int getTokenVersion(Claims claims) {
+    Integer version = claims.get(VERSION_CLAIM, Integer.class);
+    return version == null ? 0 : version;
   }
 
   public String getSalt() {

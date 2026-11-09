@@ -43,7 +43,9 @@ public class FeedErrorService {
     return feedErrorRepository.findByFeed(
         feed,
         PageRequest.of(
-            page, pageSize, Sort.by(new Sort.Order(Sort.Direction.DESC, "timeCreated"))));
+            Math.max(0, page),
+            Math.clamp(pageSize, 1, FeedItemService.MAX_PAGE_SIZE),
+            Sort.by(new Sort.Order(Sort.Direction.DESC, "timeCreated"))));
   }
 
   public long countLastRefreshErrors() {

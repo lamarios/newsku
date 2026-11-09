@@ -1,5 +1,6 @@
 package com.github.lamarios.newsku.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.lamarios.newsku.models.EmailDigestFrequency;
 import com.github.lamarios.newsku.models.ReadItemHandling;
@@ -22,6 +23,8 @@ public class User {
   @Column(name = "feed_item_preference")
   private String feedItemPreference;
 
+  // only set by the server when linking an OIDC account, never from a request body
+  @JsonProperty(access = JsonProperty.Access.READ_ONLY)
   @Column(name = "oidc_sub")
   private String oidcSub;
 
@@ -42,6 +45,19 @@ public class User {
 
   @Column(name = "last_refresh")
   private long lastRefresh;
+
+  // increased to invalidate all the login sessions and password reset links of the user
+  @JsonIgnore
+  @Column(name = "token_version")
+  private int tokenVersion;
+
+  public int getTokenVersion() {
+    return tokenVersion;
+  }
+
+  public void setTokenVersion(int tokenVersion) {
+    this.tokenVersion = tokenVersion;
+  }
 
   public long getLastRefresh() {
     return lastRefresh;

@@ -4,7 +4,7 @@ import com.github.lamarios.newsku.persistence.entities.Feed;
 import com.github.lamarios.newsku.persistence.entities.FeedItem;
 import com.github.lamarios.newsku.persistence.repositories.FeedItemRepository;
 import com.github.lamarios.newsku.persistence.repositories.FeedRepository;
-import com.github.lamarios.newsku.utils.ImageHelper;
+import com.github.lamarios.newsku.utils.SafeUrlFetcher;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,11 +32,16 @@ public class ImageController {
 
   private final FeedRepository feedRepository;
   private final FeedItemRepository feedItemRepository;
+  private final SafeUrlFetcher urlFetcher;
 
   @Autowired
-  public ImageController(FeedRepository feedRepository, FeedItemRepository feedItemRepository)
+  public ImageController(
+      FeedRepository feedRepository,
+      FeedItemRepository feedItemRepository,
+      SafeUrlFetcher urlFetcher)
       throws IOException {
     this.feedRepository = feedRepository;
+    this.urlFetcher = urlFetcher;
     this.tempDir = Files.createTempDirectory("newsku-feed-images");
     this.feedItemRepository = feedItemRepository;
   }
@@ -64,7 +69,7 @@ public class ImageController {
 
     if (!filePath.toFile().exists()) {
       log.info("File doesn't exist in cache, caching it...");
-      ImageHelper.downloadImageToPath(item.get(), filePath);
+      urlFetcher.downloadImageToPath(item.get(), filePath);
     } else {
       log.info("Serving from cache");
     }

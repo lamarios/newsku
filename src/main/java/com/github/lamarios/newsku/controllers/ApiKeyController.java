@@ -5,6 +5,7 @@ import com.github.lamarios.newsku.models.ApiKeyRequest;
 import com.github.lamarios.newsku.models.CreatedApiKey;
 import com.github.lamarios.newsku.persistence.entities.ApiKey;
 import com.github.lamarios.newsku.services.ApiKeyService;
+import com.github.lamarios.newsku.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,11 +22,16 @@ import org.springframework.web.bind.annotation.*;
 @SecurityRequirement(name = "apiKey")
 public class ApiKeyController {
   private final ApiKeyService apiKeyService;
+  private final UserService userService;
   private final boolean demoMode;
 
   @Autowired
-  public ApiKeyController(ApiKeyService apiKeyService, @Value("${DEMO_MODE:0}") boolean demoMode) {
+  public ApiKeyController(
+      ApiKeyService apiKeyService,
+      UserService userService,
+      @Value("${DEMO_MODE:0}") boolean demoMode) {
     this.apiKeyService = apiKeyService;
+    this.userService = userService;
     this.demoMode = demoMode;
   }
 
@@ -44,6 +50,8 @@ public class ApiKeyController {
     if (demoMode) {
       throw new AccessDeniedException("App in demoMode");
     }
+    // an API key can't be used to create more keys and keep access after being revoked
+    userService.requireLoginSession();
     return apiKeyService.createApiKey(request.name(), request.expiresAt());
   }
 
@@ -52,6 +60,7 @@ public class ApiKeyController {
     if (demoMode) {
       throw new AccessDeniedException("App in demoMode");
     }
+    userService.requireLoginSession();
     return apiKeyService.deleteApiKey(id);
   }
 }

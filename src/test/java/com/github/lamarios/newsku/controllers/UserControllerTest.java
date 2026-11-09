@@ -15,12 +15,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.access.AccessDeniedException;
+import tools.jackson.databind.json.JsonMapper;
 
 @Import(TestConfig.class)
 public class UserControllerTest extends TestContainerTest {
   @Autowired private UserController userController;
   @Autowired private JwtAuthenticationController authenticationController;
   @Autowired private UserService userService;
+  @Autowired private JsonMapper jsonMapper;
 
   @Test
   public void testUserUpdateSelf() throws Exception {
@@ -65,8 +67,52 @@ public class UserControllerTest extends TestContainerTest {
     assertThrows(NewskuException.class, () -> userController.updateUser(user));
 
     user.setEmail("good.email@email.com");
-    var updatedUser = userController.updateUser(user);
+    var updatedUser = userController.updateUser(user).getBody();
 
     assertEquals(user.getEmail(), updatedUser.getEmail());
+  }
+
+  @Test
+  public void testOidcSubCantBeSetByUser() throws Exception {
+    var currentUser = userController.getCurrentUser();
+    assertNull(currentUser.getOidcSub());
+
+    // the field is ignored when deserializing request bodies
+    var fromJson =
+        jsonMapper.readValue(
+            "{\"id\": \"%s\", \"username\": \"test\", \"email\": \"test@test.com\", \"oidcSub\": \"victim-sub\"}"
+                .formatted(currentUser.getId()),
+            User.class);
+    assertNull(fromJson.getOidcSub());
+
+    // and the service keeps the existing value even if one is passed
+    var user = new User();
+    user.setId(currentUser.getId());
+    user.setUsername(currentUser.getUsername());
+    user.setEmail(currentUser.getEmail());
+    user.setReadItemHandling(currentUser.getReadItemHandling());
+    user.setOidcSub("victim-sub");
+    var updated = userController.updateUser(user).getBody();
+    assertNull(updated.getOidcSub());
+    assertTrue(userService.getByOidcSub("victim-sub").isEmpty());
+  }
+
+  @Test
+  public void testCantTakeExistingUsername() throws Exception {
+    var currentUser = userController.getCurrentUser();
+
+    User other = new User();
+    other.setPassword("aaa");
+    other.setReadItemHandling(ReadItemHandling.none);
+    other.setEmail("other@test.com");
+    other.setUsername("other");
+    userService.createUser(other);
+
+    var user = new User();
+    user.setId(currentUser.getId());
+    user.setUsername("other");
+    user.setEmail(currentUser.getEmail());
+    user.setReadItemHandling(currentUser.getReadItemHandling());
+    assertThrows(NewskuException.class, () -> userController.updateUser(user));
   }
 }

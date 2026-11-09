@@ -11,6 +11,7 @@
 | ALLOW_SIGNUP | 0       | No       | 1 = allow signups, 0 = Do not allow signups                                                              |
 | ANNOUNCEMENT | (none)  | No       | Show a message on the login screen                                                                       |
 | MAX_RAM      | 256m    | No       | Sets the max RAM the software can use, increase this when you have a lot of RSS feeds (ex: 1024m, 2048m) |
+| ALLOW_PRIVATE_NETWORK_URLS | 0 | No | 1 = allow feeds, articles and images on private network addresses (localhost, 192.168.x.x, 10.x.x.x...). Leave it to 0 if users you don't trust can add feeds, otherwise they can make Newsku reach your internal services |
 
 ### AI
 
@@ -56,3 +57,10 @@ https://your.newsku-domain.com/redirect.html
 | OIDC_CLIENT_ID         | (none)  | **Yes**  | Your OIDC client id                                                                             |
 | OIDC_AUTO_SIGNUP_USERS | false   | No       | Whether to automatically sign up unknown users                                                  |
 | OIDC_NAME              | SSO     | no       | Name of your provider to display on the UI                                                      |
+
+Tokens must be issued by your provider for the configured client id (in their `aud` or `azp` claim).
+
+Logging in with SSO never links to an existing Newsku account, even one with the same username or email. Users who
+already have an account log in with their password and link their SSO account from **Settings > Email and password**.
+Once linked, they can log in with SSO. With `OIDC_AUTO_SIGNUP_USERS` enabled, unknown SSO users get a new account,
+unless the username is already taken.

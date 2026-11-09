@@ -624,4 +624,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noApiKeys => 'You don\'t have any API keys yet';
+
+  @override
+  String singleSignOn(String provider) {
+    return 'Single sign-on ($provider)';
+  }
+
+  @override
+  String get ssoLinked => 'Your account is linked to your SSO account, you can log in with it';
+
+  @override
+  String get ssoNotLinked => 'Link your SSO account to be able to log in with it';
+
+  @override
+  String get linkSsoAccount => 'Link SSO account';
+
+  @override
+  String get unlink => 'Unlink';
+
+  @override
+  String get unlinkSsoTitle => 'Unlink SSO account?';
+
+  @override
+  String get unlinkSsoWarning =>
+      'You won\'t be able to log in with SSO anymore. Make sure you have set a password before unlinking, otherwise you will lose access to your account';
 }

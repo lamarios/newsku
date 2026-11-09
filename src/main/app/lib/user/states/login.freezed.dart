@@ -12,7 +12,7 @@ part of 'login.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$LoginState implements DiagnosticableTreeMixin {
+mixin _$LoginState {
 
  bool get loading; bool get failedLogin; String get username; String get password; dynamic get error; StackTrace? get stackTrace;
 /// Create a copy of LoginState
@@ -22,12 +22,6 @@ mixin _$LoginState implements DiagnosticableTreeMixin {
 $LoginStateCopyWith<LoginState> get copyWith => _$LoginStateCopyWithImpl<LoginState>(this as LoginState, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'LoginState'))
-    ..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('failedLogin', failedLogin))..add(DiagnosticsProperty('username', username))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('error', error))..add(DiagnosticsProperty('stackTrace', stackTrace));
-}
 
 @override
 bool operator ==(Object other) {
@@ -39,7 +33,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,loading,failedLogin,username,password,const DeepCollectionEquality().hash(error),stackTrace);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'LoginState(loading: $loading, failedLogin: $failedLogin, username: $username, password: $password, error: $error, stackTrace: $stackTrace)';
 }
 
@@ -210,7 +204,7 @@ return $default(_that.loading,_that.failedLogin,_that.username,_that.password,_t
 /// @nodoc
 
 
-class _LoginState with DiagnosticableTreeMixin implements LoginState, WithError {
+class _LoginState implements LoginState, WithError {
   const _LoginState({this.loading = false, this.failedLogin = false, this.username = "", this.password = "", this.error, this.stackTrace});
   
 
@@ -228,12 +222,6 @@ class _LoginState with DiagnosticableTreeMixin implements LoginState, WithError 
 _$LoginStateCopyWith<_LoginState> get copyWith => __$LoginStateCopyWithImpl<_LoginState>(this, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'LoginState'))
-    ..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('failedLogin', failedLogin))..add(DiagnosticsProperty('username', username))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('error', error))..add(DiagnosticsProperty('stackTrace', stackTrace));
-}
 
 @override
 bool operator ==(Object other) {
@@ -245,7 +233,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,loading,failedLogin,username,password,const DeepCollectionEquality().hash(error),stackTrace);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+String toString() {
   return 'LoginState(loading: $loading, failedLogin: $failedLogin, username: $username, password: $password, error: $error, stackTrace: $stackTrace)';
 }
 

@@ -57,4 +57,17 @@ public class SignUpControllerTest extends TestContainerTest {
     newUser.setUsername("testUsername");
     assertThrows(NewskuUserException.class, () -> signUpController.signup(newUser));
   }
+
+  @Test
+  public void signUpIgnoresOidcSub() throws AccessDeniedException, NewskuUserException {
+    User newUser = new User();
+    newUser.setPassword("somePassword");
+    newUser.setEmail("someemail@eai.com");
+    newUser.setUsername("someUsername");
+    newUser.setReadItemHandling(ReadItemHandling.none);
+    newUser.setOidcSub("victim-sub");
+
+    var user = signUpController.signup(newUser);
+    assertNull(user.getOidcSub());
+  }
 }

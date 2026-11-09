@@ -1,5 +1,6 @@
 import 'package:app/user/models/email_digest_frequency.dart';
 import 'package:app/user/models/user.dart';
+import 'package:app/user/services/oidc_flow.dart';
 import 'package:app/user/services/user_service.dart';
 import 'package:app/user/states/signup.dart';
 import 'package:app/utils/models/with_error.dart';
@@ -31,10 +32,63 @@ class UserSettingsCubit extends Cubit<UserSettingsState> {
     return super.close();
   }
 
-  Future<void> updateUser(User user) async {
+  /// Returns whether the update worked, errors are emitted in the state
+  Future<bool> updateUser(User user) async {
     try {
       emit(state.copyWith(loading: true));
       await UserService(serverUrl!).updateUser(user);
+      return true;
+    } catch (e, s) {
+      emit(state.copyWith(error: e, stackTrace: s));
+      return false;
+    } finally {
+      emit(state.copyWith(loading: false));
+    }
+  }
+
+  Future<bool> updateEmail() async {
+    var user = identityCubit.currentUser;
+    if (user == null) {
+      return false;
+    }
+    user = user.copyWith(email: email.value.text.trim());
+    final updated = await updateUser(user);
+    if (updated) {
+      await identityCubit.getUser();
+    }
+    return updated;
+  }
+
+  Future<bool> resetPassword() async {
+    var user = identityCubit.currentUser;
+    if (user == null) {
+      return false;
+    }
+    user = user.copyWith(password: password.value.text);
+    final updated = await updateUser(user);
+    if (updated) {
+      emit(state.copyWith(password: '', repeatPassword: ''));
+      repeatPassword.text = '';
+      password.text = '';
+    }
+    return updated;
+  }
+
+  Future<void> linkSso() async {
+    final oidcConfig = identityCubit.state.config?.oidcConfig;
+    if (oidcConfig == null) {
+      return;
+    }
+
+    try {
+      emit(state.copyWith(loading: true));
+      final accessToken = await getOidcAccessToken(oidcConfig);
+      if (accessToken == null) {
+        return;
+      }
+      final user = await UserService(serverUrl!).linkOidc(accessToken);
+      emit(state.copyWith(ssoLinked: user.oidcSub != null));
+      await identityCubit.getUser();
     } catch (e, s) {
       emit(state.copyWith(error: e, stackTrace: s));
     } finally {
@@ -42,22 +96,16 @@ class UserSettingsCubit extends Cubit<UserSettingsState> {
     }
   }
 
-  Future<void> updateEmail() async {
-    var user = identityCubit.currentUser;
-    if (user != null) {
-      user = user.copyWith(email: email.value.text.trim());
-      await updateUser(user);
-    }
-  }
-
-  Future<void> resetPassword() async {
-    var user = identityCubit.currentUser;
-    if (user != null) {
-      user = user.copyWith(password: password.value.text);
-      await updateUser(user);
-      emit(state.copyWith(password: '', repeatPassword: ''));
-      repeatPassword.text = '';
-      password.text = '';
+  Future<void> unlinkSso() async {
+    try {
+      emit(state.copyWith(loading: true));
+      final user = await UserService(serverUrl!).unlinkOidc();
+      emit(state.copyWith(ssoLinked: user.oidcSub != null));
+      await identityCubit.getUser();
+    } catch (e, s) {
+      emit(state.copyWith(error: e, stackTrace: s));
+    } finally {
+      emit(state.copyWith(loading: false));
     }
   }
 
@@ -81,6 +129,7 @@ sealed class UserSettingsState with _$UserSettingsState implements WithError {
     @Default("") String repeatPassword,
     @Default("") String email,
     @Default([]) List<EmailDigestFrequency> digest,
+    @Default(false) bool ssoLinked,
     dynamic error,
     StackTrace? stackTrace,
   }) = _UserSettingsState;

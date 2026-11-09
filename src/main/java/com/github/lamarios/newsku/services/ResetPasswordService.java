@@ -1,12 +1,13 @@
 package com.github.lamarios.newsku.services;
 
+import com.github.lamarios.newsku.errors.NewskuUserException;
 import com.github.lamarios.newsku.persistence.entities.User;
 import com.github.lamarios.newsku.persistence.repositories.UserRepository;
 import com.github.lamarios.newsku.security.JwtTokenUtil;
 import freemarker.template.TemplateException;
-import io.jsonwebtoken.security.SignatureException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -49,8 +50,11 @@ public class ResetPasswordService {
     String token =
         jwtTokenUtil.doGenerateToken(
             Map.of(
-                "type",
-                "reset-password",
+                JwtTokenUtil.TYPE_CLAIM,
+                JwtTokenUtil.RESET_PASSWORD_TYPE,
+                // the reset increases the version, which makes the link single use
+                JwtTokenUtil.VERSION_CLAIM,
+                user.getTokenVersion(),
                 "request-id",
                 UUID.randomUUID().toString(),
                 "server-url",
@@ -72,20 +76,33 @@ public class ResetPasswordService {
   }
 
   @Transactional
-  public void resetPassword(String token, String password) {
-    try {
-      var claims = jwtTokenUtil.getAllClaimsFromToken(token);
-      User user = userRepository.findFirstById(claims.getSubject());
-
-      if (user == null) {
-        throw new InvalidParameterException("Invalid token");
-      }
-
-      user.setPassword(passwordEncoder.encode(password));
-
-      userRepository.save(user);
-    } catch (SignatureException e) {
-      throw new InvalidParameterException("Invalid token");
+  public void resetPassword(String token, String password) throws NewskuUserException {
+    if (password == null || password.isBlank()) {
+      throw new NewskuUserException("Password is empty");
     }
+
+    Claims claims;
+    try {
+      claims = jwtTokenUtil.getAllClaimsFromToken(token);
+    } catch (JwtException | IllegalArgumentException e) {
+      throw new NewskuUserException("Invalid or expired link");
+    }
+
+    // login tokens must not be usable to reset a password
+    if (!JwtTokenUtil.RESET_PASSWORD_TYPE.equals(
+        claims.get(JwtTokenUtil.TYPE_CLAIM, String.class))) {
+      throw new NewskuUserException("Invalid or expired link");
+    }
+
+    User user = userRepository.findFirstById(claims.getSubject());
+    if (user == null || JwtTokenUtil.getTokenVersion(claims) != user.getTokenVersion()) {
+      throw new NewskuUserException("Invalid or expired link");
+    }
+
+    user.setPassword(passwordEncoder.encode(password));
+    // logs out every session and invalidates other reset links
+    user.setTokenVersion(user.getTokenVersion() + 1);
+
+    userRepository.save(user);
   }
 }

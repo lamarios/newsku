@@ -23,7 +23,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SuppressWarnings("SpringBootApplicationProperties")
 @SpringBootTest(
     classes = Application.class,
-    properties = {"spring.main.allow-bean-definition-overriding=true", "ALLOW_SIGNUP=1"},
+    properties = {
+      "spring.main.allow-bean-definition-overriding=true",
+      "ALLOW_SIGNUP=1",
+      // the fake RSS feeds are served on localhost
+      "ALLOW_PRIVATE_NETWORK_URLS=1"
+    },
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 public abstract class TestContainerTest {

@@ -18,6 +18,7 @@ import com.github.lamarios.newsku.persistence.entities.User;
 import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
 import com.github.lamarios.newsku.persistence.repositories.FeedRepository;
 import com.github.lamarios.newsku.utils.BackgroundTasks;
+import com.github.lamarios.newsku.utils.SafeUrlFetcher;
 import com.github.lamarios.newsku.utils.TemporaryInvalidXmlCharacterFilter;
 import com.github.lamarios.newsku.utils.TransactionHelper;
 import java.io.FileInputStream;
@@ -59,6 +60,7 @@ public class FeedService {
   private final FeedItemService feedItemService;
   private final PlatformTransactionManager transactionManager;
   private final FeedCategoryRepository feedCategoryRepository;
+  private final SafeUrlFetcher urlFetcher;
 
   @Autowired
   public FeedService(
@@ -67,13 +69,15 @@ public class FeedService {
       FeedCategoriesService feedCategoriesService,
       FeedItemService feedItemService,
       PlatformTransactionManager transactionManager,
-      FeedCategoryRepository feedCategoryRepository) {
+      FeedCategoryRepository feedCategoryRepository,
+      SafeUrlFetcher urlFetcher) {
     this.userService = userService;
     this.feedRepository = feedRepository;
     this.feedCategoriesService = feedCategoriesService;
     this.feedItemService = feedItemService;
     this.transactionManager = transactionManager;
     this.feedCategoryRepository = feedCategoryRepository;
+    this.urlFetcher = urlFetcher;
   }
 
   @Transactional
@@ -91,7 +95,9 @@ public class FeedService {
 
     List<Item> list;
     try {
-      list = DEFAULT_READER.read(url).sorted().toList();
+      list = readFeed(urlFetcher, url);
+    } catch (SafeUrlFetcher.UnsafeUrlException e) {
+      throw new NewskuException(e.getMessage());
     } catch (Exception e) {
       throw new NewskuException("Couldn't read feed URL");
     }
@@ -114,6 +120,13 @@ public class FeedService {
     return feedRepository.save(feed);
   }
 
+  /** Fetches and parses a feed, going through the url checks of {@link SafeUrlFetcher} */
+  public static List<Item> readFeed(SafeUrlFetcher urlFetcher, String url) throws IOException {
+    try (var in = urlFetcher.open(url, SafeUrlFetcher.MAX_PAGE_SIZE)) {
+      return DEFAULT_READER.read(in).sorted().toList();
+    }
+  }
+
   @Transactional(readOnly = true)
   public List<Feed> getFeeds() {
     return feedRepository.getFeedsByUser(userService.getCurrentUser());
@@ -121,14 +134,30 @@ public class FeedService {
 
   @Transactional
   public Feed updateFeed(Feed feed) {
-    var oldFeed = feedRepository.getFirstById(feed.getId());
     var user = userService.getCurrentUser();
-    if (user.getId().equalsIgnoreCase(oldFeed.getUser().getId())) {
-      feed.setUser(oldFeed.getUser());
-      return feedRepository.save(feed);
-    } else {
+    var oldFeed = feedRepository.findFirstByIdAndUser(feed.getId(), user);
+    if (oldFeed == null) {
       throw new AccessDeniedException("you do not own this feed");
     }
+
+    FeedCategory category = null;
+    if (feed.getCategory() != null && feed.getCategory().getId() != null) {
+      category =
+          feedCategoryRepository.getFeedCategoriesByIdAndUser(feed.getCategory().getId(), user);
+      if (category == null) {
+        throw new AccessDeniedException("You do not own this category");
+      }
+    }
+
+    // only user editable fields are copied, url and image are fetched by the server so they must
+    // only come from the feed itself
+    if (feed.getName() != null && !feed.getName().isBlank()) {
+      oldFeed.setName(feed.getName());
+    }
+    oldFeed.setItemPreference(feed.getItemPreference());
+    oldFeed.setCategory(category);
+
+    return feedRepository.save(oldFeed);
   }
 
   @Transactional

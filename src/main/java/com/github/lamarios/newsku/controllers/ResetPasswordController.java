@@ -1,5 +1,6 @@
 package com.github.lamarios.newsku.controllers;
 
+import com.github.lamarios.newsku.errors.NewskuUserException;
 import com.github.lamarios.newsku.services.ResetPasswordService;
 import freemarker.template.TemplateException;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +23,8 @@ public class ResetPasswordController {
   }
 
   @PostMapping("/reset-password")
-  public void resetPassword(@RequestBody String password, @RequestParam("token") String token) {
+  public void resetPassword(@RequestBody String password, @RequestParam("token") String token)
+      throws NewskuUserException {
     resetPasswordService.resetPassword(token, password);
   }
 }

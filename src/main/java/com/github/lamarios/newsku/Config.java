@@ -1,5 +1,7 @@
 package com.github.lamarios.newsku;
 
+import com.github.lamarios.newsku.controllers.UserController;
+import freemarker.core.HTMLOutputFormat;
 import freemarker.template.TemplateExceptionHandler;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -73,7 +75,9 @@ public class Config {
             .allowedOriginPatterns("*")
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*")
-            .allowCredentials(true);
+            .exposedHeaders(UserController.NEW_TOKEN_HEADER)
+            // authentication goes through the Authorization header, not cookies
+            .allowCredentials(false);
       }
     };
   }
@@ -137,6 +141,8 @@ public class Config {
     // Set the preferred charset template files are stored in. UTF-8 is
     // a good choice in most applications:
     cfg.setDefaultEncoding("UTF-8");
+    // all templates are HTML emails, feed content (titles, urls...) must be escaped
+    cfg.setOutputFormat(HTMLOutputFormat.INSTANCE);
     // Sets how errors will appear.
     // During web page *development* TemplateExceptionHandler.HTML_DEBUG_HANDLER is better.
     cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);

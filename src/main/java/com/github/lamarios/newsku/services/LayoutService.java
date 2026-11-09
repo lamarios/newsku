@@ -3,11 +3,13 @@ package com.github.lamarios.newsku.services;
 import com.github.lamarios.newsku.models.LayoutBlockSettings;
 import com.github.lamarios.newsku.models.LayoutBlockType;
 import com.github.lamarios.newsku.persistence.entities.LayoutBlock;
+import com.github.lamarios.newsku.persistence.repositories.FeedCategoryRepository;
 import com.github.lamarios.newsku.persistence.repositories.LayoutRepository;
 import java.util.List;
 import java.util.UUID;
 import org.apache.tomcat.util.http.InvalidParameterException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class LayoutService {
   private final LayoutRepository layoutRepository;
   private final UserService userService;
+  private final FeedCategoryRepository feedCategoryRepository;
 
   @Autowired
-  public LayoutService(LayoutRepository layoutRepository, UserService userService) {
+  public LayoutService(
+      LayoutRepository layoutRepository,
+      UserService userService,
+      FeedCategoryRepository feedCategoryRepository) {
     this.layoutRepository = layoutRepository;
     this.userService = userService;
+    this.feedCategoryRepository = feedCategoryRepository;
   }
 
   @Transactional(readOnly = true)
@@ -47,6 +54,14 @@ public class LayoutService {
     }
     // we remove feed categories from the latest of the layout
     layoutBlocks.getLast().getSettings().setCategoryId(null);
+    // blocks can only show the user's own categories
+    for (LayoutBlock block : layoutBlocks) {
+      var categoryId = block.getSettings() == null ? null : block.getSettings().getCategoryId();
+      if (categoryId != null
+          && feedCategoryRepository.getFeedCategoriesByIdAndUser(categoryId, user) == null) {
+        throw new AccessDeniedException("You do not own this category");
+      }
+    }
     // if we're good, we remove all the items from the user then we insert all the new ones.
     layoutRepository.deleteByUser(user);
 

@@ -8,10 +8,15 @@ import com.github.lamarios.newsku.TestConfig;
 import com.github.lamarios.newsku.TestContainerTest;
 import com.github.lamarios.newsku.errors.NewskuException;
 import com.github.lamarios.newsku.models.FeedToImport;
+import com.github.lamarios.newsku.models.ReadItemHandling;
+import com.github.lamarios.newsku.persistence.entities.Feed;
 import com.github.lamarios.newsku.persistence.entities.FeedCategory;
 import com.github.lamarios.newsku.persistence.entities.FeedItem;
+import com.github.lamarios.newsku.persistence.entities.User;
 import com.github.lamarios.newsku.persistence.repositories.FeedItemRepository;
+import com.github.lamarios.newsku.services.UserService;
 import com.github.lamarios.newsku.utils.BackgroundTaskUtils;
+import com.github.lamarios.newsku.utils.TestUserService;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.multipart.MultipartFile;
 
 @Import(TestConfig.class)
@@ -34,6 +40,7 @@ public class FeedControllerTest extends TestContainerTest {
   @Autowired private FeedCategoryController feedCategoryController;
   @LocalServerPort private int port;
   @Autowired private FeedItemRepository feedItemRepository;
+  @Autowired private UserService userService;
 
   @Test
   public void testFeedCrud() throws SQLException, NewskuException {
@@ -64,6 +71,13 @@ public class FeedControllerTest extends TestContainerTest {
   @Test
   public void testAddingInvalidFeed() {
     assertThrows(NewskuException.class, () -> feedController.addFeed("somegarbageurl"));
+  }
+
+  @Test
+  public void testAddingLocalFileFeed() {
+    // feeds go through the url checks, only http(s) is allowed even with private network allowed
+    var e = assertThrows(NewskuException.class, () -> feedController.addFeed("file:///etc/passwd"));
+    assertTrue(e.getMessage().contains("http"));
   }
 
   @Test
@@ -178,5 +192,62 @@ public class FeedControllerTest extends TestContainerTest {
     assertEquals(2, page.getTotalPages());
     assertEquals(1, page.getContent().size());
     assertEquals(2, page.getTotalElements());
+  }
+
+  @Test
+  public void testUpdateFeedOnlyChangesEditableFields() throws NewskuException {
+    String url = "http://localhost:" + port + "/test/rss/one-month-feed";
+    var feed = feedController.addFeed(url, true);
+    var originalImage = feed.getImage();
+
+    var update = new Feed();
+    update.setId(feed.getId());
+    update.setName("new name");
+    update.setItemPreference("only tech");
+    update.setUrl("file:///etc/passwd");
+    update.setImage("file:///proc/self/environ");
+
+    feedController.updateFeed(update);
+
+    var saved = feedController.getFeeds().getFirst();
+    assertEquals("new name", saved.getName());
+    assertEquals("only tech", saved.getItemPreference());
+    assertEquals(url, saved.getUrl());
+    assertEquals(originalImage, saved.getImage());
+  }
+
+  @Test
+  public void testCantUseOtherUsersFeedOrCategory() throws Exception {
+    String url = "http://localhost:" + port + "/test/rss/one-month-feed";
+    var testUser = userService.getCurrentUser();
+    var myFeed = feedController.addFeed(url, true);
+
+    var other = new User();
+    other.setUsername("other");
+    other.setPassword("other");
+    other.setEmail("other@test.com");
+    other.setReadItemHandling(ReadItemHandling.none);
+    other = userService.createUser(other);
+
+    ((TestUserService) userService).setCurrentUser(other);
+    var otherCategory = feedCategoryController.addCategory("other's category");
+    var otherFeed = feedController.addFeed(url, true);
+
+    ((TestUserService) userService).setCurrentUser(testUser);
+
+    // can't put my feed in someone else's category
+    myFeed.setCategory(otherCategory);
+    assertThrows(AccessDeniedException.class, () -> feedController.updateFeed(myFeed));
+    assertNull(feedController.getFeeds().getFirst().getCategory());
+
+    // can't edit someone else's feed
+    otherFeed.setName("hijacked");
+    otherFeed.setCategory(null);
+    assertThrows(AccessDeniedException.class, () -> feedController.updateFeed(otherFeed));
+
+    ((TestUserService) userService).setCurrentUser(other);
+    var otherFeeds = feedController.getFeeds();
+    assertEquals(1, otherFeeds.size());
+    assertNotEquals("hijacked", otherFeeds.getFirst().getName());
   }
 }

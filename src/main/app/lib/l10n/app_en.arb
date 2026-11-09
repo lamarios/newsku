@@ -166,5 +166,19 @@
     "copy": "Copy",
     "copiedToClipboard": "Copied to clipboard",
     "deleteApiKeyExplanation": "Any application using this key will lose access. This cannot be undone",
-    "noApiKeys": "You don't have any API keys yet"
+    "noApiKeys": "You don't have any API keys yet",
+    "singleSignOn": "Single sign-on ({provider})",
+    "@singleSignOn": {
+        "placeholders": {
+            "provider": {
+                "type": "String"
+            }
+        }
+    },
+    "ssoLinked": "Your account is linked to your SSO account, you can log in with it",
+    "ssoNotLinked": "Link your SSO account to be able to log in with it",
+    "linkSsoAccount": "Link SSO account",
+    "unlink": "Unlink",
+    "unlinkSsoTitle": "Unlink SSO account?",
+    "unlinkSsoWarning": "You won't be able to log in with SSO anymore. Make sure you have set a password before unlinking, otherwise you will lose access to your account"
 }

@@ -34,10 +34,8 @@ class LoginService extends BaseService {
       headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $accessToken'},
     );
 
-    if (response.statusCode == 200) {
-      return response.body.replaceAll('"', '');
-    } else {
-      throw Exception("Error while connecting to server");
-    }
+    // surfaces the server's message, e.g. when the SSO account isn't linked to any user
+    processResponse(response, logoutOn401: false);
+    return response.body.replaceAll('"', '');
   }
 }

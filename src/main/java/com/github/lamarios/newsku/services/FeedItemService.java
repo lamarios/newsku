@@ -8,6 +8,7 @@ import com.github.lamarios.newsku.persistence.entities.*;
 import com.github.lamarios.newsku.persistence.repositories.*;
 import com.github.lamarios.newsku.utils.BackgroundTasks;
 import com.github.lamarios.newsku.utils.HtmlUtils;
+import com.github.lamarios.newsku.utils.SafeUrlFetcher;
 import com.github.lamarios.newsku.utils.TransactionHelper;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -37,6 +38,7 @@ public class FeedItemService {
   private static final Logger logger = LogManager.getLogger();
   // 30 days
   private static final long PROMPT_TAG_TIME_FRAME = 30 * 24 * 60 * 60 * 1000L;
+  public static final int MAX_PAGE_SIZE = 500;
   private final FeedItemRepository feedItemRepository;
   private final PlatformTransactionManager transactionManager;
   private final OpenaiService openaiService;
@@ -47,6 +49,7 @@ public class FeedItemService {
   private final TagClicksRepository tagClicksRepository;
   private final ClickService clickService;
   private final UserRepository userRepository;
+  private final SafeUrlFetcher urlFetcher;
 
   @Autowired
   public FeedItemService(
@@ -59,7 +62,8 @@ public class FeedItemService {
       FeedClicksRepository feedClicksRepository,
       TagClicksRepository tagClicksRepository,
       ClickService clickService,
-      UserRepository userRepository) {
+      UserRepository userRepository,
+      SafeUrlFetcher urlFetcher) {
     this.feedItemRepository = feedItemRepository;
     this.transactionManager = transactionManager;
     this.openaiService = openaiService;
@@ -70,6 +74,7 @@ public class FeedItemService {
     this.tagClicksRepository = tagClicksRepository;
     this.clickService = clickService;
     this.userRepository = userRepository;
+    this.urlFetcher = urlFetcher;
   }
 
   public void refreshFeed(Feed feed) {
@@ -82,9 +87,7 @@ public class FeedItemService {
       logger.info("Refreshing feed {}", feed.getId());
 
       List<Item> items =
-          FeedService.DEFAULT_READER
-              .read(feed.getUrl())
-              .sorted()
+          FeedService.readFeed(urlFetcher, feed.getUrl()).stream()
               .filter(item -> item.getGuid().isPresent())
               .collect(Collectors.toList());
       // we remove stuff that we already processed
@@ -259,7 +262,10 @@ public class FeedItemService {
               .filter(l -> l.startsWith("http"))
               .or(() -> item.getGuid().filter(s -> s.startsWith("http")));
       if (articleUrl.isPresent()) {
-        Document doc = Jsoup.connect(articleUrl.get()).timeout(5000).get();
+        Document doc;
+        try (var in = urlFetcher.open(articleUrl.get(), SafeUrlFetcher.MAX_PAGE_SIZE)) {
+          doc = Jsoup.parse(in, null, articleUrl.get());
+        }
         Element element = doc.selectFirst("meta[property=twitter:image]");
         if (element != null) {
           imageUrl = element.attr("content");
@@ -367,7 +373,7 @@ public class FeedItemService {
   @Transactional(readOnly = true)
   public List<FeedItem> search(String query, int page, int pageSize) {
     page = max(0, page);
-    pageSize = max(pageSize, 1);
+    pageSize = Math.clamp(pageSize, 1, MAX_PAGE_SIZE);
 
     String tsQuery =
         Arrays.stream(query.trim().split("\\s+"))
@@ -424,7 +430,11 @@ public class FeedItemService {
     if (feed == null) {
       return Page.empty();
     }
-    Pageable pageable = PageRequest.of(page, pageSize, Sort.by("timeCreated").descending());
+    Pageable pageable =
+        PageRequest.of(
+            max(0, page),
+            Math.clamp(pageSize, 1, MAX_PAGE_SIZE),
+            Sort.by("timeCreated").descending());
     return feedItemRepository.findFeedItemByFeed(feed, pageable);
   }
 }

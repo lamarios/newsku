@@ -37,6 +37,8 @@ public class SignUpController {
       throw new AccessDeniedException("App in demoMode");
     }
     if (allowSignUp) {
+      // OIDC accounts are only linked by OidcService
+      user.setOidcSub(null);
       return userService.createUser(user);
     } else {
       throw new AccessDeniedException("Sign up not allowed");

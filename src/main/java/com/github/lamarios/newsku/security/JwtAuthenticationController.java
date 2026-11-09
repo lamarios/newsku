@@ -48,7 +48,7 @@ public class JwtAuthenticationController {
   public String loginWithOidcToken(@RequestHeader("Authorization") String authorizationHeader)
       throws Exception {
     String token = authorizationHeader.replaceAll("Bearer ", "");
-    Claims claims = oidcService.getParser().parseSignedClaims(token).getPayload();
+    Claims claims = oidcService.parseToken(token);
     var subject = claims.getSubject();
 
     var user = oidcLoadUser(subject, token);
