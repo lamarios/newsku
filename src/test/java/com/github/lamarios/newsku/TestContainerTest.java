@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 @SuppressWarnings("SpringBootApplicationProperties")
 @SpringBootTest(
@@ -33,7 +33,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 public abstract class TestContainerTest {
   @Autowired private SignUpController signUpController;
-  private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:18");
+  private static final PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:18");
 
   static {
     postgres.start();
