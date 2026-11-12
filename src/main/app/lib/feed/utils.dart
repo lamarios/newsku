@@ -8,7 +8,7 @@ import 'package:app/feed/views/components/search_result.dart';
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/layouts/models/layout_block.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:gap/gap.dart';

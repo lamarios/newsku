@@ -8,7 +8,7 @@ import 'package:app/feed/views/components/item_title.dart';
 import 'package:app/feed/views/screens/feed_screen.dart';
 import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SmallGridItem extends StatelessWidget {
   final FeedCategory? category;

@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class FrostedContainer extends StatelessWidget {
   const FrostedContainer({super.key, required this.child, this.decoration, this.padding, this.blur = 10});

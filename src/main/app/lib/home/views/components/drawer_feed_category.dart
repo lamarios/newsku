@@ -4,7 +4,7 @@ import 'package:app/feed/states/main_feed.dart';
 import 'package:app/feed/views/components/feed_image.dart';
 import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 

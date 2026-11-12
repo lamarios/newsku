@@ -4,8 +4,7 @@ import 'package:app/settings/views/components/responsive_setting_child.dart';
 import 'package:app/user/models/email_digest_frequency.dart';
 import 'package:app/utils/utils.dart';
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 

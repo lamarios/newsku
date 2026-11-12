@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "url": "test.0123abcd.js",
+      "hash": "0123abcd",
+      "size": 25,
+      "urlHashed": true
+    },
+    {
+      "url": "test-not-hashed.js",
+      "hash": "4567ef01",
+      "size": 25,
+      "urlHashed": false
+    }
+  ]
+}

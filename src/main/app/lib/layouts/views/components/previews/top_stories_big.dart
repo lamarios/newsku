@@ -4,7 +4,7 @@ import 'package:app/layouts/views/components/layout_category_selector.dart';
 import 'package:app/layouts/views/components/previews/preview_container.dart';
 import 'package:app/utils/utils.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:gap/gap.dart';
 
 class TopStoriesBig extends StatefulWidget {

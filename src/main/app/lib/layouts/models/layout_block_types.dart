@@ -26,7 +26,7 @@ import 'package:app/layouts/views/components/previews/small_grid_small.dart';
 import 'package:app/layouts/views/components/previews/top_stories_big.dart';
 import 'package:app/layouts/views/components/previews/top_stories_small.dart';
 import 'package:app/utils/models/breakpoints.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const double smallPreviewSize = 150;
 

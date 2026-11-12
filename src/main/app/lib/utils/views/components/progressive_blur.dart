@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final Future<FragmentProgram?> _program = ImageFilter.isShaderFilterSupported
     ? FragmentProgram.fromAsset('shaders/progressive_blur.frag').then<FragmentProgram?>((p) => p, onError: (_) => null)

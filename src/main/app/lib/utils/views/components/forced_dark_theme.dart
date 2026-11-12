@@ -1,6 +1,7 @@
 import 'package:app/home/state/local_preferences.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:app/utils/views/components/loading_indicator_theme_bridge.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ForcedDarkThemeBuilder extends StatelessWidget {
@@ -21,7 +22,7 @@ class ForcedDarkThemeBuilder extends StatelessWidget {
           onSurface: Colors.white,
         ),
       ),
-      child: Builder(builder: (innerContext) => builder(innerContext)),
+      child: LoadingIndicatorThemeBridge(child: Builder(builder: (innerContext) => builder(innerContext))),
     );
   }
 }

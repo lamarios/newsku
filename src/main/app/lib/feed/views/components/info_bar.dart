@@ -4,7 +4,7 @@ import 'package:app/feed/views/screens/feed_screen.dart';
 import 'package:app/l10n/app_localizations.dart';
 import 'package:app/utils/dialog.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class InfoBar extends StatelessWidget {
   final FeedItem item;

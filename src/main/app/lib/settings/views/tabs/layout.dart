@@ -13,7 +13,7 @@ import 'package:app/utils/views/components/conditional_wrap.dart';
 import 'package:app/utils/views/components/error_listener.dart';
 import 'package:app/utils/views/components/simple_cubit_view.dart';
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:material_loading_indicator/loading_indicator.dart';

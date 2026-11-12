@@ -7,9 +7,10 @@ import 'package:app/notifications/notification_handler.dart';
 import 'package:app/router.dart';
 import 'package:app/utils/motion.dart';
 import 'package:app/utils/utils.dart';
+import 'package:app/utils/views/components/loading_indicator_theme_bridge.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
                 data: mediaQuery.copyWith(disableAnimations: disableAnimations),
                 child: Theme(
                   data: disableAnimations ? theme.copyWith(pageTransitionsTheme: noPageTransitionsTheme) : theme,
-                  child: child!,
+                  child: LoadingIndicatorThemeBridge(child: child!),
                 ),
               );
             },

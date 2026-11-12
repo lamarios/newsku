@@ -1,7 +1,7 @@
 import 'package:app/feed/models/feed.dart';
 import 'package:app/feed/views/components/feed_image.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DraggedFeed extends StatelessWidget {
   final Feed feed;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/settings/views/tabs/api_keys.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
 import 'package:snaptest/snaptest.dart';
@@ -85,8 +85,7 @@ void main() {
 
     await snap(name: 'api_keys_create_dialog', matchToGolden: true);
 
-    final createKey = nock(validServerUrl).put('/api/api-keys', (body) => true)
-      ..reply(200, _createdApiKey);
+    final createKey = nock(validServerUrl).put('/api/api-keys', (body) => true)..reply(200, _createdApiKey);
     nock(validServerUrl).get('/api/api-keys').reply(200, _apiKeys);
 
     await tester.tap(confirm);

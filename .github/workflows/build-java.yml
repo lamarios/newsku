@@ -70,7 +70,7 @@ jobs:
       - name: build web
         working-directory: src/main/app
         run: |
-         nix-shell --run "flutter build web --release --wasm --build-name ${TAG_NAME} --build-number ${{ github.run_number }} " ../../../shell.nix
+         nix-shell --run "flutter build web --release --wasm --web-content-hash --build-name ${TAG_NAME} --build-number ${{ github.run_number }} " ../../../shell.nix
          cp -R build/web ../resources/public
       # build backend
 

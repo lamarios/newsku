@@ -1,5 +1,5 @@
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:motor/motor.dart';
 
 /// Whether animations should be skipped, either because the user enabled the in-app setting or because the OS asks

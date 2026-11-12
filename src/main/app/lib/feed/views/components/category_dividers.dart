@@ -1,7 +1,7 @@
 import 'package:app/feed/models/feed_category.dart';
 import 'package:app/feed/views/components/category_pill.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const double _dividerHeight = 3;
 

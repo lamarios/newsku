@@ -7,7 +7,7 @@
 
 import 'package:app/user/views/components/server_url.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
 

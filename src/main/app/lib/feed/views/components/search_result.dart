@@ -7,7 +7,7 @@ import 'package:app/feed/views/components/item_content.dart';
 import 'package:app/feed/views/components/item_title.dart';
 import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:gap/gap.dart';
 
 class SearchResult extends StatelessWidget {

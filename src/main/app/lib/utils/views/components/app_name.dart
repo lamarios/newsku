@@ -1,5 +1,5 @@
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppName extends StatelessWidget {
   final TextStyle? style;

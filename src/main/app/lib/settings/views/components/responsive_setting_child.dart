@@ -1,6 +1,6 @@
 import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/views/components/conditional_wrap.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ResponsiveSettingChild extends StatelessWidget {
   final String title;

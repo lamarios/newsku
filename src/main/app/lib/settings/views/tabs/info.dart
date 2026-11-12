@@ -12,7 +12,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:feedback/feedback.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:gap/gap.dart';
 import 'package:logging/logging.dart';
 import 'package:material_loading_indicator/loading_indicator.dart';

@@ -4,7 +4,7 @@ import 'package:app/feed/models/feed_category.dart';
 import 'package:app/settings/views/components/feed_category.dart';
 import 'package:app/settings/views/tabs/feeds.dart';
 import 'package:app/utils/views/components/error_dialog.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
 import 'package:snaptest/snaptest.dart';

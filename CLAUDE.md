@@ -35,7 +35,7 @@ make build-runner-watch
 flutter test                          # all tests (CI runs this)
 flutter test test/feed/feed_test.dart # single file
 make generate-goldens                 # flutter test --update-goldens
-make web-build                        # flutter build web --release --wasm
+make web-build                        # flutter build web --release --wasm --web-content-hash
 ```
 
 Generated files (`*.freezed.dart`, `*.g.dart`, `router.gr.dart`, `l10n/app_localizations*.dart`) are committed. Regenerate them after you change models, states or routes. Localized strings live in `lib/l10n/app_en.arb`. The analyzer enforces `always_use_package_imports` (`package:app/...`) and a 120-char page width.

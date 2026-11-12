@@ -4,7 +4,7 @@ import 'package:app/stats/views/components/no_stats.dart';
 import 'package:app/stats/views/components/stat_bar.dart';
 import 'package:app/utils/utils.dart';
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()

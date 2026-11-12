@@ -12,7 +12,7 @@ import 'package:app/utils/models/breakpoints.dart';
 import 'package:app/utils/states/simple_cubit.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/utils/views/components/simple_cubit_view.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motor/motor.dart';
 import 'package:app/utils/motion.dart';

@@ -1,6 +1,6 @@
 import 'package:app/identity/views/components/first_time_setup_trigger.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
 import 'package:snaptest/snaptest.dart';

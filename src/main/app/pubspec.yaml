@@ -28,28 +28,28 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  auto_route: 11.1.0
+  auto_route: 11.2.0
   awesome_notifications: 0.12.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cached_network_image: 3.4.1
-  cached_network_image_web: 1.3.1
-  device_info_plus: 13.2.0
-  dynamic_color: 1.9.0
+  cached_network_image: 4.0.7
+  cached_network_image_web: 2.0.5
+  device_info_plus: 13.3.0
+  dynamic_color: 2.1.0
   easy_debounce: 2.0.3
   feedback: 3.2.0
-  file_picker: 12.0.0
-  file_saver: 0.4.0
+  file_picker: 13.3.3
+  file_saver: 0.7.0
   flutter:
     sdk: flutter
   flutter_bloc: 9.1.1
   flutter_localizations:
     sdk: flutter
-  flutter_sticky_header: 0.8.0
-  flutter_svg: 2.3.0
+  flutter_sticky_header: 0.11.0
+  flutter_svg: 2.3.4
   freezed_annotation: 3.1.0
-  gap: 3.0.1
-  get_it: 9.2.1
+  gap: 3.1.0
+  get_it: 9.3.0
   html_unescape: 2.0.0
   http: 1.6.0
   intl: any
@@ -57,13 +57,14 @@ dependencies:
   jwt_decoder: 2.0.1
   logging: 1.3.0
   material_loading_indicator: 1.0.0
+  material_ui: 1.11.0
   motor: 1.1.0
-  oidc: 4.0.0
-  oidc_default_store: 1.1.2
-  package_info_plus: 10.2.1
-  shared_preferences: 2.5.5
+  oidc: 5.0.2
+  oidc_default_store: 2.0.0
+  package_info_plus: 10.2.2
+  shared_preferences: 2.5.6
   sliver_tools: 0.2.12
-  url_launcher: 6.3.2
+  url_launcher: 6.3.3
   visibility_detector: 0.4.0+2
   workmanager: 0.10.10
 
@@ -71,7 +72,7 @@ dependencies:
 
 dev_dependencies:
   auto_route_generator: any
-  build_runner: 2.15.0
+  build_runner: 2.16.1
   dart_jsonwebtoken: 3.4.1
   flutter_lints: ^6.0.0
   flutter_test:

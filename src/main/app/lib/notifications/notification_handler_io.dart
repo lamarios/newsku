@@ -1,12 +1,11 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:app/feed/services/feed_service.dart';
 import 'package:app/home/state/local_preferences.dart';
 import 'package:app/l10n/app_localizations_en.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';

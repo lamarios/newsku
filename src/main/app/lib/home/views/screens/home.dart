@@ -1,7 +1,7 @@
 import 'package:app/identity/views/components/first_time_setup_trigger.dart';
 import 'package:app/identity/views/components/logout_listener.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {

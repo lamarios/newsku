@@ -1,5 +1,5 @@
 import 'package:app/feed/models/feed_item.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:html_unescape/html_unescape.dart';
 
 class ItemContent extends StatelessWidget {

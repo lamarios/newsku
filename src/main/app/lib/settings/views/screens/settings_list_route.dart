@@ -4,7 +4,7 @@ import 'package:app/main.dart';
 import 'package:app/settings/views/components/settings_master_list.dart';
 import 'package:app/utils/views/components/auto_leading_button.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 @RoutePage()
 class SettingsListScreen extends StatelessWidget {

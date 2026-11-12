@@ -12,7 +12,7 @@ import 'package:app/user/views/components/user_profile_picture.dart';
 import 'package:app/utils/models/pagination.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/utils/views/components/error_dialog.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
 import 'package:snaptest/snaptest.dart';

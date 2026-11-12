@@ -3,8 +3,7 @@ import 'package:app/feed/views/components/image_placeholder.dart';
 import 'package:app/identity/states/identity.dart';
 import 'package:app/utils/views/components/conditional_wrap.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FeedItemImage extends StatelessWidget {

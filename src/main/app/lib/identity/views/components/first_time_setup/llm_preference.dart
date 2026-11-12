@@ -3,7 +3,7 @@ import 'package:app/l10n/app_localizations.dart';
 import 'package:app/user/services/user_service.dart';
 import 'package:app/utils/utils.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LlmPreference extends StatelessWidget {

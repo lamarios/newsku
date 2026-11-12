@@ -1,7 +1,7 @@
 import 'package:app/layouts/models/layout_block_types.dart';
 import 'package:app/layouts/views/components/previews/preview_container.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SearchResultSmall extends StatelessWidget {
   const SearchResultSmall({super.key});

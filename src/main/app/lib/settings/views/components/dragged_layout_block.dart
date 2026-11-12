@@ -1,6 +1,6 @@
 import 'package:app/layouts/models/layout_block_types.dart';
 import 'package:app/utils/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DraggedLayoutBlock extends StatelessWidget {
   final LayoutBlockTypes type;

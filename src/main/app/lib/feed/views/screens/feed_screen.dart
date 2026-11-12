@@ -18,7 +18,7 @@ import 'package:app/utils/views/components/conditional_wrap.dart';
 import 'package:app/utils/views/components/error_listener.dart';
 import 'package:app/utils/views/components/progressive_blur.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';

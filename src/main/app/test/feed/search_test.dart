@@ -1,6 +1,6 @@
 import 'package:app/feed/views/components/search_result.dart';
 import 'package:app/feed/views/screens/feed_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
 import 'package:snaptest/snaptest.dart';

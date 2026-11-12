@@ -4,7 +4,7 @@ import 'package:app/l10n/app_localizations.dart';
 import 'package:app/main.dart';
 import 'package:app/router.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TestSetup extends StatelessWidget {

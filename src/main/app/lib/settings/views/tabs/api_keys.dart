@@ -6,7 +6,7 @@ import 'package:app/utils/dialog.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/utils/views/components/error_listener.dart';
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';

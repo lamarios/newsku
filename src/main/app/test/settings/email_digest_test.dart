@@ -1,5 +1,5 @@
 import 'package:app/settings/views/tabs/email_digest.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
 import 'package:snaptest/snaptest.dart';
@@ -37,7 +37,5 @@ void main() {
     expect(updateUser.isDone, true);
 
     updateUser = nock(validServerUrl).post('/api/users', (body) => true)..reply(200, loadFixture('user.json'));
-
   });
-
 }

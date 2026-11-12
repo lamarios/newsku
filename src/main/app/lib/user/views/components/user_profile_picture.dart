@@ -1,6 +1,6 @@
 import 'package:app/identity/states/identity.dart';
 import 'package:app/main.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class UserProfilePicture extends StatelessWidget {
   const UserProfilePicture({super.key});

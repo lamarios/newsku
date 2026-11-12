@@ -1,6 +1,6 @@
 import 'package:app/feed/models/feed_item.dart';
 import 'package:app/utils/motion.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:motor/motor.dart';
 
 class ItemTitle extends StatelessWidget {

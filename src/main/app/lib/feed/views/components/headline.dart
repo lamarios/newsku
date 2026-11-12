@@ -8,7 +8,7 @@ import 'package:app/feed/views/components/item_content.dart';
 import 'package:app/feed/views/components/item_title.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/utils/views/components/conditional_wrap.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:gap/gap.dart';
 
 class Headline extends StatelessWidget {
