@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feed.dart';
@@ -9,6 +9,7 @@ part of 'feed.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $FeedCopyWith<Feed> get copyWith => _$FeedCopyWithImpl<Feed>(this as Feed, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Feed&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.url, url) || other.url == url)&&(identical(other.itemPreference, itemPreference) || other.itemPreference == itemPreference)&&(identical(other.image, image) || other.image == image)&&(identical(other.category, category) || other.category == category)&&(identical(other.lastRefreshErrors, lastRefreshErrors) || other.lastRefreshErrors == lastRefreshErrors));
+  final _this = this as Feed;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Feed&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.url, _this.url) || other.url == _this.url)&&(identical(other.itemPreference, _this.itemPreference) || other.itemPreference == _this.itemPreference)&&(identical(other.image, _this.image) || other.image == _this.image)&&(identical(other.category, _this.category) || other.category == _this.category)&&(identical(other.lastRefreshErrors, _this.lastRefreshErrors) || other.lastRefreshErrors == _this.lastRefreshErrors));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,url,itemPreference,image,category,lastRefreshErrors);
+int get hashCode {
+  final _this = this as Feed;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.description,_this.url,_this.itemPreference,_this.image,_this.category,_this.lastRefreshErrors);
+}
 
 @override
 String toString() {
-  return 'Feed(id: $id, name: $name, description: $description, url: $url, itemPreference: $itemPreference, image: $image, category: $category, lastRefreshErrors: $lastRefreshErrors)';
+  final _this = this as Feed;
+  return 'Feed(id: ${_this.id}, name: ${_this.name}, description: ${_this.description}, url: ${_this.url}, itemPreference: ${_this.itemPreference}, image: ${_this.image}, category: ${_this.category}, lastRefreshErrors: ${_this.lastRefreshErrors})';
 }
 
 
@@ -66,7 +72,7 @@ class _$FeedCopyWithImpl<$Res>
 /// Create a copy of Feed
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = freezed,Object? description = freezed,Object? url = freezed,Object? itemPreference = freezed,Object? image = freezed,Object? category = freezed,Object? lastRefreshErrors = null,}) {
-  return _then(_self.copyWith(
+  return _then(Feed(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
@@ -247,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Feed&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.url, url) || other.url == url)&&(identical(other.itemPreference, itemPreference) || other.itemPreference == itemPreference)&&(identical(other.image, image) || other.image == image)&&(identical(other.category, category) || other.category == category)&&(identical(other.lastRefreshErrors, lastRefreshErrors) || other.lastRefreshErrors == lastRefreshErrors));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Feed&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.url, url) || other.url == url)&&(identical(other.itemPreference, itemPreference) || other.itemPreference == itemPreference)&&(identical(other.image, image) || other.image == image)&&(identical(other.category, category) || other.category == category)&&(identical(other.lastRefreshErrors, lastRefreshErrors) || other.lastRefreshErrors == lastRefreshErrors));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,url,itemPreference,image,category,lastRefreshErrors);
+int get hashCode {
+    return Object.hash(runtimeType,id,name,description,url,itemPreference,image,category,lastRefreshErrors);
+}
 
 @override
 String toString() {
-  return 'Feed(id: $id, name: $name, description: $description, url: $url, itemPreference: $itemPreference, image: $image, category: $category, lastRefreshErrors: $lastRefreshErrors)';
+    return 'Feed(id: $id, name: $name, description: $description, url: $url, itemPreference: $itemPreference, image: $image, category: $category, lastRefreshErrors: $lastRefreshErrors)';
 }
 
 

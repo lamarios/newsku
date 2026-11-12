@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'stats.dart';
@@ -9,6 +9,7 @@ part of 'stats.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $StatsCopyWith<Stats> get copyWith => _$StatsCopyWithImpl<Stats>(this as Stats, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Stats&&const DeepCollectionEquality().equals(other.tagClicks, tagClicks)&&const DeepCollectionEquality().equals(other.feedClicks, feedClicks));
+  final _this = this as Stats;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Stats&&const DeepCollectionEquality().equals(other.tagClicks, _this.tagClicks)&&const DeepCollectionEquality().equals(other.feedClicks, _this.feedClicks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(tagClicks),const DeepCollectionEquality().hash(feedClicks));
+int get hashCode {
+  final _this = this as Stats;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.tagClicks),const DeepCollectionEquality().hash(_this.feedClicks));
+}
 
 @override
 String toString() {
-  return 'Stats(tagClicks: $tagClicks, feedClicks: $feedClicks)';
+  final _this = this as Stats;
+  return 'Stats(tagClicks: ${_this.tagClicks}, feedClicks: ${_this.feedClicks})';
 }
 
 
@@ -66,7 +72,7 @@ class _$StatsCopyWithImpl<$Res>
 /// Create a copy of Stats
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? tagClicks = null,Object? feedClicks = null,}) {
-  return _then(_self.copyWith(
+  return _then(Stats(
 tagClicks: null == tagClicks ? _self.tagClicks : tagClicks // ignore: cast_nullable_to_non_nullable
 as List<TagClick>,feedClicks: null == feedClicks ? _self.feedClicks : feedClicks // ignore: cast_nullable_to_non_nullable
 as List<FeedClick>,
@@ -204,7 +210,7 @@ return $default(_that.tagClicks,_that.feedClicks);case _:
 @JsonSerializable()
 
 class _Stats implements Stats {
-  const _Stats({final  List<TagClick> tagClicks = const [], final  List<FeedClick> feedClicks = const []}): _tagClicks = tagClicks,_feedClicks = feedClicks;
+  const _Stats({ List<TagClick> tagClicks = const [],  List<FeedClick> feedClicks = const []}): _tagClicks = tagClicks,_feedClicks = feedClicks;
   factory _Stats.fromJson(Map<String, dynamic> json) => _$StatsFromJson(json);
 
  final  List<TagClick> _tagClicks;
@@ -235,16 +241,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Stats&&const DeepCollectionEquality().equals(other._tagClicks, _tagClicks)&&const DeepCollectionEquality().equals(other._feedClicks, _feedClicks));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Stats&&const DeepCollectionEquality().equals(other.tagClicks, _tagClicks)&&const DeepCollectionEquality().equals(other.feedClicks, _feedClicks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_tagClicks),const DeepCollectionEquality().hash(_feedClicks));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_tagClicks),const DeepCollectionEquality().hash(_feedClicks));
+}
 
 @override
 String toString() {
-  return 'Stats(tagClicks: $tagClicks, feedClicks: $feedClicks)';
+    return 'Stats(tagClicks: $tagClicks, feedClicks: $feedClicks)';
 }
 
 
@@ -300,16 +308,21 @@ $TagClickCopyWith<TagClick> get copyWith => _$TagClickCopyWithImpl<TagClick>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TagClick&&(identical(other.tag, tag) || other.tag == tag)&&(identical(other.clicks, clicks) || other.clicks == clicks));
+  final _this = this as TagClick;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TagClick&&(identical(other.tag, _this.tag) || other.tag == _this.tag)&&(identical(other.clicks, _this.clicks) || other.clicks == _this.clicks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,tag,clicks);
+int get hashCode {
+  final _this = this as TagClick;
+  return Object.hash(runtimeType,_this.tag,_this.clicks);
+}
 
 @override
 String toString() {
-  return 'TagClick(tag: $tag, clicks: $clicks)';
+  final _this = this as TagClick;
+  return 'TagClick(tag: ${_this.tag}, clicks: ${_this.clicks})';
 }
 
 
@@ -338,7 +351,7 @@ class _$TagClickCopyWithImpl<$Res>
 /// Create a copy of TagClick
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? tag = null,Object? clicks = null,}) {
-  return _then(_self.copyWith(
+  return _then(TagClick(
 tag: null == tag ? _self.tag : tag // ignore: cast_nullable_to_non_nullable
 as String,clicks: null == clicks ? _self.clicks : clicks // ignore: cast_nullable_to_non_nullable
 as int,
@@ -495,16 +508,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TagClick&&(identical(other.tag, tag) || other.tag == tag)&&(identical(other.clicks, clicks) || other.clicks == clicks));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TagClick&&(identical(other.tag, tag) || other.tag == tag)&&(identical(other.clicks, clicks) || other.clicks == clicks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,tag,clicks);
+int get hashCode {
+    return Object.hash(runtimeType,tag,clicks);
+}
 
 @override
 String toString() {
-  return 'TagClick(tag: $tag, clicks: $clicks)';
+    return 'TagClick(tag: $tag, clicks: $clicks)';
 }
 
 
@@ -560,16 +575,21 @@ $FeedClickCopyWith<FeedClick> get copyWith => _$FeedClickCopyWithImpl<FeedClick>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedClick&&(identical(other.feed, feed) || other.feed == feed)&&(identical(other.clicks, clicks) || other.clicks == clicks));
+  final _this = this as FeedClick;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedClick&&(identical(other.feed, _this.feed) || other.feed == _this.feed)&&(identical(other.clicks, _this.clicks) || other.clicks == _this.clicks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,feed,clicks);
+int get hashCode {
+  final _this = this as FeedClick;
+  return Object.hash(runtimeType,_this.feed,_this.clicks);
+}
 
 @override
 String toString() {
-  return 'FeedClick(feed: $feed, clicks: $clicks)';
+  final _this = this as FeedClick;
+  return 'FeedClick(feed: ${_this.feed}, clicks: ${_this.clicks})';
 }
 
 
@@ -598,7 +618,7 @@ class _$FeedClickCopyWithImpl<$Res>
 /// Create a copy of FeedClick
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? feed = null,Object? clicks = null,}) {
-  return _then(_self.copyWith(
+  return _then(FeedClick(
 feed: null == feed ? _self.feed : feed // ignore: cast_nullable_to_non_nullable
 as Feed,clicks: null == clicks ? _self.clicks : clicks // ignore: cast_nullable_to_non_nullable
 as int,
@@ -764,16 +784,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedClick&&(identical(other.feed, feed) || other.feed == feed)&&(identical(other.clicks, clicks) || other.clicks == clicks));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedClick&&(identical(other.feed, feed) || other.feed == feed)&&(identical(other.clicks, clicks) || other.clicks == clicks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,feed,clicks);
+int get hashCode {
+    return Object.hash(runtimeType,feed,clicks);
+}
 
 @override
 String toString() {
-  return 'FeedClick(feed: $feed, clicks: $clicks)';
+    return 'FeedClick(feed: $feed, clicks: $clicks)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'main_settings.dart';
@@ -9,6 +9,7 @@ part of 'main_settings.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $MainSettingsStateCopyWith<MainSettingsState> get copyWith => _$MainSettingsStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MainSettingsState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.feeds, feeds) || other.feeds == feeds)&&(identical(other.categories, categories) || other.categories == categories)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  final _this = this as MainSettingsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MainSettingsState&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.feeds, _this.feeds) || other.feeds == _this.feeds)&&(identical(other.categories, _this.categories) || other.categories == _this.categories)&&const DeepCollectionEquality().equals(other.error, _this.error)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,feeds,categories,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+  final _this = this as MainSettingsState;
+  return Object.hash(runtimeType,_this.loading,_this.feeds,_this.categories,const DeepCollectionEquality().hash(_this.error),_this.stackTrace);
+}
 
 @override
 String toString() {
-  return 'MainSettingsState(loading: $loading, feeds: $feeds, categories: $categories, error: $error, stackTrace: $stackTrace)';
+  final _this = this as MainSettingsState;
+  return 'MainSettingsState(loading: ${_this.loading}, feeds: ${_this.feeds}, categories: ${_this.categories}, error: ${_this.error}, stackTrace: ${_this.stackTrace})';
 }
 
 
@@ -63,7 +69,7 @@ class _$MainSettingsStateCopyWithImpl<$Res>
 /// Create a copy of MainSettingsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loading = null,Object? feeds = null,Object? categories = null,Object? error = freezed,Object? stackTrace = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(MainSettingsState(
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,feeds: null == feeds ? _self.feeds : feeds // ignore: cast_nullable_to_non_nullable
 as int,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
@@ -223,16 +229,18 @@ _$MainSettingsStateCopyWith<_MainSettingsState> get copyWith => __$MainSettingsS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MainSettingsState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.feeds, feeds) || other.feeds == feeds)&&(identical(other.categories, categories) || other.categories == categories)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MainSettingsState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.feeds, feeds) || other.feeds == feeds)&&(identical(other.categories, categories) || other.categories == categories)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,feeds,categories,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+    return Object.hash(runtimeType,loading,feeds,categories,const DeepCollectionEquality().hash(error),stackTrace);
+}
 
 @override
 String toString() {
-  return 'MainSettingsState(loading: $loading, feeds: $feeds, categories: $categories, error: $error, stackTrace: $stackTrace)';
+    return 'MainSettingsState(loading: $loading, feeds: $feeds, categories: $categories, error: $error, stackTrace: $stackTrace)';
 }
 
 

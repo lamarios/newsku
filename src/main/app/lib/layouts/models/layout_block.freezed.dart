@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'layout_block.dart';
@@ -9,6 +9,7 @@ part of 'layout_block.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $LayoutBlockCopyWith<LayoutBlock> get copyWith => _$LayoutBlockCopyWithImpl<Layo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LayoutBlock&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.order, order) || other.order == order)&&(identical(other.settings, settings) || other.settings == settings));
+  final _this = this as LayoutBlock;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LayoutBlock&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.order, _this.order) || other.order == _this.order)&&(identical(other.settings, _this.settings) || other.settings == _this.settings));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,order,settings);
+int get hashCode {
+  final _this = this as LayoutBlock;
+  return Object.hash(runtimeType,_this.id,_this.type,_this.order,_this.settings);
+}
 
 @override
 String toString() {
-  return 'LayoutBlock(id: $id, type: $type, order: $order, settings: $settings)';
+  final _this = this as LayoutBlock;
+  return 'LayoutBlock(id: ${_this.id}, type: ${_this.type}, order: ${_this.order}, settings: ${_this.settings})';
 }
 
 
@@ -66,7 +72,7 @@ class _$LayoutBlockCopyWithImpl<$Res>
 /// Create a copy of LayoutBlock
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? type = null,Object? order = null,Object? settings = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(LayoutBlock(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as LayoutBlockTypes,order: null == order ? _self.order : order // ignore: cast_nullable_to_non_nullable
@@ -239,16 +245,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LayoutBlock&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.order, order) || other.order == order)&&(identical(other.settings, settings) || other.settings == settings));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LayoutBlock&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.order, order) || other.order == order)&&(identical(other.settings, settings) || other.settings == settings));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,order,settings);
+int get hashCode {
+    return Object.hash(runtimeType,id,type,order,settings);
+}
 
 @override
 String toString() {
-  return 'LayoutBlock(id: $id, type: $type, order: $order, settings: $settings)';
+    return 'LayoutBlock(id: $id, type: $type, order: $order, settings: $settings)';
 }
 
 

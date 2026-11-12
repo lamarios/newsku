@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feeds.dart';
@@ -9,6 +9,7 @@ part of 'feeds.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $FeedsSettingsStateCopyWith<FeedsSettingsState> get copyWith => _$FeedsSettingsS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedsSettingsState&&const DeepCollectionEquality().equals(other.feeds, feeds)&&const DeepCollectionEquality().equals(other.categories, categories)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.draggingFeed, draggingFeed) || other.draggingFeed == draggingFeed)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  final _this = this as FeedsSettingsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedsSettingsState&&const DeepCollectionEquality().equals(other.feeds, _this.feeds)&&const DeepCollectionEquality().equals(other.categories, _this.categories)&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.draggingFeed, _this.draggingFeed) || other.draggingFeed == _this.draggingFeed)&&const DeepCollectionEquality().equals(other.error, _this.error)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(feeds),const DeepCollectionEquality().hash(categories),loading,draggingFeed,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+  final _this = this as FeedsSettingsState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.feeds),const DeepCollectionEquality().hash(_this.categories),_this.loading,_this.draggingFeed,const DeepCollectionEquality().hash(_this.error),_this.stackTrace);
+}
 
 @override
 String toString() {
-  return 'FeedsSettingsState(feeds: $feeds, categories: $categories, loading: $loading, draggingFeed: $draggingFeed, error: $error, stackTrace: $stackTrace)';
+  final _this = this as FeedsSettingsState;
+  return 'FeedsSettingsState(feeds: ${_this.feeds}, categories: ${_this.categories}, loading: ${_this.loading}, draggingFeed: ${_this.draggingFeed}, error: ${_this.error}, stackTrace: ${_this.stackTrace})';
 }
 
 
@@ -63,7 +69,7 @@ class _$FeedsSettingsStateCopyWithImpl<$Res>
 /// Create a copy of FeedsSettingsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? feeds = null,Object? categories = null,Object? loading = null,Object? draggingFeed = null,Object? error = freezed,Object? stackTrace = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(FeedsSettingsState(
 feeds: null == feeds ? _self.feeds : feeds // ignore: cast_nullable_to_non_nullable
 as List<Feed>,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<FeedCategory>,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
@@ -205,7 +211,7 @@ return $default(_that.feeds,_that.categories,_that.loading,_that.draggingFeed,_t
 
 
 class _FeedsSettingsState implements FeedsSettingsState, WithError {
-  const _FeedsSettingsState({final  List<Feed> feeds = const [], final  List<FeedCategory> categories = const [], this.loading = true, this.draggingFeed = false, this.error, this.stackTrace}): _feeds = feeds,_categories = categories;
+  const _FeedsSettingsState({ List<Feed> feeds = const [],  List<FeedCategory> categories = const [], this.loading = true, this.draggingFeed = false, this.error, this.stackTrace}): _feeds = feeds,_categories = categories;
   
 
  final  List<Feed> _feeds;
@@ -237,16 +243,18 @@ _$FeedsSettingsStateCopyWith<_FeedsSettingsState> get copyWith => __$FeedsSettin
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedsSettingsState&&const DeepCollectionEquality().equals(other._feeds, _feeds)&&const DeepCollectionEquality().equals(other._categories, _categories)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.draggingFeed, draggingFeed) || other.draggingFeed == draggingFeed)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedsSettingsState&&const DeepCollectionEquality().equals(other.feeds, _feeds)&&const DeepCollectionEquality().equals(other.categories, _categories)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.draggingFeed, draggingFeed) || other.draggingFeed == draggingFeed)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_feeds),const DeepCollectionEquality().hash(_categories),loading,draggingFeed,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_feeds),const DeepCollectionEquality().hash(_categories),loading,draggingFeed,const DeepCollectionEquality().hash(error),stackTrace);
+}
 
 @override
 String toString() {
-  return 'FeedsSettingsState(feeds: $feeds, categories: $categories, loading: $loading, draggingFeed: $draggingFeed, error: $error, stackTrace: $stackTrace)';
+    return 'FeedsSettingsState(feeds: $feeds, categories: $categories, loading: $loading, draggingFeed: $draggingFeed, error: $error, stackTrace: $stackTrace)';
 }
 
 

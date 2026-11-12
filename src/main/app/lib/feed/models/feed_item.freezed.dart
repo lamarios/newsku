@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feed_item.dart';
@@ -9,6 +9,7 @@ part of 'feed_item.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $FeedItemCopyWith<FeedItem> get copyWith => _$FeedItemCopyWithImpl<FeedItem>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedItem&&(identical(other.id, id) || other.id == id)&&(identical(other.guid, guid) || other.guid == guid)&&(identical(other.title, title) || other.title == title)&&(identical(other.url, url) || other.url == url)&&(identical(other.description, description) || other.description == description)&&(identical(other.content, content) || other.content == content)&&(identical(other.reasoning, reasoning) || other.reasoning == reasoning)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.read, read) || other.read == read)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.timeCreated, timeCreated) || other.timeCreated == timeCreated)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.feed, feed) || other.feed == feed));
+  final _this = this as FeedItem;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedItem&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.guid, _this.guid) || other.guid == _this.guid)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.url, _this.url) || other.url == _this.url)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.content, _this.content) || other.content == _this.content)&&(identical(other.reasoning, _this.reasoning) || other.reasoning == _this.reasoning)&&(identical(other.imageUrl, _this.imageUrl) || other.imageUrl == _this.imageUrl)&&(identical(other.read, _this.read) || other.read == _this.read)&&(identical(other.importance, _this.importance) || other.importance == _this.importance)&&(identical(other.timeCreated, _this.timeCreated) || other.timeCreated == _this.timeCreated)&&const DeepCollectionEquality().equals(other.tags, _this.tags)&&(identical(other.feed, _this.feed) || other.feed == _this.feed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,guid,title,url,description,content,reasoning,imageUrl,read,importance,timeCreated,const DeepCollectionEquality().hash(tags),feed);
+int get hashCode {
+  final _this = this as FeedItem;
+  return Object.hash(runtimeType,_this.id,_this.guid,_this.title,_this.url,_this.description,_this.content,_this.reasoning,_this.imageUrl,_this.read,_this.importance,_this.timeCreated,const DeepCollectionEquality().hash(_this.tags),_this.feed);
+}
 
 @override
 String toString() {
-  return 'FeedItem(id: $id, guid: $guid, title: $title, url: $url, description: $description, content: $content, reasoning: $reasoning, imageUrl: $imageUrl, read: $read, importance: $importance, timeCreated: $timeCreated, tags: $tags, feed: $feed)';
+  final _this = this as FeedItem;
+  return 'FeedItem(id: ${_this.id}, guid: ${_this.guid}, title: ${_this.title}, url: ${_this.url}, description: ${_this.description}, content: ${_this.content}, reasoning: ${_this.reasoning}, imageUrl: ${_this.imageUrl}, read: ${_this.read}, importance: ${_this.importance}, timeCreated: ${_this.timeCreated}, tags: ${_this.tags}, feed: ${_this.feed})';
 }
 
 
@@ -66,7 +72,7 @@ class _$FeedItemCopyWithImpl<$Res>
 /// Create a copy of FeedItem
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? guid = freezed,Object? title = freezed,Object? url = freezed,Object? description = freezed,Object? content = freezed,Object? reasoning = freezed,Object? imageUrl = freezed,Object? read = null,Object? importance = null,Object? timeCreated = null,Object? tags = null,Object? feed = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(FeedItem(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,guid: freezed == guid ? _self.guid : guid // ignore: cast_nullable_to_non_nullable
 as String?,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -227,7 +233,7 @@ return $default(_that.id,_that.guid,_that.title,_that.url,_that.description,_tha
 @JsonSerializable()
 
 class _FeedItem implements FeedItem {
-  const _FeedItem({this.id, this.guid, this.title, this.url, this.description, this.content, this.reasoning, this.imageUrl, this.read = false, this.importance = 0, this.timeCreated = 0, final  List<String> tags = const [], this.feed}): _tags = tags;
+  const _FeedItem({this.id, this.guid, this.title, this.url, this.description, this.content, this.reasoning, this.imageUrl, this.read = false, this.importance = 0, this.timeCreated = 0,  List<String> tags = const [], this.feed}): _tags = tags;
   factory _FeedItem.fromJson(Map<String, dynamic> json) => _$FeedItemFromJson(json);
 
 @override final  String? id;
@@ -263,16 +269,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedItem&&(identical(other.id, id) || other.id == id)&&(identical(other.guid, guid) || other.guid == guid)&&(identical(other.title, title) || other.title == title)&&(identical(other.url, url) || other.url == url)&&(identical(other.description, description) || other.description == description)&&(identical(other.content, content) || other.content == content)&&(identical(other.reasoning, reasoning) || other.reasoning == reasoning)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.read, read) || other.read == read)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.timeCreated, timeCreated) || other.timeCreated == timeCreated)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.feed, feed) || other.feed == feed));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedItem&&(identical(other.id, id) || other.id == id)&&(identical(other.guid, guid) || other.guid == guid)&&(identical(other.title, title) || other.title == title)&&(identical(other.url, url) || other.url == url)&&(identical(other.description, description) || other.description == description)&&(identical(other.content, content) || other.content == content)&&(identical(other.reasoning, reasoning) || other.reasoning == reasoning)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.read, read) || other.read == read)&&(identical(other.importance, importance) || other.importance == importance)&&(identical(other.timeCreated, timeCreated) || other.timeCreated == timeCreated)&&const DeepCollectionEquality().equals(other.tags, _tags)&&(identical(other.feed, feed) || other.feed == feed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,guid,title,url,description,content,reasoning,imageUrl,read,importance,timeCreated,const DeepCollectionEquality().hash(_tags),feed);
+int get hashCode {
+    return Object.hash(runtimeType,id,guid,title,url,description,content,reasoning,imageUrl,read,importance,timeCreated,const DeepCollectionEquality().hash(_tags),feed);
+}
 
 @override
 String toString() {
-  return 'FeedItem(id: $id, guid: $guid, title: $title, url: $url, description: $description, content: $content, reasoning: $reasoning, imageUrl: $imageUrl, read: $read, importance: $importance, timeCreated: $timeCreated, tags: $tags, feed: $feed)';
+    return 'FeedItem(id: $id, guid: $guid, title: $title, url: $url, description: $description, content: $content, reasoning: $reasoning, imageUrl: $imageUrl, read: $read, importance: $importance, timeCreated: $timeCreated, tags: $tags, feed: $feed)';
 }
 
 

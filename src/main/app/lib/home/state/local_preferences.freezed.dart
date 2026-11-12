@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'local_preferences.dart';
@@ -9,6 +9,7 @@ part of 'local_preferences.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $LocalPreferencesStateCopyWith<LocalPreferencesState> get copyWith => _$LocalPre
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as LocalPreferencesState;
   properties
     ..add(DiagnosticsProperty('type', 'LocalPreferencesState'))
-    ..add(DiagnosticsProperty('themeColor', themeColor))..add(DiagnosticsProperty('dynamicColor', dynamicColor))..add(DiagnosticsProperty('blackBackground', blackBackground))..add(DiagnosticsProperty('reduceMotion', reduceMotion))..add(DiagnosticsProperty('density', density))..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('notifications', notifications))..add(DiagnosticsProperty('notificationsFrequency', notificationsFrequency))..add(DiagnosticsProperty('systemColors', systemColors));
+    ..add(DiagnosticsProperty('themeColor', _this.themeColor))..add(DiagnosticsProperty('dynamicColor', _this.dynamicColor))..add(DiagnosticsProperty('blackBackground', _this.blackBackground))..add(DiagnosticsProperty('reduceMotion', _this.reduceMotion))..add(DiagnosticsProperty('density', _this.density))..add(DiagnosticsProperty('theme', _this.theme))..add(DiagnosticsProperty('notifications', _this.notifications))..add(DiagnosticsProperty('notificationsFrequency', _this.notificationsFrequency))..add(DiagnosticsProperty('systemColors', _this.systemColors));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LocalPreferencesState&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.dynamicColor, dynamicColor) || other.dynamicColor == dynamicColor)&&(identical(other.blackBackground, blackBackground) || other.blackBackground == blackBackground)&&(identical(other.reduceMotion, reduceMotion) || other.reduceMotion == reduceMotion)&&(identical(other.density, density) || other.density == density)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.notifications, notifications) || other.notifications == notifications)&&(identical(other.notificationsFrequency, notificationsFrequency) || other.notificationsFrequency == notificationsFrequency)&&(identical(other.systemColors, systemColors) || other.systemColors == systemColors));
+  final _this = this as LocalPreferencesState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LocalPreferencesState&&(identical(other.themeColor, _this.themeColor) || other.themeColor == _this.themeColor)&&(identical(other.dynamicColor, _this.dynamicColor) || other.dynamicColor == _this.dynamicColor)&&(identical(other.blackBackground, _this.blackBackground) || other.blackBackground == _this.blackBackground)&&(identical(other.reduceMotion, _this.reduceMotion) || other.reduceMotion == _this.reduceMotion)&&(identical(other.density, _this.density) || other.density == _this.density)&&(identical(other.theme, _this.theme) || other.theme == _this.theme)&&(identical(other.notifications, _this.notifications) || other.notifications == _this.notifications)&&(identical(other.notificationsFrequency, _this.notificationsFrequency) || other.notificationsFrequency == _this.notificationsFrequency)&&(identical(other.systemColors, _this.systemColors) || other.systemColors == _this.systemColors));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,themeColor,dynamicColor,blackBackground,reduceMotion,density,theme,notifications,notificationsFrequency,systemColors);
+int get hashCode {
+  final _this = this as LocalPreferencesState;
+  return Object.hash(runtimeType,_this.themeColor,_this.dynamicColor,_this.blackBackground,_this.reduceMotion,_this.density,_this.theme,_this.notifications,_this.notificationsFrequency,_this.systemColors);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'LocalPreferencesState(themeColor: $themeColor, dynamicColor: $dynamicColor, blackBackground: $blackBackground, reduceMotion: $reduceMotion, density: $density, theme: $theme, notifications: $notifications, notificationsFrequency: $notificationsFrequency, systemColors: $systemColors)';
+  final _this = this as LocalPreferencesState;
+  return 'LocalPreferencesState(themeColor: ${_this.themeColor}, dynamicColor: ${_this.dynamicColor}, blackBackground: ${_this.blackBackground}, reduceMotion: ${_this.reduceMotion}, density: ${_this.density}, theme: ${_this.theme}, notifications: ${_this.notifications}, notificationsFrequency: ${_this.notificationsFrequency}, systemColors: ${_this.systemColors})';
 }
 
 
@@ -69,7 +76,7 @@ class _$LocalPreferencesStateCopyWithImpl<$Res>
 /// Create a copy of LocalPreferencesState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? themeColor = null,Object? dynamicColor = null,Object? blackBackground = null,Object? reduceMotion = null,Object? density = null,Object? theme = null,Object? notifications = null,Object? notificationsFrequency = null,Object? systemColors = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(LocalPreferencesState(
 themeColor: null == themeColor ? _self.themeColor : themeColor // ignore: cast_nullable_to_non_nullable
 as Color,dynamicColor: null == dynamicColor ? _self.dynamicColor : dynamicColor // ignore: cast_nullable_to_non_nullable
 as bool,blackBackground: null == blackBackground ? _self.blackBackground : blackBackground // ignore: cast_nullable_to_non_nullable
@@ -236,23 +243,25 @@ _$LocalPreferencesStateCopyWith<_LocalPreferencesState> get copyWith => __$Local
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'LocalPreferencesState'))
     ..add(DiagnosticsProperty('themeColor', themeColor))..add(DiagnosticsProperty('dynamicColor', dynamicColor))..add(DiagnosticsProperty('blackBackground', blackBackground))..add(DiagnosticsProperty('reduceMotion', reduceMotion))..add(DiagnosticsProperty('density', density))..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('notifications', notifications))..add(DiagnosticsProperty('notificationsFrequency', notificationsFrequency))..add(DiagnosticsProperty('systemColors', systemColors));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LocalPreferencesState&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.dynamicColor, dynamicColor) || other.dynamicColor == dynamicColor)&&(identical(other.blackBackground, blackBackground) || other.blackBackground == blackBackground)&&(identical(other.reduceMotion, reduceMotion) || other.reduceMotion == reduceMotion)&&(identical(other.density, density) || other.density == density)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.notifications, notifications) || other.notifications == notifications)&&(identical(other.notificationsFrequency, notificationsFrequency) || other.notificationsFrequency == notificationsFrequency)&&(identical(other.systemColors, systemColors) || other.systemColors == systemColors));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LocalPreferencesState&&(identical(other.themeColor, themeColor) || other.themeColor == themeColor)&&(identical(other.dynamicColor, dynamicColor) || other.dynamicColor == dynamicColor)&&(identical(other.blackBackground, blackBackground) || other.blackBackground == blackBackground)&&(identical(other.reduceMotion, reduceMotion) || other.reduceMotion == reduceMotion)&&(identical(other.density, density) || other.density == density)&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.notifications, notifications) || other.notifications == notifications)&&(identical(other.notificationsFrequency, notificationsFrequency) || other.notificationsFrequency == notificationsFrequency)&&(identical(other.systemColors, systemColors) || other.systemColors == systemColors));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,themeColor,dynamicColor,blackBackground,reduceMotion,density,theme,notifications,notificationsFrequency,systemColors);
+int get hashCode {
+    return Object.hash(runtimeType,themeColor,dynamicColor,blackBackground,reduceMotion,density,theme,notifications,notificationsFrequency,systemColors);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'LocalPreferencesState(themeColor: $themeColor, dynamicColor: $dynamicColor, blackBackground: $blackBackground, reduceMotion: $reduceMotion, density: $density, theme: $theme, notifications: $notifications, notificationsFrequency: $notificationsFrequency, systemColors: $systemColors)';
+    return 'LocalPreferencesState(themeColor: $themeColor, dynamicColor: $dynamicColor, blackBackground: $blackBackground, reduceMotion: $reduceMotion, density: $density, theme: $theme, notifications: $notifications, notificationsFrequency: $notificationsFrequency, systemColors: $systemColors)';
 }
 
 

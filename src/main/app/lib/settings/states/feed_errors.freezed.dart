@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feed_errors.dart';
@@ -9,6 +9,7 @@ part of 'feed_errors.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $FeedErrorsStateCopyWith<FeedErrorsState> get copyWith => _$FeedErrorsStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedErrorsState&&(identical(other.page, page) || other.page == page)&&(identical(other.loading, loading) || other.loading == loading)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace)&&(identical(other.errors, errors) || other.errors == errors));
+  final _this = this as FeedErrorsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedErrorsState&&(identical(other.page, _this.page) || other.page == _this.page)&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&const DeepCollectionEquality().equals(other.error, _this.error)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace)&&(identical(other.errors, _this.errors) || other.errors == _this.errors));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,page,loading,const DeepCollectionEquality().hash(error),stackTrace,errors);
+int get hashCode {
+  final _this = this as FeedErrorsState;
+  return Object.hash(runtimeType,_this.page,_this.loading,const DeepCollectionEquality().hash(_this.error),_this.stackTrace,_this.errors);
+}
 
 @override
 String toString() {
-  return 'FeedErrorsState(page: $page, loading: $loading, error: $error, stackTrace: $stackTrace, errors: $errors)';
+  final _this = this as FeedErrorsState;
+  return 'FeedErrorsState(page: ${_this.page}, loading: ${_this.loading}, error: ${_this.error}, stackTrace: ${_this.stackTrace}, errors: ${_this.errors})';
 }
 
 
@@ -63,7 +69,7 @@ class _$FeedErrorsStateCopyWithImpl<$Res>
 /// Create a copy of FeedErrorsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? page = null,Object? loading = null,Object? error = freezed,Object? stackTrace = freezed,Object? errors = null,}) {
-  return _then(_self.copyWith(
+  return _then(FeedErrorsState(
 page: null == page ? _self.page : page // ignore: cast_nullable_to_non_nullable
 as int,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -232,16 +238,18 @@ _$FeedErrorsStateCopyWith<_FeedErrorsState> get copyWith => __$FeedErrorsStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedErrorsState&&(identical(other.page, page) || other.page == page)&&(identical(other.loading, loading) || other.loading == loading)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace)&&(identical(other.errors, errors) || other.errors == errors));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedErrorsState&&(identical(other.page, page) || other.page == page)&&(identical(other.loading, loading) || other.loading == loading)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace)&&(identical(other.errors, errors) || other.errors == errors));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,page,loading,const DeepCollectionEquality().hash(error),stackTrace,errors);
+int get hashCode {
+    return Object.hash(runtimeType,page,loading,const DeepCollectionEquality().hash(error),stackTrace,errors);
+}
 
 @override
 String toString() {
-  return 'FeedErrorsState(page: $page, loading: $loading, error: $error, stackTrace: $stackTrace, errors: $errors)';
+    return 'FeedErrorsState(page: $page, loading: $loading, error: $error, stackTrace: $stackTrace, errors: $errors)';
 }
 
 

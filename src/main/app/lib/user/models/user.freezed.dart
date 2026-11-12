@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user.dart';
@@ -9,6 +9,7 @@ part of 'user.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $UserCopyWith<User> get copyWith => _$UserCopyWithImpl<User>(this as User, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.email, email) || other.email == email)&&(identical(other.feedItemPreference, feedItemPreference) || other.feedItemPreference == feedItemPreference)&&(identical(other.oidcSub, oidcSub) || other.oidcSub == oidcSub)&&(identical(other.minimumImportance, minimumImportance) || other.minimumImportance == minimumImportance)&&(identical(other.firstTimeSetupDone, firstTimeSetupDone) || other.firstTimeSetupDone == firstTimeSetupDone)&&(identical(other.readItemHandling, readItemHandling) || other.readItemHandling == readItemHandling)&&const DeepCollectionEquality().equals(other.emailDigest, emailDigest));
+  final _this = this as User;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.password, _this.password) || other.password == _this.password)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.feedItemPreference, _this.feedItemPreference) || other.feedItemPreference == _this.feedItemPreference)&&(identical(other.oidcSub, _this.oidcSub) || other.oidcSub == _this.oidcSub)&&(identical(other.minimumImportance, _this.minimumImportance) || other.minimumImportance == _this.minimumImportance)&&(identical(other.firstTimeSetupDone, _this.firstTimeSetupDone) || other.firstTimeSetupDone == _this.firstTimeSetupDone)&&(identical(other.readItemHandling, _this.readItemHandling) || other.readItemHandling == _this.readItemHandling)&&const DeepCollectionEquality().equals(other.emailDigest, _this.emailDigest));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,username,password,email,feedItemPreference,oidcSub,minimumImportance,firstTimeSetupDone,readItemHandling,const DeepCollectionEquality().hash(emailDigest));
+int get hashCode {
+  final _this = this as User;
+  return Object.hash(runtimeType,_this.id,_this.username,_this.password,_this.email,_this.feedItemPreference,_this.oidcSub,_this.minimumImportance,_this.firstTimeSetupDone,_this.readItemHandling,const DeepCollectionEquality().hash(_this.emailDigest));
+}
 
 @override
 String toString() {
-  return 'User(id: $id, username: $username, password: $password, email: $email, feedItemPreference: $feedItemPreference, oidcSub: $oidcSub, minimumImportance: $minimumImportance, firstTimeSetupDone: $firstTimeSetupDone, readItemHandling: $readItemHandling, emailDigest: $emailDigest)';
+  final _this = this as User;
+  return 'User(id: ${_this.id}, username: ${_this.username}, password: ${_this.password}, email: ${_this.email}, feedItemPreference: ${_this.feedItemPreference}, oidcSub: ${_this.oidcSub}, minimumImportance: ${_this.minimumImportance}, firstTimeSetupDone: ${_this.firstTimeSetupDone}, readItemHandling: ${_this.readItemHandling}, emailDigest: ${_this.emailDigest})';
 }
 
 
@@ -66,7 +72,7 @@ class _$UserCopyWithImpl<$Res>
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? username = freezed,Object? password = freezed,Object? email = freezed,Object? feedItemPreference = freezed,Object? oidcSub = freezed,Object? minimumImportance = null,Object? firstTimeSetupDone = null,Object? readItemHandling = null,Object? emailDigest = null,}) {
-  return _then(_self.copyWith(
+  return _then(User(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String?,password: freezed == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
@@ -212,7 +218,7 @@ return $default(_that.id,_that.username,_that.password,_that.email,_that.feedIte
 @JsonSerializable()
 
 class _User implements User {
-  const _User({this.id, this.username, this.password, this.email, this.feedItemPreference, this.oidcSub, this.minimumImportance = 0, this.firstTimeSetupDone = false, this.readItemHandling = ReadItemHandling.none, final  List<EmailDigestFrequency> emailDigest = const []}): _emailDigest = emailDigest;
+  const _User({this.id, this.username, this.password, this.email, this.feedItemPreference, this.oidcSub, this.minimumImportance = 0, this.firstTimeSetupDone = false, this.readItemHandling = ReadItemHandling.none,  List<EmailDigestFrequency> emailDigest = const []}): _emailDigest = emailDigest;
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
 @override final  String? id;
@@ -245,16 +251,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.email, email) || other.email == email)&&(identical(other.feedItemPreference, feedItemPreference) || other.feedItemPreference == feedItemPreference)&&(identical(other.oidcSub, oidcSub) || other.oidcSub == oidcSub)&&(identical(other.minimumImportance, minimumImportance) || other.minimumImportance == minimumImportance)&&(identical(other.firstTimeSetupDone, firstTimeSetupDone) || other.firstTimeSetupDone == firstTimeSetupDone)&&(identical(other.readItemHandling, readItemHandling) || other.readItemHandling == readItemHandling)&&const DeepCollectionEquality().equals(other._emailDigest, _emailDigest));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.email, email) || other.email == email)&&(identical(other.feedItemPreference, feedItemPreference) || other.feedItemPreference == feedItemPreference)&&(identical(other.oidcSub, oidcSub) || other.oidcSub == oidcSub)&&(identical(other.minimumImportance, minimumImportance) || other.minimumImportance == minimumImportance)&&(identical(other.firstTimeSetupDone, firstTimeSetupDone) || other.firstTimeSetupDone == firstTimeSetupDone)&&(identical(other.readItemHandling, readItemHandling) || other.readItemHandling == readItemHandling)&&const DeepCollectionEquality().equals(other.emailDigest, _emailDigest));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,username,password,email,feedItemPreference,oidcSub,minimumImportance,firstTimeSetupDone,readItemHandling,const DeepCollectionEquality().hash(_emailDigest));
+int get hashCode {
+    return Object.hash(runtimeType,id,username,password,email,feedItemPreference,oidcSub,minimumImportance,firstTimeSetupDone,readItemHandling,const DeepCollectionEquality().hash(_emailDigest));
+}
 
 @override
 String toString() {
-  return 'User(id: $id, username: $username, password: $password, email: $email, feedItemPreference: $feedItemPreference, oidcSub: $oidcSub, minimumImportance: $minimumImportance, firstTimeSetupDone: $firstTimeSetupDone, readItemHandling: $readItemHandling, emailDigest: $emailDigest)';
+    return 'User(id: $id, username: $username, password: $password, email: $email, feedItemPreference: $feedItemPreference, oidcSub: $oidcSub, minimumImportance: $minimumImportance, firstTimeSetupDone: $firstTimeSetupDone, readItemHandling: $readItemHandling, emailDigest: $emailDigest)';
 }
 
 

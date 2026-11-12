@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'config.dart';
@@ -9,6 +9,7 @@ part of 'config.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ConfigCopyWith<Config> get copyWith => _$ConfigCopyWithImpl<Config>(this as Con
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Config&&(identical(other.demoMode, demoMode) || other.demoMode == demoMode)&&(identical(other.backendVersion, backendVersion) || other.backendVersion == backendVersion)&&(identical(other.allowSignup, allowSignup) || other.allowSignup == allowSignup)&&(identical(other.canResetPassword, canResetPassword) || other.canResetPassword == canResetPassword)&&(identical(other.oidcConfig, oidcConfig) || other.oidcConfig == oidcConfig)&&(identical(other.announcement, announcement) || other.announcement == announcement));
+  final _this = this as Config;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Config&&(identical(other.demoMode, _this.demoMode) || other.demoMode == _this.demoMode)&&(identical(other.backendVersion, _this.backendVersion) || other.backendVersion == _this.backendVersion)&&(identical(other.allowSignup, _this.allowSignup) || other.allowSignup == _this.allowSignup)&&(identical(other.canResetPassword, _this.canResetPassword) || other.canResetPassword == _this.canResetPassword)&&(identical(other.oidcConfig, _this.oidcConfig) || other.oidcConfig == _this.oidcConfig)&&(identical(other.announcement, _this.announcement) || other.announcement == _this.announcement));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,demoMode,backendVersion,allowSignup,canResetPassword,oidcConfig,announcement);
+int get hashCode {
+  final _this = this as Config;
+  return Object.hash(runtimeType,_this.demoMode,_this.backendVersion,_this.allowSignup,_this.canResetPassword,_this.oidcConfig,_this.announcement);
+}
 
 @override
 String toString() {
-  return 'Config(demoMode: $demoMode, backendVersion: $backendVersion, allowSignup: $allowSignup, canResetPassword: $canResetPassword, oidcConfig: $oidcConfig, announcement: $announcement)';
+  final _this = this as Config;
+  return 'Config(demoMode: ${_this.demoMode}, backendVersion: ${_this.backendVersion}, allowSignup: ${_this.allowSignup}, canResetPassword: ${_this.canResetPassword}, oidcConfig: ${_this.oidcConfig}, announcement: ${_this.announcement})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ConfigCopyWithImpl<$Res>
 /// Create a copy of Config
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? demoMode = null,Object? backendVersion = null,Object? allowSignup = null,Object? canResetPassword = null,Object? oidcConfig = freezed,Object? announcement = null,}) {
-  return _then(_self.copyWith(
+  return _then(Config(
 demoMode: null == demoMode ? _self.demoMode : demoMode // ignore: cast_nullable_to_non_nullable
 as bool,backendVersion: null == backendVersion ? _self.backendVersion : backendVersion // ignore: cast_nullable_to_non_nullable
 as String,allowSignup: null == allowSignup ? _self.allowSignup : allowSignup // ignore: cast_nullable_to_non_nullable
@@ -243,16 +249,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Config&&(identical(other.demoMode, demoMode) || other.demoMode == demoMode)&&(identical(other.backendVersion, backendVersion) || other.backendVersion == backendVersion)&&(identical(other.allowSignup, allowSignup) || other.allowSignup == allowSignup)&&(identical(other.canResetPassword, canResetPassword) || other.canResetPassword == canResetPassword)&&(identical(other.oidcConfig, oidcConfig) || other.oidcConfig == oidcConfig)&&(identical(other.announcement, announcement) || other.announcement == announcement));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Config&&(identical(other.demoMode, demoMode) || other.demoMode == demoMode)&&(identical(other.backendVersion, backendVersion) || other.backendVersion == backendVersion)&&(identical(other.allowSignup, allowSignup) || other.allowSignup == allowSignup)&&(identical(other.canResetPassword, canResetPassword) || other.canResetPassword == canResetPassword)&&(identical(other.oidcConfig, oidcConfig) || other.oidcConfig == oidcConfig)&&(identical(other.announcement, announcement) || other.announcement == announcement));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,demoMode,backendVersion,allowSignup,canResetPassword,oidcConfig,announcement);
+int get hashCode {
+    return Object.hash(runtimeType,demoMode,backendVersion,allowSignup,canResetPassword,oidcConfig,announcement);
+}
 
 @override
 String toString() {
-  return 'Config(demoMode: $demoMode, backendVersion: $backendVersion, allowSignup: $allowSignup, canResetPassword: $canResetPassword, oidcConfig: $oidcConfig, announcement: $announcement)';
+    return 'Config(demoMode: $demoMode, backendVersion: $backendVersion, allowSignup: $allowSignup, canResetPassword: $canResetPassword, oidcConfig: $oidcConfig, announcement: $announcement)';
 }
 
 

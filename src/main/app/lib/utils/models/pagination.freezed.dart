@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'pagination.dart';
@@ -9,6 +9,7 @@ part of 'pagination.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $PaginatedCopyWith<T, Paginated<T>> get copyWith => _$PaginatedCopyWithImpl<T, P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Paginated<T>&&const DeepCollectionEquality().equals(other.content, content)&&(identical(other.totalElements, totalElements) || other.totalElements == totalElements)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.numberOfElements, numberOfElements) || other.numberOfElements == numberOfElements)&&(identical(other.number, number) || other.number == number));
+  final _this = this as Paginated<T>;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Paginated<T>&&const DeepCollectionEquality().equals(other.content, _this.content)&&(identical(other.totalElements, _this.totalElements) || other.totalElements == _this.totalElements)&&(identical(other.totalPages, _this.totalPages) || other.totalPages == _this.totalPages)&&(identical(other.numberOfElements, _this.numberOfElements) || other.numberOfElements == _this.numberOfElements)&&(identical(other.number, _this.number) || other.number == _this.number));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(content),totalElements,totalPages,numberOfElements,number);
+int get hashCode {
+  final _this = this as Paginated<T>;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.content),_this.totalElements,_this.totalPages,_this.numberOfElements,_this.number);
+}
 
 @override
 String toString() {
-  return 'Paginated<$T>(content: $content, totalElements: $totalElements, totalPages: $totalPages, numberOfElements: $numberOfElements, number: $number)';
+  final _this = this as Paginated<T>;
+  return 'Paginated<$T>(content: ${_this.content}, totalElements: ${_this.totalElements}, totalPages: ${_this.totalPages}, numberOfElements: ${_this.numberOfElements}, number: ${_this.number})';
 }
 
 
@@ -66,7 +72,7 @@ class _$PaginatedCopyWithImpl<T,$Res>
 /// Create a copy of Paginated
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? content = null,Object? totalElements = null,Object? totalPages = null,Object? numberOfElements = null,Object? number = null,}) {
-  return _then(_self.copyWith(
+  return _then(Paginated(
 content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as List<T>,totalElements: null == totalElements ? _self.totalElements : totalElements // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
@@ -207,7 +213,7 @@ return $default(_that.content,_that.totalElements,_that.totalPages,_that.numberO
 @JsonSerializable(genericArgumentFactories: true)
 
 class _Paginated<T> implements Paginated<T> {
-  const _Paginated({final  List<T> content = const [], this.totalElements = 0, this.totalPages = 0, this.numberOfElements = 0, this.number = 0}): _content = content;
+  const _Paginated({ List<T> content = const [], this.totalElements = 0, this.totalPages = 0, this.numberOfElements = 0, this.number = 0}): _content = content;
   factory _Paginated.fromJson(Map<String, dynamic> json,T Function(Object?) fromJsonT) => _$PaginatedFromJson(json,fromJsonT);
 
  final  List<T> _content;
@@ -235,16 +241,18 @@ Map<String, dynamic> toJson(Object? Function(T) toJsonT) {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Paginated<T>&&const DeepCollectionEquality().equals(other._content, _content)&&(identical(other.totalElements, totalElements) || other.totalElements == totalElements)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.numberOfElements, numberOfElements) || other.numberOfElements == numberOfElements)&&(identical(other.number, number) || other.number == number));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Paginated<T>&&const DeepCollectionEquality().equals(other.content, _content)&&(identical(other.totalElements, totalElements) || other.totalElements == totalElements)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.numberOfElements, numberOfElements) || other.numberOfElements == numberOfElements)&&(identical(other.number, number) || other.number == number));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_content),totalElements,totalPages,numberOfElements,number);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_content),totalElements,totalPages,numberOfElements,number);
+}
 
 @override
 String toString() {
-  return 'Paginated<$T>(content: $content, totalElements: $totalElements, totalPages: $totalPages, numberOfElements: $numberOfElements, number: $number)';
+    return 'Paginated<$T>(content: $content, totalElements: $totalElements, totalPages: $totalPages, numberOfElements: $numberOfElements, number: $number)';
 }
 
 

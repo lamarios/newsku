@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'login.dart';
@@ -9,6 +9,7 @@ part of 'login.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $LoginStateCopyWith<LoginState> get copyWith => _$LoginStateCopyWithImpl<LoginSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.failedLogin, failedLogin) || other.failedLogin == failedLogin)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  final _this = this as LoginState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.failedLogin, _this.failedLogin) || other.failedLogin == _this.failedLogin)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.password, _this.password) || other.password == _this.password)&&const DeepCollectionEquality().equals(other.error, _this.error)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,failedLogin,username,password,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+  final _this = this as LoginState;
+  return Object.hash(runtimeType,_this.loading,_this.failedLogin,_this.username,_this.password,const DeepCollectionEquality().hash(_this.error),_this.stackTrace);
+}
 
 @override
 String toString() {
-  return 'LoginState(loading: $loading, failedLogin: $failedLogin, username: $username, password: $password, error: $error, stackTrace: $stackTrace)';
+  final _this = this as LoginState;
+  return 'LoginState(loading: ${_this.loading}, failedLogin: ${_this.failedLogin}, username: ${_this.username}, password: ${_this.password}, error: ${_this.error}, stackTrace: ${_this.stackTrace})';
 }
 
 
@@ -63,7 +69,7 @@ class _$LoginStateCopyWithImpl<$Res>
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loading = null,Object? failedLogin = null,Object? username = null,Object? password = null,Object? error = freezed,Object? stackTrace = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(LoginState(
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,failedLogin: null == failedLogin ? _self.failedLogin : failedLogin // ignore: cast_nullable_to_non_nullable
 as bool,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -225,16 +231,18 @@ _$LoginStateCopyWith<_LoginState> get copyWith => __$LoginStateCopyWithImpl<_Log
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.failedLogin, failedLogin) || other.failedLogin == failedLogin)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.failedLogin, failedLogin) || other.failedLogin == failedLogin)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,failedLogin,username,password,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+    return Object.hash(runtimeType,loading,failedLogin,username,password,const DeepCollectionEquality().hash(error),stackTrace);
+}
 
 @override
 String toString() {
-  return 'LoginState(loading: $loading, failedLogin: $failedLogin, username: $username, password: $password, error: $error, stackTrace: $stackTrace)';
+    return 'LoginState(loading: $loading, failedLogin: $failedLogin, username: $username, password: $password, error: $error, stackTrace: $stackTrace)';
 }
 
 

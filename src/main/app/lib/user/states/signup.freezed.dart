@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'signup.dart';
@@ -9,6 +9,7 @@ part of 'signup.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $SignupStateCopyWith<SignupState> get copyWith => _$SignupStateCopyWithImpl<Sign
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.repeatPassword, repeatPassword) || other.repeatPassword == repeatPassword)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  final _this = this as SignupState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SignupState&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.password, _this.password) || other.password == _this.password)&&(identical(other.repeatPassword, _this.repeatPassword) || other.repeatPassword == _this.repeatPassword)&&const DeepCollectionEquality().equals(other.error, _this.error)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,username,email,password,repeatPassword,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+  final _this = this as SignupState;
+  return Object.hash(runtimeType,_this.loading,_this.username,_this.email,_this.password,_this.repeatPassword,const DeepCollectionEquality().hash(_this.error),_this.stackTrace);
+}
 
 @override
 String toString() {
-  return 'SignupState(loading: $loading, username: $username, email: $email, password: $password, repeatPassword: $repeatPassword, error: $error, stackTrace: $stackTrace)';
+  final _this = this as SignupState;
+  return 'SignupState(loading: ${_this.loading}, username: ${_this.username}, email: ${_this.email}, password: ${_this.password}, repeatPassword: ${_this.repeatPassword}, error: ${_this.error}, stackTrace: ${_this.stackTrace})';
 }
 
 
@@ -63,7 +69,7 @@ class _$SignupStateCopyWithImpl<$Res>
 /// Create a copy of SignupState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loading = null,Object? username = freezed,Object? email = freezed,Object? password = freezed,Object? repeatPassword = freezed,Object? error = freezed,Object? stackTrace = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(SignupState(
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -227,16 +233,18 @@ _$SignupStateCopyWith<_SignupState> get copyWith => __$SignupStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignupState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.repeatPassword, repeatPassword) || other.repeatPassword == repeatPassword)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SignupState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.username, username) || other.username == username)&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.repeatPassword, repeatPassword) || other.repeatPassword == repeatPassword)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,username,email,password,repeatPassword,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+    return Object.hash(runtimeType,loading,username,email,password,repeatPassword,const DeepCollectionEquality().hash(error),stackTrace);
+}
 
 @override
 String toString() {
-  return 'SignupState(loading: $loading, username: $username, email: $email, password: $password, repeatPassword: $repeatPassword, error: $error, stackTrace: $stackTrace)';
+    return 'SignupState(loading: $loading, username: $username, email: $email, password: $password, repeatPassword: $repeatPassword, error: $error, stackTrace: $stackTrace)';
 }
 
 

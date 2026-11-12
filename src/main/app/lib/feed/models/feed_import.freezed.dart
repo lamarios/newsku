@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feed_import.dart';
@@ -9,6 +9,7 @@ part of 'feed_import.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 FeedToImport _$FeedToImportFromJson(
@@ -35,16 +36,21 @@ $FeedToImportCopyWith<FeedToImport> get copyWith => _$FeedToImportCopyWithImpl<F
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedToImport&&(identical(other.url, url) || other.url == url)&&(identical(other.feedCategory, feedCategory) || other.feedCategory == feedCategory));
+  final _this = this as FeedToImport;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedToImport&&(identical(other.url, _this.url) || other.url == _this.url)&&(identical(other.feedCategory, _this.feedCategory) || other.feedCategory == _this.feedCategory));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,url,feedCategory);
+int get hashCode {
+  final _this = this as FeedToImport;
+  return Object.hash(runtimeType,_this.url,_this.feedCategory);
+}
 
 @override
 String toString() {
-  return 'FeedToImport(url: $url, feedCategory: $feedCategory)';
+  final _this = this as FeedToImport;
+  return 'FeedToImport(url: ${_this.url}, feedCategory: ${_this.feedCategory})';
 }
 
 
@@ -73,7 +79,7 @@ class _$FeedToImportCopyWithImpl<$Res>
 /// Create a copy of FeedToImport
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? url = null,Object? feedCategory = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(FeedToImport(
 url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,feedCategory: freezed == feedCategory ? _self.feedCategory : feedCategory // ignore: cast_nullable_to_non_nullable
 as FeedCategory?,
@@ -242,16 +248,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedImport&&(identical(other.url, url) || other.url == url)&&(identical(other.feedCategory, feedCategory) || other.feedCategory == feedCategory));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedImport&&(identical(other.url, url) || other.url == url)&&(identical(other.feedCategory, feedCategory) || other.feedCategory == feedCategory));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,url,feedCategory);
+int get hashCode {
+    return Object.hash(runtimeType,url,feedCategory);
+}
 
 @override
 String toString() {
-  return 'FeedToImport(url: $url, feedCategory: $feedCategory)';
+    return 'FeedToImport(url: $url, feedCategory: $feedCategory)';
 }
 
 

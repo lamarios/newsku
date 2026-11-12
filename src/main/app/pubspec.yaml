@@ -76,8 +76,8 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
-  freezed: 3.2.5
-  json_serializable: 6.14.1
+  freezed: 4.0.1
+  json_serializable: 6.15.2
   mocktail: 1.0.5
   nock: 1.2.3
   snaptest: 0.3.1

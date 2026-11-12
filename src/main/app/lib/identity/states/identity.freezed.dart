@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'identity.dart';
@@ -9,6 +9,7 @@ part of 'identity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $IdentityStateCopyWith<IdentityState> get copyWith => _$IdentityStateCopyWithImp
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as IdentityState;
   properties
     ..add(DiagnosticsProperty('type', 'IdentityState'))
-    ..add(DiagnosticsProperty('token', token))..add(DiagnosticsProperty('serverUrl', serverUrl))..add(DiagnosticsProperty('config', config))..add(DiagnosticsProperty('currentUser', currentUser));
+    ..add(DiagnosticsProperty('token', _this.token))..add(DiagnosticsProperty('serverUrl', _this.serverUrl))..add(DiagnosticsProperty('config', _this.config))..add(DiagnosticsProperty('currentUser', _this.currentUser));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is IdentityState&&(identical(other.token, token) || other.token == token)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.config, config) || other.config == config)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser));
+  final _this = this as IdentityState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is IdentityState&&(identical(other.token, _this.token) || other.token == _this.token)&&(identical(other.serverUrl, _this.serverUrl) || other.serverUrl == _this.serverUrl)&&(identical(other.config, _this.config) || other.config == _this.config)&&(identical(other.currentUser, _this.currentUser) || other.currentUser == _this.currentUser));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,token,serverUrl,config,currentUser);
+int get hashCode {
+  final _this = this as IdentityState;
+  return Object.hash(runtimeType,_this.token,_this.serverUrl,_this.config,_this.currentUser);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'IdentityState(token: $token, serverUrl: $serverUrl, config: $config, currentUser: $currentUser)';
+  final _this = this as IdentityState;
+  return 'IdentityState(token: ${_this.token}, serverUrl: ${_this.serverUrl}, config: ${_this.config}, currentUser: ${_this.currentUser})';
 }
 
 
@@ -69,7 +76,7 @@ class _$IdentityStateCopyWithImpl<$Res>
 /// Create a copy of IdentityState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? token = freezed,Object? serverUrl = freezed,Object? config = freezed,Object? currentUser = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(IdentityState(
 token: freezed == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
 as String?,serverUrl: freezed == serverUrl ? _self.serverUrl : serverUrl // ignore: cast_nullable_to_non_nullable
 as String?,config: freezed == config ? _self.config : config // ignore: cast_nullable_to_non_nullable
@@ -250,23 +257,25 @@ _$IdentityStateCopyWith<_IdentityState> get copyWith => __$IdentityStateCopyWith
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'IdentityState'))
     ..add(DiagnosticsProperty('token', token))..add(DiagnosticsProperty('serverUrl', serverUrl))..add(DiagnosticsProperty('config', config))..add(DiagnosticsProperty('currentUser', currentUser));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IdentityState&&(identical(other.token, token) || other.token == token)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.config, config) || other.config == config)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _IdentityState&&(identical(other.token, token) || other.token == token)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.config, config) || other.config == config)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,token,serverUrl,config,currentUser);
+int get hashCode {
+    return Object.hash(runtimeType,token,serverUrl,config,currentUser);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'IdentityState(token: $token, serverUrl: $serverUrl, config: $config, currentUser: $currentUser)';
+    return 'IdentityState(token: $token, serverUrl: $serverUrl, config: $config, currentUser: $currentUser)';
 }
 
 

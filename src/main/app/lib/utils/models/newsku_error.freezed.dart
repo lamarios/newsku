@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'newsku_error.dart';
@@ -9,6 +9,7 @@ part of 'newsku_error.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $NewskuErrorCopyWith<NewskuError> get copyWith => _$NewskuErrorCopyWithImpl<News
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewskuError&&(identical(other.type, type) || other.type == type)&&(identical(other.uuid, uuid) || other.uuid == uuid)&&(identical(other.message, message) || other.message == message)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  final _this = this as NewskuError;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NewskuError&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.uuid, _this.uuid) || other.uuid == _this.uuid)&&(identical(other.message, _this.message) || other.message == _this.message)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,type,uuid,message,stackTrace);
+int get hashCode {
+  final _this = this as NewskuError;
+  return Object.hash(runtimeType,_this.type,_this.uuid,_this.message,_this.stackTrace);
+}
 
 @override
 String toString() {
-  return 'NewskuError(type: $type, uuid: $uuid, message: $message, stackTrace: $stackTrace)';
+  final _this = this as NewskuError;
+  return 'NewskuError(type: ${_this.type}, uuid: ${_this.uuid}, message: ${_this.message}, stackTrace: ${_this.stackTrace})';
 }
 
 
@@ -66,7 +72,7 @@ class _$NewskuErrorCopyWithImpl<$Res>
 /// Create a copy of NewskuError
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? uuid = freezed,Object? message = null,Object? stackTrace = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(NewskuError(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ErrorType,uuid: freezed == uuid ? _self.uuid : uuid // ignore: cast_nullable_to_non_nullable
 as String?,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
@@ -227,16 +233,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewskuError&&(identical(other.type, type) || other.type == type)&&(identical(other.uuid, uuid) || other.uuid == uuid)&&(identical(other.message, message) || other.message == message)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NewskuError&&(identical(other.type, type) || other.type == type)&&(identical(other.uuid, uuid) || other.uuid == uuid)&&(identical(other.message, message) || other.message == message)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,type,uuid,message,stackTrace);
+int get hashCode {
+    return Object.hash(runtimeType,type,uuid,message,stackTrace);
+}
 
 @override
 String toString() {
-  return 'NewskuError(type: $type, uuid: $uuid, message: $message, stackTrace: $stackTrace)';
+    return 'NewskuError(type: $type, uuid: $uuid, message: $message, stackTrace: $stackTrace)';
 }
 
 

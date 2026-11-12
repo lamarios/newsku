@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'stats_state.dart';
@@ -9,6 +9,7 @@ part of 'stats_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $StatsStateCopyWith<StatsState> get copyWith => _$StatsStateCopyWithImpl<StatsSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatsState&&(identical(other.stats, stats) || other.stats == stats)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace)&&(identical(other.loading, loading) || other.loading == loading));
+  final _this = this as StatsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatsState&&(identical(other.stats, _this.stats) || other.stats == _this.stats)&&const DeepCollectionEquality().equals(other.error, _this.error)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace)&&(identical(other.loading, _this.loading) || other.loading == _this.loading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,stats,const DeepCollectionEquality().hash(error),stackTrace,loading);
+int get hashCode {
+  final _this = this as StatsState;
+  return Object.hash(runtimeType,_this.stats,const DeepCollectionEquality().hash(_this.error),_this.stackTrace,_this.loading);
+}
 
 @override
 String toString() {
-  return 'StatsState(stats: $stats, error: $error, stackTrace: $stackTrace, loading: $loading)';
+  final _this = this as StatsState;
+  return 'StatsState(stats: ${_this.stats}, error: ${_this.error}, stackTrace: ${_this.stackTrace}, loading: ${_this.loading})';
 }
 
 
@@ -63,7 +69,7 @@ class _$StatsStateCopyWithImpl<$Res>
 /// Create a copy of StatsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? stats = null,Object? error = freezed,Object? stackTrace = freezed,Object? loading = null,}) {
-  return _then(_self.copyWith(
+  return _then(StatsState(
 stats: null == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
 as Stats,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as dynamic,stackTrace: freezed == stackTrace ? _self.stackTrace : stackTrace // ignore: cast_nullable_to_non_nullable
@@ -230,16 +236,18 @@ _$StatsStateCopyWith<_StatsState> get copyWith => __$StatsStateCopyWithImpl<_Sta
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatsState&&(identical(other.stats, stats) || other.stats == stats)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace)&&(identical(other.loading, loading) || other.loading == loading));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatsState&&(identical(other.stats, stats) || other.stats == stats)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace)&&(identical(other.loading, loading) || other.loading == loading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,stats,const DeepCollectionEquality().hash(error),stackTrace,loading);
+int get hashCode {
+    return Object.hash(runtimeType,stats,const DeepCollectionEquality().hash(error),stackTrace,loading);
+}
 
 @override
 String toString() {
-  return 'StatsState(stats: $stats, error: $error, stackTrace: $stackTrace, loading: $loading)';
+    return 'StatsState(stats: $stats, error: $error, stackTrace: $stackTrace, loading: $loading)';
 }
 
 

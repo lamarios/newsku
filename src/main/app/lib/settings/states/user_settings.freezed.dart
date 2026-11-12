@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_settings.dart';
@@ -9,6 +9,7 @@ part of 'user_settings.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $UserSettingsStateCopyWith<UserSettingsState> get copyWith => _$UserSettingsStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserSettingsState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.password, password) || other.password == password)&&(identical(other.repeatPassword, repeatPassword) || other.repeatPassword == repeatPassword)&&(identical(other.email, email) || other.email == email)&&const DeepCollectionEquality().equals(other.digest, digest)&&(identical(other.ssoLinked, ssoLinked) || other.ssoLinked == ssoLinked)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  final _this = this as UserSettingsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserSettingsState&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.password, _this.password) || other.password == _this.password)&&(identical(other.repeatPassword, _this.repeatPassword) || other.repeatPassword == _this.repeatPassword)&&(identical(other.email, _this.email) || other.email == _this.email)&&const DeepCollectionEquality().equals(other.digest, _this.digest)&&(identical(other.ssoLinked, _this.ssoLinked) || other.ssoLinked == _this.ssoLinked)&&const DeepCollectionEquality().equals(other.error, _this.error)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,password,repeatPassword,email,const DeepCollectionEquality().hash(digest),ssoLinked,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+  final _this = this as UserSettingsState;
+  return Object.hash(runtimeType,_this.loading,_this.password,_this.repeatPassword,_this.email,const DeepCollectionEquality().hash(_this.digest),_this.ssoLinked,const DeepCollectionEquality().hash(_this.error),_this.stackTrace);
+}
 
 @override
 String toString() {
-  return 'UserSettingsState(loading: $loading, password: $password, repeatPassword: $repeatPassword, email: $email, digest: $digest, ssoLinked: $ssoLinked, error: $error, stackTrace: $stackTrace)';
+  final _this = this as UserSettingsState;
+  return 'UserSettingsState(loading: ${_this.loading}, password: ${_this.password}, repeatPassword: ${_this.repeatPassword}, email: ${_this.email}, digest: ${_this.digest}, ssoLinked: ${_this.ssoLinked}, error: ${_this.error}, stackTrace: ${_this.stackTrace})';
 }
 
 
@@ -63,7 +69,7 @@ class _$UserSettingsStateCopyWithImpl<$Res>
 /// Create a copy of UserSettingsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loading = null,Object? password = null,Object? repeatPassword = null,Object? email = null,Object? digest = null,Object? ssoLinked = null,Object? error = freezed,Object? stackTrace = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(UserSettingsState(
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,repeatPassword: null == repeatPassword ? _self.repeatPassword : repeatPassword // ignore: cast_nullable_to_non_nullable
@@ -207,7 +213,7 @@ return $default(_that.loading,_that.password,_that.repeatPassword,_that.email,_t
 
 
 class _UserSettingsState extends UserSettingsState implements WithError {
-  const _UserSettingsState({this.loading = false, this.password = "", this.repeatPassword = "", this.email = "", final  List<EmailDigestFrequency> digest = const [], this.ssoLinked = false, this.error, this.stackTrace}): _digest = digest,super._();
+  const _UserSettingsState({this.loading = false, this.password = "", this.repeatPassword = "", this.email = "",  List<EmailDigestFrequency> digest = const [], this.ssoLinked = false, this.error, this.stackTrace}): _digest = digest,super._();
   
 
 @override@JsonKey() final  bool loading;
@@ -235,16 +241,18 @@ _$UserSettingsStateCopyWith<_UserSettingsState> get copyWith => __$UserSettingsS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserSettingsState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.password, password) || other.password == password)&&(identical(other.repeatPassword, repeatPassword) || other.repeatPassword == repeatPassword)&&(identical(other.email, email) || other.email == email)&&const DeepCollectionEquality().equals(other._digest, _digest)&&(identical(other.ssoLinked, ssoLinked) || other.ssoLinked == ssoLinked)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserSettingsState&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.password, password) || other.password == password)&&(identical(other.repeatPassword, repeatPassword) || other.repeatPassword == repeatPassword)&&(identical(other.email, email) || other.email == email)&&const DeepCollectionEquality().equals(other.digest, _digest)&&(identical(other.ssoLinked, ssoLinked) || other.ssoLinked == ssoLinked)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,password,repeatPassword,email,const DeepCollectionEquality().hash(_digest),ssoLinked,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+    return Object.hash(runtimeType,loading,password,repeatPassword,email,const DeepCollectionEquality().hash(_digest),ssoLinked,const DeepCollectionEquality().hash(error),stackTrace);
+}
 
 @override
 String toString() {
-  return 'UserSettingsState(loading: $loading, password: $password, repeatPassword: $repeatPassword, email: $email, digest: $digest, ssoLinked: $ssoLinked, error: $error, stackTrace: $stackTrace)';
+    return 'UserSettingsState(loading: $loading, password: $password, repeatPassword: $repeatPassword, email: $email, digest: $digest, ssoLinked: $ssoLinked, error: $error, stackTrace: $stackTrace)';
 }
 
 

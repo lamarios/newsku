@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'main_feed.dart';
@@ -9,12 +9,13 @@ part of 'main_feed.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MainFeedState {
 
- bool get hasScrolled; DateTime get currentTime; TimeBlock get timeBlock; bool get loading; Map<DateTimeRange, List<FeedItem>> get items; List<FeedCategory> get categories; List<Feed> get feeds; Feed? get selectedFeed; String get searchTerms; List<FeedItem> get feedItems; int get page; List<LayoutBlock> get layout; int get errorCount; bool get drawerOpened; FeedViewMode get viewMode; dynamic get error; StackTrace? get stackTrace;
+ bool get hasScrolled; DateTime get currentTime; TimeBlock get timeBlock; bool get loading; Map<DateTimeRange<DateTime>, List<FeedItem>> get items; List<FeedCategory> get categories; List<Feed> get feeds; Feed? get selectedFeed; String get searchTerms; List<FeedItem> get feedItems; int get page; List<LayoutBlock> get layout; int get errorCount; bool get drawerOpened; FeedViewMode get viewMode; dynamic get error; StackTrace? get stackTrace;
 /// Create a copy of MainFeedState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +26,21 @@ $MainFeedStateCopyWith<MainFeedState> get copyWith => _$MainFeedStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MainFeedState&&(identical(other.hasScrolled, hasScrolled) || other.hasScrolled == hasScrolled)&&(identical(other.currentTime, currentTime) || other.currentTime == currentTime)&&(identical(other.timeBlock, timeBlock) || other.timeBlock == timeBlock)&&(identical(other.loading, loading) || other.loading == loading)&&const DeepCollectionEquality().equals(other.items, items)&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.feeds, feeds)&&(identical(other.selectedFeed, selectedFeed) || other.selectedFeed == selectedFeed)&&(identical(other.searchTerms, searchTerms) || other.searchTerms == searchTerms)&&const DeepCollectionEquality().equals(other.feedItems, feedItems)&&(identical(other.page, page) || other.page == page)&&const DeepCollectionEquality().equals(other.layout, layout)&&(identical(other.errorCount, errorCount) || other.errorCount == errorCount)&&(identical(other.drawerOpened, drawerOpened) || other.drawerOpened == drawerOpened)&&(identical(other.viewMode, viewMode) || other.viewMode == viewMode)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  final _this = this as MainFeedState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MainFeedState&&(identical(other.hasScrolled, _this.hasScrolled) || other.hasScrolled == _this.hasScrolled)&&(identical(other.currentTime, _this.currentTime) || other.currentTime == _this.currentTime)&&(identical(other.timeBlock, _this.timeBlock) || other.timeBlock == _this.timeBlock)&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&const DeepCollectionEquality().equals(other.items, _this.items)&&const DeepCollectionEquality().equals(other.categories, _this.categories)&&const DeepCollectionEquality().equals(other.feeds, _this.feeds)&&(identical(other.selectedFeed, _this.selectedFeed) || other.selectedFeed == _this.selectedFeed)&&(identical(other.searchTerms, _this.searchTerms) || other.searchTerms == _this.searchTerms)&&const DeepCollectionEquality().equals(other.feedItems, _this.feedItems)&&(identical(other.page, _this.page) || other.page == _this.page)&&const DeepCollectionEquality().equals(other.layout, _this.layout)&&(identical(other.errorCount, _this.errorCount) || other.errorCount == _this.errorCount)&&(identical(other.drawerOpened, _this.drawerOpened) || other.drawerOpened == _this.drawerOpened)&&(identical(other.viewMode, _this.viewMode) || other.viewMode == _this.viewMode)&&const DeepCollectionEquality().equals(other.error, _this.error)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,hasScrolled,currentTime,timeBlock,loading,const DeepCollectionEquality().hash(items),const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(feeds),selectedFeed,searchTerms,const DeepCollectionEquality().hash(feedItems),page,const DeepCollectionEquality().hash(layout),errorCount,drawerOpened,viewMode,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+  final _this = this as MainFeedState;
+  return Object.hash(runtimeType,_this.hasScrolled,_this.currentTime,_this.timeBlock,_this.loading,const DeepCollectionEquality().hash(_this.items),const DeepCollectionEquality().hash(_this.categories),const DeepCollectionEquality().hash(_this.feeds),_this.selectedFeed,_this.searchTerms,const DeepCollectionEquality().hash(_this.feedItems),_this.page,const DeepCollectionEquality().hash(_this.layout),_this.errorCount,_this.drawerOpened,_this.viewMode,const DeepCollectionEquality().hash(_this.error),_this.stackTrace);
+}
 
 @override
 String toString() {
-  return 'MainFeedState(hasScrolled: $hasScrolled, currentTime: $currentTime, timeBlock: $timeBlock, loading: $loading, items: $items, categories: $categories, feeds: $feeds, selectedFeed: $selectedFeed, searchTerms: $searchTerms, feedItems: $feedItems, page: $page, layout: $layout, errorCount: $errorCount, drawerOpened: $drawerOpened, viewMode: $viewMode, error: $error, stackTrace: $stackTrace)';
+  final _this = this as MainFeedState;
+  return 'MainFeedState(hasScrolled: ${_this.hasScrolled}, currentTime: ${_this.currentTime}, timeBlock: ${_this.timeBlock}, loading: ${_this.loading}, items: ${_this.items}, categories: ${_this.categories}, feeds: ${_this.feeds}, selectedFeed: ${_this.selectedFeed}, searchTerms: ${_this.searchTerms}, feedItems: ${_this.feedItems}, page: ${_this.page}, layout: ${_this.layout}, errorCount: ${_this.errorCount}, drawerOpened: ${_this.drawerOpened}, viewMode: ${_this.viewMode}, error: ${_this.error}, stackTrace: ${_this.stackTrace})';
 }
 
 
@@ -45,7 +51,7 @@ abstract mixin class $MainFeedStateCopyWith<$Res>  {
   factory $MainFeedStateCopyWith(MainFeedState value, $Res Function(MainFeedState) _then) = _$MainFeedStateCopyWithImpl;
 @useResult
 $Res call({
- bool hasScrolled, DateTime currentTime, TimeBlock timeBlock, bool loading, Map<DateTimeRange, List<FeedItem>> items, List<FeedCategory> categories, List<Feed> feeds, Feed? selectedFeed, String searchTerms, List<FeedItem> feedItems, int page, List<LayoutBlock> layout, int errorCount, bool drawerOpened, FeedViewMode viewMode, dynamic error, StackTrace? stackTrace
+ bool hasScrolled, DateTime currentTime, TimeBlock timeBlock, bool loading, Map<DateTimeRange<DateTime>, List<FeedItem>> items, List<FeedCategory> categories, List<Feed> feeds, Feed? selectedFeed, String searchTerms, List<FeedItem> feedItems, int page, List<LayoutBlock> layout, int errorCount, bool drawerOpened, FeedViewMode viewMode, dynamic error, StackTrace? stackTrace
 });
 
 
@@ -63,13 +69,13 @@ class _$MainFeedStateCopyWithImpl<$Res>
 /// Create a copy of MainFeedState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? hasScrolled = null,Object? currentTime = null,Object? timeBlock = null,Object? loading = null,Object? items = null,Object? categories = null,Object? feeds = null,Object? selectedFeed = freezed,Object? searchTerms = null,Object? feedItems = null,Object? page = null,Object? layout = null,Object? errorCount = null,Object? drawerOpened = null,Object? viewMode = null,Object? error = freezed,Object? stackTrace = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(MainFeedState(
 hasScrolled: null == hasScrolled ? _self.hasScrolled : hasScrolled // ignore: cast_nullable_to_non_nullable
 as bool,currentTime: null == currentTime ? _self.currentTime : currentTime // ignore: cast_nullable_to_non_nullable
 as DateTime,timeBlock: null == timeBlock ? _self.timeBlock : timeBlock // ignore: cast_nullable_to_non_nullable
 as TimeBlock,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
-as Map<DateTimeRange, List<FeedItem>>,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
+as Map<DateTimeRange<DateTime>, List<FeedItem>>,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<FeedCategory>,feeds: null == feeds ? _self.feeds : feeds // ignore: cast_nullable_to_non_nullable
 as List<Feed>,selectedFeed: freezed == selectedFeed ? _self.selectedFeed : selectedFeed // ignore: cast_nullable_to_non_nullable
 as Feed?,searchTerms: null == searchTerms ? _self.searchTerms : searchTerms // ignore: cast_nullable_to_non_nullable
@@ -175,7 +181,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool hasScrolled,  DateTime currentTime,  TimeBlock timeBlock,  bool loading,  Map<DateTimeRange, List<FeedItem>> items,  List<FeedCategory> categories,  List<Feed> feeds,  Feed? selectedFeed,  String searchTerms,  List<FeedItem> feedItems,  int page,  List<LayoutBlock> layout,  int errorCount,  bool drawerOpened,  FeedViewMode viewMode,  dynamic error,  StackTrace? stackTrace)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool hasScrolled,  DateTime currentTime,  TimeBlock timeBlock,  bool loading,  Map<DateTimeRange<DateTime>, List<FeedItem>> items,  List<FeedCategory> categories,  List<Feed> feeds,  Feed? selectedFeed,  String searchTerms,  List<FeedItem> feedItems,  int page,  List<LayoutBlock> layout,  int errorCount,  bool drawerOpened,  FeedViewMode viewMode,  dynamic error,  StackTrace? stackTrace)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MainFeedState() when $default != null:
 return $default(_that.hasScrolled,_that.currentTime,_that.timeBlock,_that.loading,_that.items,_that.categories,_that.feeds,_that.selectedFeed,_that.searchTerms,_that.feedItems,_that.page,_that.layout,_that.errorCount,_that.drawerOpened,_that.viewMode,_that.error,_that.stackTrace);case _:
@@ -196,7 +202,7 @@ return $default(_that.hasScrolled,_that.currentTime,_that.timeBlock,_that.loadin
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool hasScrolled,  DateTime currentTime,  TimeBlock timeBlock,  bool loading,  Map<DateTimeRange, List<FeedItem>> items,  List<FeedCategory> categories,  List<Feed> feeds,  Feed? selectedFeed,  String searchTerms,  List<FeedItem> feedItems,  int page,  List<LayoutBlock> layout,  int errorCount,  bool drawerOpened,  FeedViewMode viewMode,  dynamic error,  StackTrace? stackTrace)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool hasScrolled,  DateTime currentTime,  TimeBlock timeBlock,  bool loading,  Map<DateTimeRange<DateTime>, List<FeedItem>> items,  List<FeedCategory> categories,  List<Feed> feeds,  Feed? selectedFeed,  String searchTerms,  List<FeedItem> feedItems,  int page,  List<LayoutBlock> layout,  int errorCount,  bool drawerOpened,  FeedViewMode viewMode,  dynamic error,  StackTrace? stackTrace)  $default,) {final _that = this;
 switch (_that) {
 case _MainFeedState():
 return $default(_that.hasScrolled,_that.currentTime,_that.timeBlock,_that.loading,_that.items,_that.categories,_that.feeds,_that.selectedFeed,_that.searchTerms,_that.feedItems,_that.page,_that.layout,_that.errorCount,_that.drawerOpened,_that.viewMode,_that.error,_that.stackTrace);}
@@ -213,7 +219,7 @@ return $default(_that.hasScrolled,_that.currentTime,_that.timeBlock,_that.loadin
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool hasScrolled,  DateTime currentTime,  TimeBlock timeBlock,  bool loading,  Map<DateTimeRange, List<FeedItem>> items,  List<FeedCategory> categories,  List<Feed> feeds,  Feed? selectedFeed,  String searchTerms,  List<FeedItem> feedItems,  int page,  List<LayoutBlock> layout,  int errorCount,  bool drawerOpened,  FeedViewMode viewMode,  dynamic error,  StackTrace? stackTrace)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool hasScrolled,  DateTime currentTime,  TimeBlock timeBlock,  bool loading,  Map<DateTimeRange<DateTime>, List<FeedItem>> items,  List<FeedCategory> categories,  List<Feed> feeds,  Feed? selectedFeed,  String searchTerms,  List<FeedItem> feedItems,  int page,  List<LayoutBlock> layout,  int errorCount,  bool drawerOpened,  FeedViewMode viewMode,  dynamic error,  StackTrace? stackTrace)?  $default,) {final _that = this;
 switch (_that) {
 case _MainFeedState() when $default != null:
 return $default(_that.hasScrolled,_that.currentTime,_that.timeBlock,_that.loading,_that.items,_that.categories,_that.feeds,_that.selectedFeed,_that.searchTerms,_that.feedItems,_that.page,_that.layout,_that.errorCount,_that.drawerOpened,_that.viewMode,_that.error,_that.stackTrace);case _:
@@ -228,15 +234,15 @@ return $default(_that.hasScrolled,_that.currentTime,_that.timeBlock,_that.loadin
 
 
 class _MainFeedState extends MainFeedState implements WithError {
-  const _MainFeedState({this.hasScrolled = false, required this.currentTime, this.timeBlock = TimeBlock.one_day, this.loading = true, final  Map<DateTimeRange, List<FeedItem>> items = const {}, final  List<FeedCategory> categories = const [], final  List<Feed> feeds = const [], this.selectedFeed, this.searchTerms = '', final  List<FeedItem> feedItems = const [], this.page = 0, final  List<LayoutBlock> layout = const [], this.errorCount = 0, this.drawerOpened = false, this.viewMode = FeedViewMode.feeds, this.error, this.stackTrace}): _items = items,_categories = categories,_feeds = feeds,_feedItems = feedItems,_layout = layout,super._();
+  const _MainFeedState({this.hasScrolled = false, required this.currentTime, this.timeBlock = TimeBlock.one_day, this.loading = true,  Map<DateTimeRange<DateTime>, List<FeedItem>> items = const {},  List<FeedCategory> categories = const [],  List<Feed> feeds = const [], this.selectedFeed, this.searchTerms = '',  List<FeedItem> feedItems = const [], this.page = 0,  List<LayoutBlock> layout = const [], this.errorCount = 0, this.drawerOpened = false, this.viewMode = FeedViewMode.feeds, this.error, this.stackTrace}): _items = items,_categories = categories,_feeds = feeds,_feedItems = feedItems,_layout = layout,super._();
   
 
 @override@JsonKey() final  bool hasScrolled;
 @override final  DateTime currentTime;
 @override@JsonKey() final  TimeBlock timeBlock;
 @override@JsonKey() final  bool loading;
- final  Map<DateTimeRange, List<FeedItem>> _items;
-@override@JsonKey() Map<DateTimeRange, List<FeedItem>> get items {
+ final  Map<DateTimeRange<DateTime>, List<FeedItem>> _items;
+@override@JsonKey() Map<DateTimeRange<DateTime>, List<FeedItem>> get items {
   if (_items is EqualUnmodifiableMapView) return _items;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_items);
@@ -289,16 +295,18 @@ _$MainFeedStateCopyWith<_MainFeedState> get copyWith => __$MainFeedStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MainFeedState&&(identical(other.hasScrolled, hasScrolled) || other.hasScrolled == hasScrolled)&&(identical(other.currentTime, currentTime) || other.currentTime == currentTime)&&(identical(other.timeBlock, timeBlock) || other.timeBlock == timeBlock)&&(identical(other.loading, loading) || other.loading == loading)&&const DeepCollectionEquality().equals(other._items, _items)&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._feeds, _feeds)&&(identical(other.selectedFeed, selectedFeed) || other.selectedFeed == selectedFeed)&&(identical(other.searchTerms, searchTerms) || other.searchTerms == searchTerms)&&const DeepCollectionEquality().equals(other._feedItems, _feedItems)&&(identical(other.page, page) || other.page == page)&&const DeepCollectionEquality().equals(other._layout, _layout)&&(identical(other.errorCount, errorCount) || other.errorCount == errorCount)&&(identical(other.drawerOpened, drawerOpened) || other.drawerOpened == drawerOpened)&&(identical(other.viewMode, viewMode) || other.viewMode == viewMode)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MainFeedState&&(identical(other.hasScrolled, hasScrolled) || other.hasScrolled == hasScrolled)&&(identical(other.currentTime, currentTime) || other.currentTime == currentTime)&&(identical(other.timeBlock, timeBlock) || other.timeBlock == timeBlock)&&(identical(other.loading, loading) || other.loading == loading)&&const DeepCollectionEquality().equals(other.items, _items)&&const DeepCollectionEquality().equals(other.categories, _categories)&&const DeepCollectionEquality().equals(other.feeds, _feeds)&&(identical(other.selectedFeed, selectedFeed) || other.selectedFeed == selectedFeed)&&(identical(other.searchTerms, searchTerms) || other.searchTerms == searchTerms)&&const DeepCollectionEquality().equals(other.feedItems, _feedItems)&&(identical(other.page, page) || other.page == page)&&const DeepCollectionEquality().equals(other.layout, _layout)&&(identical(other.errorCount, errorCount) || other.errorCount == errorCount)&&(identical(other.drawerOpened, drawerOpened) || other.drawerOpened == drawerOpened)&&(identical(other.viewMode, viewMode) || other.viewMode == viewMode)&&const DeepCollectionEquality().equals(other.error, error)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,hasScrolled,currentTime,timeBlock,loading,const DeepCollectionEquality().hash(_items),const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_feeds),selectedFeed,searchTerms,const DeepCollectionEquality().hash(_feedItems),page,const DeepCollectionEquality().hash(_layout),errorCount,drawerOpened,viewMode,const DeepCollectionEquality().hash(error),stackTrace);
+int get hashCode {
+    return Object.hash(runtimeType,hasScrolled,currentTime,timeBlock,loading,const DeepCollectionEquality().hash(_items),const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_feeds),selectedFeed,searchTerms,const DeepCollectionEquality().hash(_feedItems),page,const DeepCollectionEquality().hash(_layout),errorCount,drawerOpened,viewMode,const DeepCollectionEquality().hash(error),stackTrace);
+}
 
 @override
 String toString() {
-  return 'MainFeedState(hasScrolled: $hasScrolled, currentTime: $currentTime, timeBlock: $timeBlock, loading: $loading, items: $items, categories: $categories, feeds: $feeds, selectedFeed: $selectedFeed, searchTerms: $searchTerms, feedItems: $feedItems, page: $page, layout: $layout, errorCount: $errorCount, drawerOpened: $drawerOpened, viewMode: $viewMode, error: $error, stackTrace: $stackTrace)';
+    return 'MainFeedState(hasScrolled: $hasScrolled, currentTime: $currentTime, timeBlock: $timeBlock, loading: $loading, items: $items, categories: $categories, feeds: $feeds, selectedFeed: $selectedFeed, searchTerms: $searchTerms, feedItems: $feedItems, page: $page, layout: $layout, errorCount: $errorCount, drawerOpened: $drawerOpened, viewMode: $viewMode, error: $error, stackTrace: $stackTrace)';
 }
 
 
@@ -309,7 +317,7 @@ abstract mixin class _$MainFeedStateCopyWith<$Res> implements $MainFeedStateCopy
   factory _$MainFeedStateCopyWith(_MainFeedState value, $Res Function(_MainFeedState) _then) = __$MainFeedStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool hasScrolled, DateTime currentTime, TimeBlock timeBlock, bool loading, Map<DateTimeRange, List<FeedItem>> items, List<FeedCategory> categories, List<Feed> feeds, Feed? selectedFeed, String searchTerms, List<FeedItem> feedItems, int page, List<LayoutBlock> layout, int errorCount, bool drawerOpened, FeedViewMode viewMode, dynamic error, StackTrace? stackTrace
+ bool hasScrolled, DateTime currentTime, TimeBlock timeBlock, bool loading, Map<DateTimeRange<DateTime>, List<FeedItem>> items, List<FeedCategory> categories, List<Feed> feeds, Feed? selectedFeed, String searchTerms, List<FeedItem> feedItems, int page, List<LayoutBlock> layout, int errorCount, bool drawerOpened, FeedViewMode viewMode, dynamic error, StackTrace? stackTrace
 });
 
 
@@ -333,7 +341,7 @@ as bool,currentTime: null == currentTime ? _self.currentTime : currentTime // ig
 as DateTime,timeBlock: null == timeBlock ? _self.timeBlock : timeBlock // ignore: cast_nullable_to_non_nullable
 as TimeBlock,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
-as Map<DateTimeRange, List<FeedItem>>,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
+as Map<DateTimeRange<DateTime>, List<FeedItem>>,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
 as List<FeedCategory>,feeds: null == feeds ? _self._feeds : feeds // ignore: cast_nullable_to_non_nullable
 as List<Feed>,selectedFeed: freezed == selectedFeed ? _self.selectedFeed : selectedFeed // ignore: cast_nullable_to_non_nullable
 as Feed?,searchTerms: null == searchTerms ? _self.searchTerms : searchTerms // ignore: cast_nullable_to_non_nullable

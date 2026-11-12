@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'server_url.dart';
@@ -9,6 +9,7 @@ part of 'server_url.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ServerUrlStateCopyWith<ServerUrlState> get copyWith => _$ServerUrlStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServerUrlState&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.config, config) || other.config == config)&&(identical(other.error, error) || other.error == error));
+  final _this = this as ServerUrlState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServerUrlState&&(identical(other.serverUrl, _this.serverUrl) || other.serverUrl == _this.serverUrl)&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.config, _this.config) || other.config == _this.config)&&(identical(other.error, _this.error) || other.error == _this.error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,serverUrl,loading,config,error);
+int get hashCode {
+  final _this = this as ServerUrlState;
+  return Object.hash(runtimeType,_this.serverUrl,_this.loading,_this.config,_this.error);
+}
 
 @override
 String toString() {
-  return 'ServerUrlState(serverUrl: $serverUrl, loading: $loading, config: $config, error: $error)';
+  final _this = this as ServerUrlState;
+  return 'ServerUrlState(serverUrl: ${_this.serverUrl}, loading: ${_this.loading}, config: ${_this.config}, error: ${_this.error})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ServerUrlStateCopyWithImpl<$Res>
 /// Create a copy of ServerUrlState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? serverUrl = freezed,Object? loading = null,Object? config = freezed,Object? error = null,}) {
-  return _then(_self.copyWith(
+  return _then(ServerUrlState(
 serverUrl: freezed == serverUrl ? _self.serverUrl : serverUrl // ignore: cast_nullable_to_non_nullable
 as String?,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,config: freezed == config ? _self.config : config // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ _$ServerUrlStateCopyWith<_ServerUrlState> get copyWith => __$ServerUrlStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServerUrlState&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.config, config) || other.config == config)&&(identical(other.error, error) || other.error == error));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServerUrlState&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.config, config) || other.config == config)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,serverUrl,loading,config,error);
+int get hashCode {
+    return Object.hash(runtimeType,serverUrl,loading,config,error);
+}
 
 @override
 String toString() {
-  return 'ServerUrlState(serverUrl: $serverUrl, loading: $loading, config: $config, error: $error)';
+    return 'ServerUrlState(serverUrl: $serverUrl, loading: $loading, config: $config, error: $error)';
 }
 
 
