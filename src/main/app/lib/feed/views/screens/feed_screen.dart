@@ -53,7 +53,7 @@ class FeedScreen extends StatelessWidget {
       ),
       child: BlocProvider(
         create: (context) => MainFeedCubit(
-          MainFeedState(currentTime: DateTime.now().copyWith(hour: 23, minute: 59, second: 59, millisecond: 999)),
+          MainFeedState(currentTime: now().copyWith(hour: 23, minute: 59, second: 59, millisecond: 999)),
         ),
         child: ErrorHandler<MainFeedCubit, MainFeedState>(
           child: BlocBuilder<MainFeedCubit, MainFeedState>(

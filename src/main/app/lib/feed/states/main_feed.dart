@@ -137,7 +137,7 @@ class MainFeedCubit extends Cubit<MainFeedState> {
 
       emit(
         state.copyWith(
-          currentTime: DateTime.now().copyWith(hour: 23, minute: 59, second: 59, millisecond: 999),
+          currentTime: now().copyWith(hour: 23, minute: 59, second: 59, millisecond: 999),
           items: {},
           layout: await layout,
           errorCount: await errorCount,

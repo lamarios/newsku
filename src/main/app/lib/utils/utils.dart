@@ -15,6 +15,9 @@ const double pu7 = pu * 7;
 const double pu8 = pu * 8;
 const double pu9 = pu * 9;
 
+/// Source of the current time for date-dependent UI, overridden in tests so golden images don't depend on the day.
+DateTime Function() now = DateTime.now;
+
 String? get serverUrl => getIt.get<IdentityCubit>().state.serverUrl;
 
 LocalPreferencesState get localPreferences => getIt.get<LocalPreferencesCubit>().state;
