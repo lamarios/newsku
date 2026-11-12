@@ -22,6 +22,7 @@ Newsku requires a connection to an Openai API compatible server
 | OPENAI_URL     | (none)  | **Yes**  | The url of the open ai compatible instance.      | 
 | OPENAI_API_KEY | (none)  | **Yes**  | API Key to talk to the open ai compatible server |
 | OPENAI_MODEL   | (none)  | **Yes**  | I tested openai gpt oss 20B with good results    | 
+| OPENAI_TIMEOUT_SECONDS | 120 | No | Timeout in seconds for requests to the open ai compatible server |
 
 ### SMTP Server
 

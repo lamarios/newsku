@@ -63,15 +63,18 @@ public class OpenaiServiceImpl implements OpenaiService {
   private final String url;
   private final String apiKey;
   private final String model;
+  private final Duration timeout;
 
   @Autowired
   public OpenaiServiceImpl(
       @Value("${OPENAI_URL}") String url,
       @Value("${OPENAI_API_KEY:}") String apiKey,
-      @Value("${OPENAI_MODEL}") String model) {
+      @Value("${OPENAI_MODEL}") String model,
+      @Value("${OPENAI_TIMEOUT_SECONDS:120}") long timeoutSeconds) {
     this.url = url;
     this.apiKey = apiKey;
     this.model = model;
+    this.timeout = Duration.ofSeconds(timeoutSeconds);
 
     var models = getClient().models().list();
     List<String> modelList = new ArrayList<>();
@@ -97,7 +100,7 @@ public class OpenaiServiceImpl implements OpenaiService {
       client = client.apiKey(apiKey);
     }
 
-    client.timeout(Duration.ofMinutes(2));
+    client.timeout(timeout);
 
     return client.build();
   }

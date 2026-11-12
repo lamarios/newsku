@@ -581,6 +581,12 @@
 <td>No</td>
 <td>Sets the max RAM the software can use, increase this when you have a lot of RSS feeds (ex: 1024m, 2048m)</td>
 </tr>
+<tr>
+<td>ALLOW_PRIVATE_NETWORK_URLS</td>
+<td>0</td>
+<td>No</td>
+<td>1 = allow feeds, articles and images on private network addresses (localhost, 192.168.x.x, 10.x.x.x...). Leave it to 0 if users you don't trust can add feeds, otherwise they can make Newsku reach your internal services</td>
+</tr>
 </tbody>
 </table>
 <h3 id="ai">AI</h3>
@@ -612,6 +618,12 @@
 <td>(none)</td>
 <td><strong>Yes</strong></td>
 <td>I tested openai gpt oss 20B with good results</td>
+</tr>
+<tr>
+<td>OPENAI_TIMEOUT_SECONDS</td>
+<td>120</td>
+<td>No</td>
+<td>Timeout in seconds for requests to the open ai compatible server</td>
 </tr>
 </tbody>
 </table>
@@ -716,7 +728,12 @@ https://your.newsku-domain.com/redirect.html
 <td>Name of your provider to display on the UI</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+<p>Tokens must be issued by your provider for the configured client id (in their <code>aud</code> or <code>azp</code> claim).</p>
+<p>Logging in with SSO never links to an existing Newsku account, even one with the same username or email. Users who
+already have an account log in with their password and link their SSO account from <strong>Settings &gt; Email and password</strong>.
+Once linked, they can log in with SSO. With <code>OIDC_AUTO_SIGNUP_USERS</code> enabled, unknown SSO users get a new account,
+unless the username is already taken.</p></div>
 
 
 
